@@ -14,6 +14,33 @@ from pathlib import Path
 # Matches a clause heading like "5.6.1 General" or "5.6 PDU Session"
 _CLAUSE_RE = re.compile(r"^(\d+(?:\.\d+)*)\s+(.+)$")
 
+# A table-of-contents entry: a clause heading followed by a dotted leader and
+# a page number, e.g. "5.6.1 General....................114". These appear in
+# the front-matter TOC and must be dropped, not parsed as body sections.
+_TOC_RE = re.compile(r"^(\d+(?:\.\d+)*)\s+.+\.{3,}\s*\d+\s*$")
+
+
+def _is_spurious_clause(clause: str, title: str) -> bool:
+    """True if a ``_CLAUSE_RE`` match is a false positive from noisy PDF text
+    extraction, not a real clause heading.
+
+    PDF text extraction (e.g. LiteParse) can split body lines so that a line
+    starts with a number followed by text. Heuristics to reject those:
+
+    * first segment has >2 digits (page/byte offsets, values like ``172800``);
+    * title does not start with an uppercase letter (real headings are
+      capitalized; body fragments like ``sk-Counter ...`` are rare);
+    * title ends in sentence punctuation (``.`` ``!`` ``?`` ``:`` ``;``) —
+      real headings don't end in punctuation.
+    """
+    if len(clause.split(".")[0]) > 2:
+        return True
+    if not re.match(r"^[A-Z]", title):
+        return True
+    if re.search(r"[.!?:;]\s*$", title):
+        return True
+    return False
+
 
 @dataclass
 class Section:
@@ -41,16 +68,35 @@ def parse_text(text: str, spec: str, release: str) -> list[Section]:
 
     Lines that look like clause headings ("5.6.1 Title") start a new section.
     All other lines accumulate into the current section's text.
+
+    The front-matter table of contents is skipped as a block: it is entered on
+    the "Contents" heading or the first dotted-leader line, and exited on the
+    first top-level (non-dotted) clause heading that is not itself a TOC entry.
+    This handles TOC entries that wrap across lines (a continuation line like
+    "5.3.3.6 Cell re-selection ..." has no dotted leader on the same line).
     """
     sections: list[Section] = []
     current: Section | None = None
+    in_toc = False
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
         if not line:
             continue
+        # enter the table of contents block
+        if not in_toc and (line == "Contents" or _TOC_RE.match(line)):
+            in_toc = True
+            continue
+        if in_toc:
+            # exit on the first real top-level clause heading
+            m = _CLAUSE_RE.match(line)
+            if m and "." not in m.group(1) and not _TOC_RE.match(line) \
+                    and not _is_spurious_clause(m.group(1), m.group(2)):
+                in_toc = False
+            else:
+                continue
         m = _CLAUSE_RE.match(line)
-        if m:
+        if m and not _is_spurious_clause(m.group(1), m.group(2)):
             clause, title = m.group(1), m.group(2)
             current = Section(
                 spec=spec,
@@ -79,6 +125,17 @@ def parse_text(text: str, spec: str, release: str) -> list[Section]:
 
 def parse_file(path: Path, spec: str, release: str) -> list[Section]:
     """Parse a text file into sections."""
+    return parse_text(path.read_text(encoding="utf-8"), spec=spec, release=release)
+
+
+def parse_pdf(path: Path, spec: str, release: str) -> list[Section]:
+    """Parse a PDF that has been pre-extracted to a .txt file.
+
+    PDF text extraction is delegated to an external tool (e.g. LiteParse's
+    ``lit parse --format text``). This function reads the extracted text and
+    feeds it through :func:`parse_text`, so PDFs share the same clause
+    structure as text/docx sources.
+    """
     return parse_text(path.read_text(encoding="utf-8"), spec=spec, release=release)
 
 
