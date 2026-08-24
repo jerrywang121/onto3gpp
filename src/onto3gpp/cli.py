@@ -66,7 +66,20 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
     default=None,
     help="Path to an ontology (JSON) to enable relationship-aware reranking.",
 )
-def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Path | None) -> None:
+@click.option(
+    "--chain",
+    is_flag=True,
+    default=False,
+    help="Use the Level 0-4 NER fallback chain for query expansion.",
+)
+def eval(
+    parsed: Path,
+    gold: Path,
+    top_k: int,
+    expand: Path | None,
+    ontology: Path | None,
+    chain: bool,
+) -> None:
     """Build a BM25 index from parsed sections and evaluate against a gold set."""
     import json
 
@@ -119,6 +132,7 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
                     top_k=top_k,
                     dictionary=dictionary,
                     ontology=onto,
+                    chain=chain,
                 )
             )
         # aggregate per-query results into a single EvalResult
@@ -134,10 +148,17 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
     else:
         index = BM25Index.build(chunks)
         result = evaluate(
-            index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto
+            index,
+            gold_queries,
+            top_k=top_k,
+            dictionary=dictionary,
+            ontology=onto,
+            chain=chain,
         )
 
     modes = []
+    if chain:
+        modes.append("NER fallback chain")
     if dictionary is not None:
         modes.append("term-expanded search")
     if onto is not None:
