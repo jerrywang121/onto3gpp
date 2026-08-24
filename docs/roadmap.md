@@ -70,6 +70,13 @@ runs end-to-end.
 > implemented. On the real gold set, ontology-aware ranking gives a modest
 > MRR lift (0.628 vs 0.625) and a clear Recall@5 lift (0.833 vs 0.750) over
 > plain BM25. **Gate partially met** (Recall@5 lift confirmed; MRR marginal).
+>
+> **Spec coverage expanded:** added TS 38.331 (RRC, V19.3.0) and TS 24.501
+> (NAS, V19.7.0) as knowledge sources. The parser was hardened to reject
+> NAS table-row clauses (bit-field/IE enumeration rows like "1 UAS services
+> enabled") via TOC-title matching (commit `4d74f69`). 124501 now parses to
+> 1181 clean sections (was 2107 with ~926 spurious rows). Dictionary rebuilt
+> to 5825 entries across all specs.
 
 **Branch:** `stage/2-ontology`
 

@@ -92,8 +92,13 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 - Relationship-aware reranker (ontology-aware candidate generation +
   related-concept boost) (`src/onto3gpp/runtime/reranker.py`).
 - CLI: `onto3gpp build-ontology`, `onto3gpp eval --ontology`.
-- Real 3GPP spec (TS 38.300 V18.3.0) parsed → 532 sections, 911-term
-  dictionary, 879-concept / 2027-relation ontology.
+- Real 3GPP specs parsed:
+  - TS 38.300 V18.3.0 → 532 sections, 911-term dictionary, 879-concept /
+    2027-relation ontology.
+  - TS 38.331 V19.3.0 (RRC) → 589 sections (clean).
+  - TS 24.501 V19.7.0 (NAS) → 1181 sections (clean after TOC-title filter).
+- Parser hardened for noisy PDF extraction: spurious-clause filter + block TOC
+  detection + TOC-title matching to reject NAS table rows (commit `4d74f69`).
 - Real gold set (`data/gold_queries_38300.jsonl`, 12 queries referencing
   real 38.300 clauses).
 
