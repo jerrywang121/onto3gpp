@@ -14,8 +14,10 @@ Flow:
 
 from __future__ import annotations
 
+import copy
 import json
-from dataclasses import dataclass
+import random
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from onto3gpp.evaluate import GoldQuery, evaluate
@@ -146,6 +148,9 @@ class LoopResult:
     after_mrr: float | None
     gaps: list[str]
     proposals: list[ImprovementProposal]
+    promoted: bool = False
+    holdout_delta: float | None = None
+    regression_log: list[dict] = field(default_factory=list)
 
 
 def run_improvement_loop(
@@ -155,19 +160,24 @@ def run_improvement_loop(
     llm: LLMClient,
     top_k: int = 10,
     domain_dir: Path | None = None,
+    holdout_frac: float = 0.3,
+    min_delta: float = 0.0,
 ) -> LoopResult:
     """Run one closed-loop improvement iteration.
 
-    1. Evaluate the current ontology to find gaps (queries that miss).
-    2. Build search logs from the gold set.
-    3. Ask the LLM to propose improvements.
-    4. Apply valid proposals.
-    5. Re-evaluate and report before/after MRR.
+    1. Split the gold set into a train set and a hold-out eval set.
+    2. Evaluate the train set to find gaps (queries that miss).
+    3. Build search logs from the train set.
+    4. Ask the LLM to propose improvements.
+    5. Auto-judge the proposals against the **hold-out** set: promote only if
+       hold-out MRR improves by at least ``min_delta``; otherwise reject.
+    6. Report before/after MRR and a regression log.
     """
-    before = evaluate(index, gold, top_k=top_k, ontology=ontology)
-    gaps = find_gaps(before.per_query, gold)
+    train, holdout = split_gold(gold, holdout_frac=holdout_frac)
+    before = evaluate(index, train, top_k=top_k, ontology=ontology)
+    gaps = find_gaps(before.per_query, train)
 
-    logs = build_search_logs(gold)
+    logs = build_search_logs(train)
     summary = (
         f"{len(ontology.concepts)} concepts, {len(ontology.relations)} relations; "
         f"gaps: {', '.join(gaps) if gaps else 'none'}"
@@ -175,13 +185,106 @@ def run_improvement_loop(
     proposals = propose_improvements(
         llm, search_logs=logs, ontology_summary=summary, domain_dir=domain_dir
     )
-    applied = apply_proposals(ontology, proposals)
 
-    after = evaluate(index, gold, top_k=top_k, ontology=ontology)
+    # Auto-judge against the hold-out set (no human-in-the-loop).
+    judge = auto_judge_proposals(
+        index, ontology, proposals, holdout, top_k=top_k, min_delta=min_delta
+    )
+
+    after = evaluate(index, train, top_k=top_k, ontology=ontology)
     return LoopResult(
-        applied=applied,
+        applied=judge.applied,
         before_mrr=before.mrr,
         after_mrr=after.mrr,
         gaps=gaps,
         proposals=proposals,
+        promoted=judge.promoted,
+        holdout_delta=judge.delta,
+        regression_log=judge.regression_log,
+    )
+
+
+def split_gold(
+    gold: list[GoldQuery], holdout_frac: float = 0.3, seed: int = 42
+) -> tuple[list[GoldQuery], list[GoldQuery]]:
+    """Split a gold set into a train set and a hold-out eval set.
+
+    The improvement loop proposes changes from the *train* set (where it finds
+    gaps) but judges them against the *holdout* set, so it can't overfit to
+    the queries it saw. Returns ``(train, holdout)``.
+    """
+    gold = list(gold)
+    rng = random.Random(seed)
+    rng.shuffle(gold)
+    n_holdout = max(1, round(len(gold) * holdout_frac))
+    holdout = gold[:n_holdout]
+    train = gold[n_holdout:]
+    return train, holdout
+
+
+@dataclass
+class AutoJudgeResult:
+    """Outcome of auto-judging a batch of proposals against a holdout set."""
+
+    promoted: bool
+    delta: float
+    before_mrr: float
+    after_mrr: float
+    applied: int
+    regression_log: list[dict]
+
+
+def auto_judge_proposals(
+    index,
+    ontology: Ontology,
+    proposals: list[ImprovementProposal],
+    holdout: list[GoldQuery],
+    top_k: int = 10,
+    min_delta: float = 0.0,
+) -> AutoJudgeResult:
+    """Auto-promote or auto-reject proposals using a hold-out eval set.
+
+    The proposals are applied to a *copy* of the ontology, then the holdout
+    set is evaluated before and after. If MRR improves by at least
+    ``min_delta``, the proposals are promoted (the copy replaces the original
+    ontology) and ``promoted`` is True. Otherwise they are rejected and the
+    original ontology is left untouched.
+
+    A regression log records per-query MRR before/after so regressions are
+    auditable (no human-in-the-loop, but evidence is preserved).
+    """
+    before = evaluate(index, holdout, top_k=top_k, ontology=ontology)
+    before_mrr = before.mrr
+
+    candidate = copy.deepcopy(ontology)
+    applied = apply_proposals(candidate, proposals)
+    after = evaluate(index, holdout, top_k=top_k, ontology=candidate)
+    after_mrr = after.mrr
+
+    delta = after_mrr - before_mrr
+    promoted = applied > 0 and delta >= min_delta
+
+    # regression log: per-query MRR before/after
+    regression_log: list[dict] = []
+    for b, a in zip(before.per_query, after.per_query):
+        regression_log.append(
+            {
+                "query": b["query"],
+                "mrr_before": b["mrr"],
+                "mrr_after": a["mrr"],
+            }
+        )
+
+    if promoted:
+        # promote: replace the original ontology's contents with the candidate
+        ontology.concepts = candidate.concepts
+        ontology.relations = candidate.relations
+
+    return AutoJudgeResult(
+        promoted=promoted,
+        delta=delta,
+        before_mrr=before_mrr,
+        after_mrr=after_mrr,
+        applied=applied,
+        regression_log=regression_log,
     )

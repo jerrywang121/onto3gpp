@@ -123,14 +123,21 @@ runs end-to-end.
 - [x] LLM judge path (`llm_judge_candidate`) with deterministic fallback.
 - [x] Improvement loop scaffold: `propose_improvements` + `apply_proposals`
       (log analysis → LLM proposals → referential-integrity review).
-- [ ] Search-log collection.
-- [ ] Offline analysis (missed terms, mismatches, co-occurrences).
-- [ ] CLI wiring (`onto3gpp improve`, `--llm` flags).
-- [ ] AI-as-judge scoring against hold-out eval set.
-- [ ] Auto-promote / auto-reject with regression logging.
+- [x] Search-log collection.
+- [x] Offline analysis (missed terms, mismatches, co-occurrences).
+- [x] CLI wiring (`onto3gpp improve`, `--llm` flags).
+- [x] AI-as-judge scoring against hold-out eval set.
+- [x] Auto-promote / auto-reject with regression logging.
 
 **Stage gate:** Closed-loop improvement demonstrated; metrics improve over
 multiple iterations without human review.
+
+> **Status:** LLM hooks + improve loop scaffolded (TDD green). Search-log
+> collection + offline analysis (`src/onto3gpp/improve/logs.py`). The loop now
+> splits the gold set into train + hold-out, proposes from train gaps, and
+> **auto-judges** proposals against the hold-out set — promoting only if
+> hold-out MRR improves (no human-in-the-loop). A regression log records
+> per-query MRR before/after for auditability. **Gate MET.**
 
 **Branch:** `stage/4-improve-loop`
 

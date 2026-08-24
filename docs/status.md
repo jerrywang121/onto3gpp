@@ -15,8 +15,8 @@
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
 | 1 Terminology | � done | `stage/1-terminology` | 0.667 / 0.729 / 0.917 | Real gold set; word-boundary fix resolved regression |
 | 2 Ontology | � done | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
-| 3 Intent | 🔵 in progress | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
-| 4 Improve loop | 🔵 in progress | `stage/4-improve-loop` | — | LLM hooks + improve loop scaffolded (TDD green) |
+| 3 Intent | � done | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
+| 4 Improve loop | 🔵 in progress | `stage/4-improve-loop` | — | LLM hooks + improve loop + hold-out auto-judge (TDD green) |
 | 5 CPU NER | ⚪ not started | — | — | |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
@@ -245,6 +245,22 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
   ontology-aware) — a genuine retrieval gap, not an ontology issue. The target
   clauses 9.2.3.2.1/9.2.3.2.2 contain "handover" and "RRC_CONNECTED" but rank
   below the top-10.
+
+**Hold-out auto-judge (this session):**
+- The loop now **splits the gold set** into train + hold-out (`split_gold`),
+  proposes from **train** gaps, and **auto-judges** proposals against the
+  **hold-out** set (`auto_judge_proposals`). A proposal is **promoted** only if
+  hold-out MRR improves by at least `min_delta`; otherwise it is **rejected**
+  and the ontology is left untouched. This prevents overfitting to the queries
+  the loop saw.
+- A **regression log** records per-query MRR before/after for every judged
+  batch, so regressions are auditable without human-in-the-loop.
+- CLI `onto3gpp improve` now reports `Promoted`, `Hold-out delta`, and the
+  regression log.
+- **Fixed a latent CLI bug:** `onto3gpp eval` referenced an undefined `index`
+  and `EvalResult` in the non-scoped path — now builds the index and imports
+  `EvalResult` correctly. Verified end-to-end (MRR 0.8542 on the real gold
+  set).
 
 **Pending:**
 - Stage gate: closed-loop improvement demonstrated; metrics improve over
