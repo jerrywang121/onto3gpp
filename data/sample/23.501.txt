@@ -1,0 +1,26 @@
+TS 23.501 System Architecture for the 5G System
+5.6 PDU Session
+5.6.1 General
+A PDU session is an association between the UE and the Data Network that provides a PDU connectivity service. The PDU session is established by the SMF.
+5.6.2 PDU Session Establishment
+During PDU session establishment, the SMF selects a UPF to serve the user plane. The SMF sends a PDU Session Establishment Request to the UPF.
+5.6.3 User Plane Forwarding
+The UPF forwards user plane packets between the RAN and the Data Network. The UPF applies QoS enforcement.
+5.6.4 UPF Selection
+The network selects a UPF based on the DNN, S-NSSAI, and the location of the UE. The SMF performs UPF selection.
+5.7 Registration
+5.7.1 Registration Procedure
+The registration procedure is initiated by the UE. The AMF handles the registration request and establishes the UE context.
+5.7.2 Registration Update
+The AMF updates the registration when the UE moves to a new tracking area.
+5.8 QoS
+5.8.1 QoS Flow
+A QoS flow is the finest granularity of QoS differentiation in the 5G system. Each QoS flow is identified by a QFI.
+5.8.2 QoS Flow Mapping
+QoS flows are mapped to PDU sessions. Each PDU session can have multiple QoS flows.
+5.9 Interfaces
+5.9.1 N2 Interface
+The N2 interface connects the RAN to the AMF. It carries NGAP signaling.
+5.10 Mobility
+5.10.1 Handover
+Handover is the procedure by which the UE moves from one cell to another while maintaining connectivity.

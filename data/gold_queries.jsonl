@@ -1,0 +1,10 @@
+{"query": "How is a PDU session established?", "relevant_clauses": ["5.6.1", "5.6.2"]}
+{"query": "What does the SMF do during PDU session establishment?", "relevant_clauses": ["5.6.2"]}
+{"query": "How does the UPF forward user plane packets?", "relevant_clauses": ["5.6.3"]}
+{"query": "What is the registration procedure?", "relevant_clauses": ["5.7.1"]}
+{"query": "How does the AMF handle registration?", "relevant_clauses": ["5.7.1", "5.7.2"]}
+{"query": "What is a QoS flow?", "relevant_clauses": ["5.8.1"]}
+{"query": "How are QoS flows mapped to PDU sessions?", "relevant_clauses": ["5.8.2"]}
+{"query": "What is the N2 interface used for?", "relevant_clauses": ["5.9.1"]}
+{"query": "How does the network select a UPF?", "relevant_clauses": ["5.6.2", "5.6.4"]}
+{"query": "What happens during handover?", "relevant_clauses": ["5.10.1"]}

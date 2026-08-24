@@ -14,13 +14,13 @@ a measurable evaluation (see `docs/status.md` for live metrics). A stage is
 **Goal:** Establish a measurable baseline before any ontology work.
 
 **Tasks:**
-- [ ] Domain-pack skeleton (`docs/domain/_template` + `docs/domain/3gpp`).
-- [ ] Document parser: `.docx`/`.pdf`/`.text` → structured sections (clause
+- [x] Domain-pack skeleton (`docs/domain/_template` + `docs/domain/3gpp`).
+- [x] Document parser: `.docx`/`.pdf`/`.text` → structured sections (clause
       hierarchy).
-- [ ] Chunker with section metadata (spec, release, clause, title).
-- [ ] BM25 index + search.
-- [ ] Gold set bootstrap (`data/gold_queries.jsonl`, ~100–300 real queries).
-- [ ] Eval harness: MRR, NDCG@k, Recall@k.
+- [x] Chunker with section metadata (spec, release, clause, title).
+- [x] BM25 index + search.
+- [x] Gold set bootstrap (`data/gold_queries.jsonl`, ~100–300 real queries).
+- [x] Eval harness: MRR, NDCG@k, Recall@k.
 
 **Stage gate:** Baseline metrics recorded in `docs/status.md`. Eval harness
 runs end-to-end.
