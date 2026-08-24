@@ -56,12 +56,16 @@ def evaluate(
     gold: list[GoldQuery],
     top_k: int = 10,
     dictionary=None,
+    ontology=None,
 ) -> EvalResult:
     """Evaluate an index against a gold set.
 
     If `dictionary` is provided, queries are expanded with canonical terms
-    (term-expanded search); otherwise plain BM25 is used.
+    (term-expanded search); otherwise plain BM25 is used. If `ontology` is
+    provided, results are reranked with the relationship-aware reranker.
     """
+    from onto3gpp.runtime.reranker import rerank
+
     mrr_scores: list[float] = []
     ndcg_scores: list[float] = []
     recall5_scores: list[float] = []
@@ -69,10 +73,14 @@ def evaluate(
     per_query: list[dict] = []
 
     for gq in gold:
-        if dictionary is not None:
+        if ontology is not None:
+            results = index.search_ontology(gq.query, ontology, top_k=top_k)
+        elif dictionary is not None:
             results = index.search_expanded(gq.query, dictionary, top_k=top_k)
         else:
             results = index.search(gq.query, top_k=top_k)
+        if ontology is not None:
+            results = rerank(results, gq.query, ontology)
         relevant = set(gq.relevant_clauses)
         # relevance label per result: 1 if the result's clause is relevant
         relevance = [1 if r.chunk.clause in relevant else 0 for r in results]

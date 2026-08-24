@@ -39,13 +39,14 @@ runs end-to-end.
 - [x] Ontology compiler → Aho-Corasick trie + dictionary.
 - [x] Runtime NER (dictionary path).
 - [x] Query expansion → BM25.
-- [ ] Measure term-expansion lift on **real** 3GPP documents (blocked on data).
+- [x] Measure term-expansion lift on **real** 3GPP documents.
 
 **Stage gate:** Term-expansion lift measured vs. Stage 0 baseline.
 
 > **Status:** mechanism implemented and unit-tested. Real 3GPP spec (TS
-> 38.300) now parsed → 911-term dictionary. Lift measurement pending a real
-> gold set.
+> 38.300) parsed → 911-term dictionary. On the real gold set
+> (`data/gold_queries_38300.jsonl`), term-expansion **regresses** vs. plain
+> BM25 (MRR 0.484 vs 0.625). **Gate NOT passed** — needs investigation.
 
 **Branch:** `stage/1-terminology`
 
@@ -58,13 +59,16 @@ runs end-to-end.
 **Tasks:**
 - [x] Concept/relation schema + merge + validate + version.
 - [x] Relation extraction (rules + LLM) with AI-as-judge gate.
-- [ ] Ontology reasoner → query IR.
-- [ ] Relationship-aware reranker.
+- [x] Ontology reasoner → query IR.
+- [x] Relationship-aware reranker.
 
 **Stage gate:** Relationship-aware ranking lift vs. Stage 1.
 
 > **Status:** schema + relation extraction done. Built a 879-concept /
-> 2027-relation ontology from real TS 38.300. Reasoner + reranker pending.
+> 2027-relation ontology from real TS 38.300. Reasoner + reranker
+> implemented. On the real gold set, ontology-aware ranking gives a modest
+> MRR lift (0.628 vs 0.625) and a clear Recall@5 lift (0.833 vs 0.750) over
+> plain BM25. **Gate partially met** (Recall@5 lift confirmed; MRR marginal).
 
 **Branch:** `stage/2-ontology`
 

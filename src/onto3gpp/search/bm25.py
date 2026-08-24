@@ -86,3 +86,39 @@ class BM25Index:
             if scores[i] > 0
         ]
         return results[:top_k]
+
+    def search_ontology(
+        self, query: str, onto, top_k: int = 10
+    ) -> list[SearchResult]:
+        """Search with ontology-aware candidate generation.
+
+        The query is scored with plain BM25 (so the query's own signal is not
+        polluted by expansion terms). Chunks that mention a related concept
+        (a 1-hop neighbor of a query concept) are added to the candidate set
+        with a floor score, so the relationship-aware reranker can boost them
+        into the top-k even when they share no exact tokens with the query.
+        """
+        from onto3gpp.runtime.reasoner import reason
+
+        plan = reason(query, onto)
+        q_tokens = tokenize(query)
+        if not q_tokens:
+            return []
+        scores = self.bm25.get_scores(q_tokens)
+        related = set(plan.related_terms)
+
+        candidates: list[SearchResult] = []
+        for i, chunk in enumerate(self.chunks):
+            s = scores[i]
+            if s > 0:
+                candidates.append(SearchResult(chunk=chunk, score=s))
+                continue
+            # chunk doesn't match the query lexically; keep it as a candidate
+            # only if it mentions a related concept (floor score so it isn't
+            # filtered out before the reranker can boost it)
+            text_lower = chunk.text.lower()
+            if any(t.lower() in text_lower for t in related):
+                candidates.append(SearchResult(chunk=chunk, score=1e-6))
+
+        candidates.sort(key=lambda r: r.score, reverse=True)
+        return candidates[:top_k]

@@ -13,8 +13,8 @@
 | Stage | Status | Branch | Metrics (MRR / NDCG@10 / Recall@10) | Notes |
 |-------|--------|--------|-------------------------------------|-------|
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
-| 1 Terminology | 🔵 in progress | `stage/1-terminology` | 1.000 / 0.992 / 1.000 | Real docs now available; lift measurement pending |
-| 2 Ontology | 🔵 in progress | `stage/2-ontology` | — | Schema + relation extraction done; reasoner/reranker pending |
+| 1 Terminology | 🔵 in progress | `stage/1-terminology` | 0.484 / 0.568 / 0.778 | Real gold set; term-expansion regresses vs plain |
+| 2 Ontology | 🔵 in progress | `stage/2-ontology` | 0.628 / 0.679 / 0.833 | Reasoner + reranker done; Recall@5 lift confirmed |
 | 3 Intent | ⚪ not started | — | — | |
 | 4 Improve loop | ⚪ not started | — | — | |
 | 5 CPU NER | ⚪ not started | — | — | |
@@ -84,20 +84,49 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
   (`src/onto3gpp/ontology/schema.py`).
 - Rules-based relation extraction with word-boundary matching
   (`src/onto3gpp/extract/relations.py`).
-- CLI: `onto3gpp build-ontology`.
+- Ontology reasoner → query IR (primary + related terms, hub-capped)
+  (`src/onto3gpp/runtime/reasoner.py`).
+- Relationship-aware reranker (ontology-aware candidate generation +
+  related-concept boost) (`src/onto3gpp/runtime/reranker.py`).
+- CLI: `onto3gpp build-ontology`, `onto3gpp eval --ontology`.
 - Real 3GPP spec (TS 38.300 V18.3.0) parsed → 532 sections, 911-term
   dictionary, 879-concept / 2027-relation ontology.
+- Real gold set (`data/gold_queries_38300.jsonl`, 12 queries referencing
+  real 38.300 clauses).
+
+**Metrics (real TS 38.300, `data/gold_queries_38300.jsonl`):**
+
+| Mode | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|------|-----|---------|----------|-----------|
+| Plain BM25 | 0.6250 | 0.6765 | 0.7500 | 0.8333 |
+| Term-expanded | 0.4841 | 0.5684 | 0.6111 | 0.7778 |
+| Ontology-aware | 0.6278 | 0.6791 | 0.8333 | 0.8333 |
+
+> **Findings:**
+> - Ontology-aware reranking gives a **modest lift** over plain BM25 on MRR
+>   (0.6278 vs 0.6250) and a **clear lift on Recall@5** (0.8333 vs 0.7500) —
+>   it surfaces related-concept chunks that share no exact tokens with the
+>   query.
+> - Term-expanded (Stage 1) is *worse* than plain BM25 on this gold set. The
+>   expansion adds canonical surface forms that dilute the query signal. This
+>   needs investigation — likely the dictionary's canonical forms are too
+>   generic (e.g. "UE", "RRC") and add noise rather than disambiguation.
+> - The ontology has noisy hub concepts (UE degree 457, OF/AND/AS stopwords).
+>   The reasoner caps related-term expansion per concept and filters
+>   stopwords/single-char noise; the reranker uses a small boost (0.2) so exact
+>   token matches still win.
 
 **Pending:**
-- Ontology reasoner → query IR.
-- Relationship-aware reranker.
-- Stage gate: relationship-aware ranking lift vs. Stage 1.
+- Investigate term-expansion regression (Stage 1 gate).
+- Stage gate: relationship-aware ranking lift vs. Stage 1 — **partially met**
+  (Recall@5 lift confirmed; MRR lift marginal).
 
 ## Open Questions / Next Actions
 
-- [ ] Measure term-expansion lift on real 3GPP docs (Stage 1 gate) — real
-      docs now available (`data/raw/38300/38300-i30.docx`).
-- [ ] Stage 2: ontology reasoner + relationship-aware reranker.
+- [ ] Investigate why term-expanded search underperforms plain BM25 on the
+      real gold set (Stage 1 gate).
+- [ ] Consider pruning noisy hub concepts / stopwords from the ontology at
+      build time (not just at reason time).
 - [ ] Decide domain-pack schema (ADR-0003).
 
 ## Roll-back / Trial History

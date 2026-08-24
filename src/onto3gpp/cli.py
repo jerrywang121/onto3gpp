@@ -61,12 +61,19 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
     default=None,
     help="Path to a compiled dictionary (JSON) to enable term-expanded search.",
 )
-def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None) -> None:
+@click.option(
+    "--ontology",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to an ontology (JSON) to enable relationship-aware reranking.",
+)
+def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Path | None) -> None:
     """Build a BM25 index from parsed sections and evaluate against a gold set."""
     import json
 
     from onto3gpp.compile.dictionary import Dictionary
     from onto3gpp.evaluate import load_gold, evaluate
+    from onto3gpp.ontology.schema import ontology_from_dict
     from onto3gpp.search.chunker import Chunk
 
     chunks: list[Chunk] = []
@@ -87,13 +94,24 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None) -> None:
     index = BM25Index.build(chunks)
     gold_queries = load_gold(gold)
 
+    dictionary = None
     if expand is not None:
         dictionary = Dictionary.from_dict(json.loads(expand.read_text(encoding="utf-8")))
-        result = evaluate(index, gold_queries, top_k=top_k, dictionary=dictionary)
-        click.echo("Mode: term-expanded search")
-    else:
-        result = evaluate(index, gold_queries, top_k=top_k)
-        click.echo("Mode: plain BM25")
+
+    onto = None
+    if ontology is not None:
+        onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
+
+    result = evaluate(index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto)
+
+    modes = []
+    if dictionary is not None:
+        modes.append("term-expanded search")
+    if onto is not None:
+        modes.append("relationship-aware reranking")
+    if not modes:
+        modes.append("plain BM25")
+    click.echo(f"Mode: {' + '.join(modes)}")
 
     click.echo(f"Queries: {result.num_queries}")
     click.echo(f"MRR:        {result.mrr:.4f}")
