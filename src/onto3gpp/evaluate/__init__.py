@@ -51,8 +51,17 @@ def load_gold(path: Path) -> list[GoldQuery]:
     return queries
 
 
-def evaluate(index: BM25Index, gold: list[GoldQuery], top_k: int = 10) -> EvalResult:
-    """Evaluate an index against a gold set."""
+def evaluate(
+    index: BM25Index,
+    gold: list[GoldQuery],
+    top_k: int = 10,
+    dictionary=None,
+) -> EvalResult:
+    """Evaluate an index against a gold set.
+
+    If `dictionary` is provided, queries are expanded with canonical terms
+    (term-expanded search); otherwise plain BM25 is used.
+    """
     mrr_scores: list[float] = []
     ndcg_scores: list[float] = []
     recall5_scores: list[float] = []
@@ -60,7 +69,10 @@ def evaluate(index: BM25Index, gold: list[GoldQuery], top_k: int = 10) -> EvalRe
     per_query: list[dict] = []
 
     for gq in gold:
-        results = index.search(gq.query, top_k=top_k)
+        if dictionary is not None:
+            results = index.search_expanded(gq.query, dictionary, top_k=top_k)
+        else:
+            results = index.search(gq.query, top_k=top_k)
         relevant = set(gq.relevant_clauses)
         # relevance label per result: 1 if the result's clause is relevant
         relevance = [1 if r.chunk.clause in relevant else 0 for r in results]

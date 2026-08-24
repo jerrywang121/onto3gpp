@@ -1,0 +1,124 @@
+{
+  "entries": [
+    {
+      "surface": "PDU Session",
+      "canonical": "PDU Session",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU",
+      "canonical": "PDU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE",
+      "canonical": "UE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SMF",
+      "canonical": "SMF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UPF",
+      "canonical": "UPF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Session Establishment",
+      "canonical": "PDU Session Establishment",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN",
+      "canonical": "RAN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "User Plane Forwarding",
+      "canonical": "User Plane Forwarding",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DNN",
+      "canonical": "DNN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "S-NSSAI",
+      "canonical": "S-NSSAI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UPF Selection",
+      "canonical": "UPF Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AMF",
+      "canonical": "AMF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Registration Procedure",
+      "canonical": "Registration Procedure",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Registration Update",
+      "canonical": "Registration Update",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QFI",
+      "canonical": "QFI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QoS Flow",
+      "canonical": "QoS Flow",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QoS Flow Mapping",
+      "canonical": "QoS Flow Mapping",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "N2",
+      "canonical": "N2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NGAP",
+      "canonical": "NGAP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "N2 Interface",
+      "canonical": "N2 Interface",
+      "type": "phrase",
+      "aliases": []
+    }
+  ]
+}

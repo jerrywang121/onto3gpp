@@ -34,13 +34,17 @@ runs end-to-end.
 **Goal:** Measure the lift from a compiled terminology dictionary.
 
 **Tasks:**
-- [ ] Candidate term extraction (rules first, optional LLM).
-- [ ] AI-as-judge gate for candidate terms (against gold set + provenance).
-- [ ] Ontology compiler → Aho-Corasick trie + dictionary.
-- [ ] Runtime NER (dictionary path).
-- [ ] Query expansion → BM25.
+- [x] Candidate term extraction (rules first, optional LLM).
+- [x] AI-as-judge gate for candidate terms (against gold set + provenance).
+- [x] Ontology compiler → Aho-Corasick trie + dictionary.
+- [x] Runtime NER (dictionary path).
+- [x] Query expansion → BM25.
+- [ ] Measure term-expansion lift on **real** 3GPP documents (blocked on data).
 
 **Stage gate:** Term-expansion lift measured vs. Stage 0 baseline.
+
+> **Status:** mechanism implemented and unit-tested. Lift not yet measurable
+> on the synthetic sample (plain BM25 already perfect). Gate pending real docs.
 
 **Branch:** `stage/1-terminology`
 

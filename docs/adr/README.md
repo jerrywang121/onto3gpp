@@ -14,6 +14,12 @@ docs/adr/0001-<slug>.md
 docs/adr/0002-<slug>.md
 ```
 
+## Index
+
+- **ADR-0001** — AI-as-judge replaces human-in-the-loop.
+- **ADR-0002** — Domain-general pipeline via domain packs.
+- **ADR-0003** — Compiled terminology dictionary (Aho-Corasick) for runtime NER.
+
 ## Template
 
 ```markdown

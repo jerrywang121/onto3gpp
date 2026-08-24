@@ -59,3 +59,30 @@ class BM25Index:
             if scores[i] > 0
         ]
         return results[:top_k]
+
+    def search_expanded(
+        self, query: str, dictionary, top_k: int = 10
+    ) -> list[SearchResult]:
+        """Search with query expansion via a compiled dictionary.
+
+        The query is expanded with canonical terms found by runtime NER, so
+        abbreviations and aliases match their canonical surface forms in the
+        index.
+        """
+        from onto3gpp.runtime.ner import expand_query
+
+        q_tokens = expand_query(dictionary, query)
+        if not q_tokens:
+            return []
+        scores = self.bm25.get_scores(q_tokens)
+        ranked = sorted(
+            range(len(self.chunks)),
+            key=lambda i: scores[i],
+            reverse=True,
+        )
+        results = [
+            SearchResult(chunk=self.chunks[i], score=scores[i])
+            for i in ranked
+            if scores[i] > 0
+        ]
+        return results[:top_k]
