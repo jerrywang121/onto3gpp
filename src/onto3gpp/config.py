@@ -22,6 +22,7 @@ class DomainConfig:
     concept_types: list[str] = field(default_factory=list)
     relation_types: list[str] = field(default_factory=list)
     intents: list[str] = field(default_factory=list)
+    intent_patterns: dict[str, list[str]] = field(default_factory=dict)
     document_metadata: list[str] = field(default_factory=list)
     judge_threshold: float = 0.8
     llm: LLMConfig = field(default_factory=LLMConfig)

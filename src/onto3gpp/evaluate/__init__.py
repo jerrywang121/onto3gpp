@@ -81,13 +81,14 @@ def evaluate(
 
     for gq in gold:
         if ontology is not None:
-            results = index.search_ontology(gq.query, ontology, top_k=top_k)
+            results = index.search_structure(gq.query, ontology, top_k=top_k)
         elif dictionary is not None:
             results = index.search_expanded(gq.query, dictionary, top_k=top_k)
         else:
             results = index.search(gq.query, top_k=top_k)
         if ontology is not None:
-            results = rerank(results, gq.query, ontology)
+            chunks = getattr(index, "chunks", None)
+            results = rerank(results, gq.query, ontology, chunks=chunks)
         relevant = set(gq.relevant_clauses)
         # relevance label per result: 1 if the result's clause is relevant
         relevance = [1 if r.chunk.clause in relevant else 0 for r in results]

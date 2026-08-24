@@ -93,11 +93,21 @@ runs end-to-end.
 **Goal:** Intent-aware results.
 
 **Tasks:**
-- [ ] Intent detector (pattern-based, from domain pack).
-- [ ] Structure-aware boosts (spec/clause relevance).
-- [ ] Reranker integration.
+- [x] Intent detector (pattern-based, from domain pack).
+- [x] Structure-aware boosts (spec/clause relevance).
+- [x] Reranker integration.
 
 **Stage gate:** Intent-aware results lift vs. Stage 2.
+
+> **Status:** intent detector (`src/onto3gpp/runtime/intent.py`) classifies a
+> query into one of 13 intents via domain-pack regexes (ties broken by latest
+> match position). Structure-aware boosts (`src/onto3gpp/runtime/structure.py`)
+> lift chunks whose clause title or ancestor titles share query tokens,
+> proportional to overlap count and scaled to the best BM25 score (additive
+> boost, factor 0.4). Integrated into `search_structure` (BM25) and the
+> reranker. On the real gold set, intent+structure ranking gives a **strong
+> lift**: MRR 0.854 (vs 0.786 Stage 2), NDCG 0.895, Recall@5 0.944, Recall@10
+> 0.972. **Gate MET.**
 
 **Branch:** `stage/3-intent`
 

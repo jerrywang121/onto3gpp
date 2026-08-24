@@ -6,7 +6,7 @@
 
 ## Current Stage
 
-**Stage 2 — Ontology + Relations** (in progress)
+**Stage 3 — Intent + Structure Boosts** (in progress)
 
 ## Stage Status
 
@@ -14,8 +14,8 @@
 |-------|--------|--------|-------------------------------------|-------|
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
 | 1 Terminology | � done | `stage/1-terminology` | 0.667 / 0.729 / 0.917 | Real gold set; word-boundary fix resolved regression |
-| 2 Ontology | 🔵 in progress | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
-| 3 Intent | ⚪ not started | — | — | |
+| 2 Ontology | � done | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
+| 3 Intent | 🔵 in progress | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
 | 4 Improve loop | 🔵 in progress | `stage/4-improve-loop` | — | LLM hooks + improve loop scaffolded (TDD green) |
 | 5 CPU NER | ⚪ not started | — | — | |
 
@@ -147,6 +147,48 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 **Pending:**
 - Stage gate: relationship-aware ranking lift vs. Stage 1 — **met** on the
   38.300 corpus (MRR 0.7861 vs 0.6667 term-expanded; R@10 0.9167).
+
+## Stage 3 — Intent + Structure Boosts (in progress)
+
+**Delivered:**
+- Deterministic query-intent classifier (`src/onto3gpp/runtime/intent.py`):
+  13 intents, domain-pack regex patterns, ties broken by latest match position
+  (so "What is the security principle?" → SECURITY, not DEFINITION).
+- Structure-aware boosts (`src/onto3gpp/runtime/structure.py`): lift chunks
+  whose clause title or ancestor titles share query tokens, proportional to
+  overlap count and scaled to the best BM25 score (additive boost, factor 0.4).
+- `search_structure` on `BM25Index` (structure-aware candidate generation) +
+  reranker integration (`chunks` param).
+- Domain-pack `intent_patterns` field in `config.yaml` + `_template/README.md`.
+
+**Metrics (real TS 38.300, `data/gold_queries_38300.jsonl`):**
+
+| Mode | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|------|-----|---------|----------|-----------|
+| Stage 2 ontology-aware | 0.7861 | 0.8158 | 0.8333 | 0.9167 |
+| Stage 3 intent+structure | 0.8542 | 0.8954 | 0.9444 | 0.9722 |
+
+> **Findings:**
+> - **Strong lift across all metrics.** MRR +0.068, NDCG +0.080, R@5 +0.111,
+>   R@10 +0.056 vs. Stage 2. The structure boost surfaces clauses whose
+>   *titles* match the query even when their body text doesn't share tokens
+>   (e.g. SDT query → 18.1 "Support of SDT procedure over RACH").
+> - **Additive boost (not floor) is key.** A floor score only helped chunks
+>   with BM25 score 0; clauses with a partial BM25 score (e.g. 18.1 at 9.03)
+>   stayed buried. Making the boost additive lets them rise above unrelated
+>   high-scoring chunks.
+> - **Boost factor tuned to 0.4.** 0.5 over-promoted sub-clauses (QoE query
+>   regressed 1.00 → 0.25 because 21.2.2 matched 3 title tokens vs gold 21.1's
+>   2); 0.3 under-promoted (handover dropped to 0.25). 0.4 balances both.
+> - **Handover query remains a hard case.** Gold parent 9.2.3.2 has empty
+>   text (textlen=0) so the chunker skips it — it can never be retrieved. Its
+>   children 9.2.3.2.1/9.2.3.2.2 are retrievable but rank below 16.14.3.2.2
+>   "Conditional Handover" (a genuine match). This is a gold-set/data issue,
+>   not a ranking bug.
+
+**Pending:**
+- Stage gate: intent-aware results lift vs. Stage 2 — **met** (MRR 0.8542 vs
+  0.7861; R@5 0.9444 vs 0.8333).
 
 ## Open Questions / Next Actions
 

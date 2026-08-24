@@ -55,6 +55,9 @@ def test_run_improvement_loop_returns_metrics_and_proposals():
         def search_ontology(self, query, ontology, top_k=10):
             return []
 
+        def search_structure(self, query, ontology, top_k=10):
+            return []
+
     onto = Ontology(concepts=[Concept(id="smf", canonical="SMF")])
     llm = FakeLLM(
         '{"proposals": [{"type": "alias", "concept": "smf",'
