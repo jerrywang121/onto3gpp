@@ -14,7 +14,7 @@
 |-------|--------|--------|-------------------------------------|-------|
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
 | 1 Terminology | � done | `stage/1-terminology` | 0.667 / 0.729 / 0.917 | Real gold set; word-boundary fix resolved regression |
-| 2 Ontology | 🔵 in progress | `stage/2-ontology` | 0.628 / 0.679 / 0.833 | Reasoner + reranker done; Recall@5 lift confirmed |
+| 2 Ontology | 🔵 in progress | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
 | 3 Intent | ⚪ not started | — | — | |
 | 4 Improve loop | 🔵 in progress | `stage/4-improve-loop` | — | LLM hooks + improve loop scaffolded (TDD green) |
 | 5 CPU NER | ⚪ not started | — | — | |
@@ -101,6 +101,9 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
   detection + TOC-title matching to reject NAS table rows (commit `4d74f69`).
 - Real gold set (`data/gold_queries_38300.jsonl`, 12 queries referencing
   real 38.300 clauses).
+- **Ontology rebuilt over all 4 specs** (commit `f578ed2`): 5788 concepts /
+  26885 relations. Relation extraction optimized with an Aho-Corasick
+  automaton (build time 43min → 1.8s).
 
 **Metrics (real TS 38.300, `data/gold_queries_38300.jsonl`):**
 
@@ -109,6 +112,13 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 | Plain BM25 | 0.6250 | 0.6765 | 0.7500 | 0.8333 |
 | Term-expanded | 0.6667 | 0.7291 | 0.8333 | 0.9167 |
 | Ontology-aware | 0.6278 | 0.6791 | 0.8333 | 0.8333 |
+
+**Metrics (real TS 38.300 corpus only, rebuilt 4-spec ontology):**
+
+| Mode | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|------|-----|---------|----------|-----------|
+| Plain BM25 | 0.6694 | 0.7098 | 0.8333 | 0.8333 |
+| Ontology-aware | 0.7861 | 0.8158 | 0.8333 | 0.9167 |
 
 > **Findings:**
 > - **Term-expansion regression RESOLVED.** The earlier regression (MRR 0.484)
@@ -122,14 +132,21 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 >   (0.6278 vs 0.6250) and a **clear lift on Recall@5** (0.8333 vs 0.7500) —
 >   it surfaces related-concept chunks that share no exact tokens with the
 >   query.
+> - **Rebuilt 4-spec ontology gives a strong lift** on the 38.300 corpus:
+>   MRR 0.7861 (vs 0.6694 plain BM25, +0.117), NDCG 0.8158 (+0.106),
+>   Recall@10 0.9167 (+0.083). The expanded concept/relation coverage
+>   (5788 concepts / 26885 relations) materially improves retrieval.
+> - **Eval caveat:** the gold set is 38.300-specific but has no `spec` field,
+>   so evaluating over the full 4-spec corpus dilutes gold-relevant chunks
+>   (ontology-aware MRR drops to 0.5744). Eval should be scoped per-spec.
 > - The ontology has noisy hub concepts (UE degree 457, OF/AND/AS stopwords).
 >   The reasoner caps related-term expansion per concept and filters
 >   stopwords/single-char noise; the reranker uses a small boost (0.2) so exact
 >   token matches still win.
 
 **Pending:**
-- Stage gate: relationship-aware ranking lift vs. Stage 1 — **partially met**
-  (Recall@5 lift confirmed; MRR lift marginal vs. term-expanded).
+- Stage gate: relationship-aware ranking lift vs. Stage 1 — **met** on the
+  38.300 corpus (MRR 0.7861 vs 0.6667 term-expanded; R@10 0.9167).
 
 ## Open Questions / Next Actions
 
