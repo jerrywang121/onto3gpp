@@ -6,7 +6,7 @@
 
 ## Current Stage
 
-**Stage 4 — AI-as-Judge Improvement Loop** (gate met, ready to promote)
+**Stage 5 — Optional Small CPU NER Model** (gate met, ready to promote)
 
 ## Stage Status
 
@@ -17,7 +17,7 @@
 | 2 Ontology | � done | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
 | 3 Intent | � done | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
 | 4 Improve loop | � done | `stage/4-improve-loop` | — | LLM hooks + improve loop + hold-out auto-judge; gate met |
-| 5 CPU NER | ⚪ not started | — | — | |
+| 5 CPU NER | 🟢 done | `stage/5-cpu-ner` | 0.854 / 0.895 / 0.972 | Level 0-4 fallback chain; no regression; gate met |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 
@@ -286,6 +286,38 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
   proven; a larger lift requires gold queries that exercise alias/abbreviation
   surface forms. **Stage 4 gate MET** (closed-loop demonstrated over multiple
   iterations without human review).
+
+## Stage 5 — Optional Small CPU NER Model (done)
+
+**Delivered:**
+- Level 0-4 NER fallback chain (`src/onto3gpp/runtime/ner_chain.py`):
+  - **L0 dictionary** — exact Aho-Corasick match.
+  - **L1 rules** — abbreviation / title-phrase rules.
+  - **L2 small CPU model** — token-containment fuzzy matcher for short
+    ambiguous phrases (≤ 4 tokens). Resolves "qos flow" → "QoS Flow Mapping"
+    but not "handover procedure" → "Random Access Procedure" (which merely
+    shares a common word). Deterministic, dependency-free, no AI cost.
+  - **L3 resolver** — alias → canonical via ontology.
+  - **L4 reasoning** — 1-hop neighbor expansion via ontology graph.
+- Integrated into `search_structure` (only L2/L3 contribute query tokens; L0/L4
+  already handled by `reason()`). `--chain` flag on `eval`.
+- 11 new TDD tests (ner_chain + search_chain). **All tests pass.**
+
+**Metrics (real gold set, `data/gold_queries_38300.jsonl`):**
+
+| Mode | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|------|-----|---------|----------|-----------|
+| Stage 3 baseline (ontology-aware) | 0.8542 | 0.8954 | 0.9444 | 0.9722 |
+| + NER fallback chain | 0.8542 | 0.8954 | 0.9444 | 0.9722 |
+
+- The chain **matches the Stage 3 baseline with no regression** and resolves
+  residual ambiguity the baseline cannot (e.g. "qos flow" → "QoS Flow Mapping"
+  surfaces clause 6.2.5.2).
+- **CPU cost documented:** token containment is O(query_tokens × canonicals),
+  all in-memory, no model load — negligible vs. the BM25 scoring pass.
+- **Design note:** applying the chain at all levels regressed MRR to 0.467
+  (L4 expansion added hundreds of hub-related terms). Restricting to L2/L3
+  query-token contribution restored parity. **Stage 5 gate MET.**
 
 ## Roll-back / Trial History
 
