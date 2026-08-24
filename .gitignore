@@ -198,7 +198,15 @@ cython_debug/
 #   Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
 #   that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #   and can be added to the global gitignore or merged into this file. However, if you prefer, 
-#   you could uncomment the following to ignore the entire vscode folder
+# onto3gpp generated artifacts
+data/parsed/
+data/packs/
+data/index/
+data/logs/
+data/review_queue/
+data/candidates/
+*.pack
+*.trie#   you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py

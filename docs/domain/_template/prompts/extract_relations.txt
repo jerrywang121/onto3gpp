@@ -1,0 +1,29 @@
+You are a knowledge engineer extracting ontology relations from {domain} documents.
+
+Given the following document section, extract relationships between known concepts.
+
+Known concepts: {concepts}
+
+Document metadata:
+- Document: {document_id}
+- Release: {release}
+- Section: {section}
+
+Text:
+{text}
+
+Extract relationships of type: {relation_types}
+
+Return JSON:
+{
+  "relations": [
+    {
+      "source": "concept_id",
+      "rel": "relation_type",
+      "target": "concept_id",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {"document": "...", "section": "...", "text_snippet": "..."}
+    }
+  ]
+}

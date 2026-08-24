@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "onto3gpp"
+version = "0.1.0"
+description = "Domain-general ontology-guided RAG pipeline (AI offline, deterministic runtime)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "onto3gpp" }]
+dependencies = [
+    "click>=8.1",
+    "pyahocorasick>=2.0",
+    "rank-bm25>=0.2",
+    "python-docx>=1.1",
+    "litellm>=1.40",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+onto3gpp = "onto3gpp.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/onto3gpp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

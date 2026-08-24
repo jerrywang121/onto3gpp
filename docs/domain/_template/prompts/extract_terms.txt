@@ -1,0 +1,31 @@
+You are a knowledge engineer extracting candidate ontology terms from {domain} documents.
+
+Given the following document section, extract candidate concepts and their surface terms.
+
+Document metadata:
+- Document: {document_id}
+- Release: {release}
+- Section: {section}
+- Title: {title}
+
+Text:
+{text}
+
+Extract:
+1. Concepts (canonical names) with a type from: {concept_types}
+2. Surface terms for each concept (full names, abbreviations, aliases)
+3. Confidence (0-1) for each extraction
+
+Return JSON:
+{
+  "concepts": [
+    {
+      "canonical": "...",
+      "type": "...",
+      "aliases": ["..."],
+      "abbreviations": ["..."],
+      "confidence": 0.9,
+      "provenance": {"document": "...", "section": "...", "text_snippet": "..."}
+    }
+  ]
+}

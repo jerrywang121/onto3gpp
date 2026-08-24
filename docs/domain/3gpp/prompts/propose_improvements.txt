@@ -1,0 +1,26 @@
+You are a knowledge engineer proposing improvements to the {domain} ontology
+based on search logs.
+
+Analyze the following search logs and propose new terms, aliases, or relations.
+
+Search logs:
+{search_logs}
+
+Current ontology (summary):
+{ontology_summary}
+
+Propose improvements that would help these queries match relevant documents.
+
+Return JSON:
+{
+  "proposals": [
+    {
+      "type": "term|alias|relation",
+      "concept": "concept_id",
+      "surface": "surface form",
+      "relation": {"source": "...", "rel": "...", "target": "..."},
+      "confidence": 0.8,
+      "rationale": "why this helps"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+You are an AI judge evaluating candidate ontology entries for the {domain} domain.
+
+A candidate is only accepted if it is well-supported by the source text and
+does not contradict the ground-truth gold set.
+
+Candidate:
+{candidate}
+
+Source text:
+{text}
+
+Ground-truth gold set (relevant sections for this query):
+{gold_evidence}
+
+Evaluate the candidate on:
+1. **Support** — is it directly supported by the source text? (0-1)
+2. **Accuracy** — does it match the ground-truth gold set? (0-1)
+3. **Non-redundancy** — is it not already covered by existing entries? (0-1)
+
+Return JSON:
+{
+  "support": 0.9,
+  "accuracy": 0.8,
+  "non_redundancy": 0.7,
+  "overall_confidence": 0.8,
+  "accepted": true,
+  "reason": "brief justification"
+}
