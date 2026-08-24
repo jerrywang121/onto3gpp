@@ -8,7 +8,7 @@ from pathlib import Path
 
 import click
 
-from onto3gpp.parser import parse_file
+from onto3gpp.parser import parse_docx, parse_file
 from onto3gpp.search.bm25 import BM25Index
 from onto3gpp.search.chunker import chunk_sections
 
@@ -36,9 +36,12 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
 
     out.mkdir(parents=True, exist_ok=True)
     total = 0
-    for path in sorted(spec_dir.glob("*.txt")):
+    for path in sorted(spec_dir.glob("*.txt")) + sorted(spec_dir.glob("*.docx")):
         spec = path.stem
-        sections = parse_file(path, spec=spec, release=release)
+        if path.suffix == ".docx":
+            sections = parse_docx(path, spec=spec, release=release)
+        else:
+            sections = parse_file(path, spec=spec, release=release)
         out_path = out / f"{spec}.jsonl"
         with out_path.open("w", encoding="utf-8") as f:
             for s in sections:
@@ -140,6 +143,73 @@ def build_dict(parsed: Path, out: Path, threshold: float) -> None:
     click.echo(f"Accepted:   {len(gated)}")
     click.echo(f"Entries:    {len(dictionary.entries)}")
     click.echo(f"Wrote dictionary to {out}")
+
+
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--dict", "dict_path", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
+def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
+    """Build an ontology (concepts + relations) from parsed sections + dictionary."""
+    import json
+
+    from onto3gpp.compile.dictionary import Dictionary
+    from onto3gpp.extract.relations import extract_relations
+    from onto3gpp.ontology.schema import (
+        Concept,
+        Ontology,
+        ontology_to_dict,
+        validate_ontology,
+    )
+    from onto3gpp.parser import Section
+
+    dictionary = Dictionary.from_dict(json.loads(dict_path.read_text(encoding="utf-8")))
+
+    sections: list[Section] = []
+    for path in sorted(parsed.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            sections.append(
+                Section(
+                    spec=data["spec"],
+                    release=data["release"],
+                    clause=data["clause"],
+                    title=data["title"],
+                    text=data["text"],
+                    parent_clause=data.get("parent_clause", ""),
+                    metadata=data.get("metadata", {}),
+                )
+            )
+
+    # Concepts from dictionary entries (dedup by canonical)
+    concepts: dict[str, Concept] = {}
+    for entry in dictionary.entries.values():
+        cid = entry.canonical.lower().replace(" ", "_")
+        if cid not in concepts:
+            concepts[cid] = Concept(
+                id=cid,
+                canonical=entry.canonical,
+                type=entry.type,
+                aliases=[a for a in entry.aliases if a != entry.canonical],
+            )
+
+    onto = Ontology(concepts=list(concepts.values()))
+    relations = extract_relations(sections, onto)
+    onto.relations = relations
+
+    errors = validate_ontology(onto)
+    if errors:
+        click.echo("Validation errors:")
+        for e in errors[:20]:
+            click.echo(f"  {e}")
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(ontology_to_dict(onto), indent=2), encoding="utf-8")
+    click.echo(f"Concepts:  {len(onto.concepts)}")
+    click.echo(f"Relations: {len(onto.relations)}")
+    click.echo(f"Wrote ontology to {out}")
 
 
 if __name__ == "__main__":

@@ -119,6 +119,5352 @@
       "canonical": "N2 Interface",
       "type": "phrase",
       "aliases": []
+    },
+    {
+      "surface": "FRANCE",
+      "canonical": "FRANCE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ARIB",
+      "canonical": "ARIB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ATIS",
+      "canonical": "ATIS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CCSA",
+      "canonical": "CCSA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ETSI",
+      "canonical": "ETSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSDSI",
+      "canonical": "TSDSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TTA",
+      "canonical": "TTA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TTC",
+      "canonical": "TTC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UMTS",
+      "canonical": "UMTS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LTE",
+      "canonical": "LTE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GSM",
+      "canonical": "GSM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MBS",
+      "canonical": "MBS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RRC",
+      "canonical": "RRC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NAS",
+      "canonical": "NAS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UL",
+      "canonical": "UL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "I-RNTI",
+      "canonical": "I-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SPID",
+      "canonical": "SPID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RAT",
+      "canonical": "RAT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ID",
+      "canonical": "ID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSG",
+      "canonical": "TSG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Sophia Antipolis",
+      "canonical": "Sophia Antipolis",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "E-UTRA",
+      "canonical": "Evolved Universal Terrestrial Radio Access",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TR",
+      "canonical": "TR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E-UTRAN",
+      "canonical": "E-UTRAN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MAC",
+      "canonical": "Medium Access Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RLC",
+      "canonical": "RLC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PDCP",
+      "canonical": "PDCP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDAP",
+      "canonical": "SDAP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ETWS",
+      "canonical": "ETWS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PWS",
+      "canonical": "PWS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG",
+      "canonical": "NG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IETF",
+      "canonical": "IETF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RFC",
+      "canonical": "RFC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IP",
+      "canonical": "IP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IMS",
+      "canonical": "IMS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ECN",
+      "canonical": "Explicit Congestion Notification",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BAP",
+      "canonical": "Backhaul Adaptation Protocol",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "F1",
+      "canonical": "F1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "F1AP",
+      "canonical": "F1AP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRVCC",
+      "canonical": "SRVCC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "V2X",
+      "canonical": "V2X",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LPP",
+      "canonical": "LPP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MAP",
+      "canonical": "MAP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MS",
+      "canonical": "MS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NRM",
+      "canonical": "NRM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NIMA",
+      "canonical": "NIMA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DEPARTMENT",
+      "canonical": "DEPARTMENT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "OF",
+      "canonical": "OF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DEFENSE",
+      "canonical": "DEFENSE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "WORLD",
+      "canonical": "WORLD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GEODETIC",
+      "canonical": "GEODETIC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SYSTEM",
+      "canonical": "SYSTEM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CBS",
+      "canonical": "CBS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "XR",
+      "canonical": "XR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UAS",
+      "canonical": "UAS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L4S",
+      "canonical": "L4S",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AQM",
+      "canonical": "AQM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AI",
+      "canonical": "Artificial Intelligence",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ML",
+      "canonical": "ML",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Evolved Universal Terrestrial Radio Access",
+      "canonical": "Evolved Universal Terrestrial Radio Access",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "A2X",
+      "canonical": "A2X",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "A-CSI",
+      "canonical": "A-CSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CSI",
+      "canonical": "CSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AGC",
+      "canonical": "AGC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AKA",
+      "canonical": "AKA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AMBR",
+      "canonical": "AMBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AMC",
+      "canonical": "AMC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AR",
+      "canonical": "AR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ARP",
+      "canonical": "ARP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ATG",
+      "canonical": "Air-to-ground",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BA",
+      "canonical": "Bandwidth Adaptation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BCCH",
+      "canonical": "BCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BCH",
+      "canonical": "BCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BFD",
+      "canonical": "BFD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BH",
+      "canonical": "BH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BL",
+      "canonical": "BL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BPSK",
+      "canonical": "BPSK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BRID",
+      "canonical": "BRID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "C-RNTI",
+      "canonical": "C-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RNTI",
+      "canonical": "RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CAG",
+      "canonical": "CAG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CAPC",
+      "canonical": "Channel Access Priority Classes",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CBRA",
+      "canonical": "CBRA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CCE",
+      "canonical": "CCE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CD-SSB",
+      "canonical": "CD-SSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSB",
+      "canonical": "SSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CFR",
+      "canonical": "CFR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CFRA",
+      "canonical": "CFRA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CG",
+      "canonical": "CG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CHO",
+      "canonical": "Conditional Handover",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CLI",
+      "canonical": "CLI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CMAS",
+      "canonical": "CMAS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CORESET",
+      "canonical": "CORESET",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CP",
+      "canonical": "CP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CPA",
+      "canonical": "CPA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CPC",
+      "canonical": "CPC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DAA",
+      "canonical": "DAA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DAG",
+      "canonical": "DAG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DAPS",
+      "canonical": "DAPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DFT",
+      "canonical": "DFT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DCI",
+      "canonical": "DCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DCP",
+      "canonical": "DCP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CRC",
+      "canonical": "CRC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PS-RNTI",
+      "canonical": "PS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DCR",
+      "canonical": "DCR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DL",
+      "canonical": "DL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DL-SCH",
+      "canonical": "DL-SCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DL-TDOA",
+      "canonical": "DL-TDOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DMRS",
+      "canonical": "Demodulation Reference Signal",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DRX",
+      "canonical": "DRX",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DSR",
+      "canonical": "Delay Status Report",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DTX",
+      "canonical": "DTX",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E-CID",
+      "canonical": "E-CID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EC",
+      "canonical": "EC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EHC",
+      "canonical": "EHC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FS",
+      "canonical": "FS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FSA",
+      "canonical": "FSA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "G-CS-RNTI",
+      "canonical": "G-CS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "G-RNTI",
+      "canonical": "G-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GFBR",
+      "canonical": "GFBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GIN",
+      "canonical": "GIN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GNSS",
+      "canonical": "GNSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GSO",
+      "canonical": "GSO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "H-SFN",
+      "canonical": "H-SFN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HAPS",
+      "canonical": "HAPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HRNN",
+      "canonical": "HRNN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB",
+      "canonical": "IAB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IFRI",
+      "canonical": "IFRI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "INT-RNTI",
+      "canonical": "INT-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "KPAS",
+      "canonical": "KPAS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L2",
+      "canonical": "L2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L3",
+      "canonical": "L3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LBT",
+      "canonical": "LBT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LDPC",
+      "canonical": "LDPC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LEO",
+      "canonical": "LEO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LTM",
+      "canonical": "LTM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L1",
+      "canonical": "L1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCE",
+      "canonical": "MCE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCCH",
+      "canonical": "MCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MDBV",
+      "canonical": "MDBV",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MEO",
+      "canonical": "MEO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MIB",
+      "canonical": "Master Information Block",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MICO",
+      "canonical": "MICO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MFBR",
+      "canonical": "MFBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MMTEL",
+      "canonical": "MMTEL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MNO",
+      "canonical": "MNO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MO-SDT",
+      "canonical": "MO-SDT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDT",
+      "canonical": "Small Data Transmission",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MP",
+      "canonical": "MP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MPE",
+      "canonical": "MPE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MRB",
+      "canonical": "MRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MT",
+      "canonical": "MT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MT-SDT",
+      "canonical": "MT-SDT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MTCH",
+      "canonical": "MTCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MTSI",
+      "canonical": "MTSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MU-MIMO",
+      "canonical": "MU-MIMO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MIMO",
+      "canonical": "MIMO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RTT",
+      "canonical": "RTT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MUSIM",
+      "canonical": "MUSIM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "N3C",
+      "canonical": "N3C",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NB",
+      "canonical": "NB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCD-SSB",
+      "canonical": "NCD-SSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCGI",
+      "canonical": "NCGI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCL",
+      "canonical": "NCL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCR",
+      "canonical": "NCR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCRT",
+      "canonical": "NCRT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NES",
+      "canonical": "NES",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NGSO",
+      "canonical": "NGSO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NID",
+      "canonical": "NID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NPN",
+      "canonical": "Non-Public Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NSAG",
+      "canonical": "NSAG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AS",
+      "canonical": "AS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NTN",
+      "canonical": "Non-Terrestrial Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "P-MPR",
+      "canonical": "P-MPR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "P-RNTI",
+      "canonical": "P-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PCH",
+      "canonical": "PCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PCI",
+      "canonical": "PCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PDB",
+      "canonical": "PDB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PDC",
+      "canonical": "PDC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PDCCH",
+      "canonical": "Physical Downlink Control Channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDSCH",
+      "canonical": "PDSCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PEI",
+      "canonical": "PEI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PER",
+      "canonical": "PER",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PH",
+      "canonical": "PH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PLMN",
+      "canonical": "PLMN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PNI-NPN",
+      "canonical": "PNI-NPN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PO",
+      "canonical": "PO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PQI",
+      "canonical": "PQI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PC5",
+      "canonical": "PC5",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PRACH",
+      "canonical": "PRACH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PRB",
+      "canonical": "PRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PRG",
+      "canonical": "PRG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PRS",
+      "canonical": "PRS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSDB",
+      "canonical": "PSDB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSER",
+      "canonical": "PSER",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSI",
+      "canonical": "PSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSIHI",
+      "canonical": "PSIHI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSS",
+      "canonical": "PSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PTM",
+      "canonical": "PTM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PTP",
+      "canonical": "PTP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PTW",
+      "canonical": "PTW",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PUCCH",
+      "canonical": "PUCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PUSCH",
+      "canonical": "PUSCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QAM",
+      "canonical": "QAM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QMC",
+      "canonical": "QMC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QPSK",
+      "canonical": "QPSK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RA",
+      "canonical": "RA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RA-RNTI",
+      "canonical": "RA-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RACH",
+      "canonical": "RACH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RANAC",
+      "canonical": "RANAC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "REG",
+      "canonical": "REG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RIM",
+      "canonical": "Remote Interference Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RLM",
+      "canonical": "RLM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RMSI",
+      "canonical": "RMSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SI",
+      "canonical": "System Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RNA",
+      "canonical": "RNA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RNAU",
+      "canonical": "RNAU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RQA",
+      "canonical": "RQA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RS",
+      "canonical": "RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RSRP",
+      "canonical": "RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RSRQ",
+      "canonical": "RSRQ",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RSSI",
+      "canonical": "RSSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RSTD",
+      "canonical": "RSTD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SCS",
+      "canonical": "SCS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SD",
+      "canonical": "SD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SD-RSRP",
+      "canonical": "SD-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SFI-RNTI",
+      "canonical": "SFI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SHR",
+      "canonical": "SHR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB",
+      "canonical": "SIB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SI-RNTI",
+      "canonical": "SI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SLA",
+      "canonical": "SLA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-PRS",
+      "canonical": "Sidelink Positioning Reference Signal",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-RSRP",
+      "canonical": "SL-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SMC",
+      "canonical": "SMC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SMTC",
+      "canonical": "SMTC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SS",
+      "canonical": "SS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PBCH",
+      "canonical": "PBCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SNPN",
+      "canonical": "Non-Public Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SPR",
+      "canonical": "Change Report",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SPS",
+      "canonical": "SPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SR",
+      "canonical": "SR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRAP",
+      "canonical": "SRAP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRS",
+      "canonical": "SRS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSS",
+      "canonical": "SSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSSG",
+      "canonical": "SSSG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SST",
+      "canonical": "SST",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SU-MIMO",
+      "canonical": "SU-MIMO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SUL",
+      "canonical": "Supplementary Uplink",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TA",
+      "canonical": "TA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TB",
+      "canonical": "TB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TCE",
+      "canonical": "TCE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TNL",
+      "canonical": "TNL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TPC",
+      "canonical": "TPC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TRP",
+      "canonical": "TRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TRS",
+      "canonical": "TRS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSS",
+      "canonical": "TSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "U2N",
+      "canonical": "U2N",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "U2U",
+      "canonical": "U2U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UAV",
+      "canonical": "UAV",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UCI",
+      "canonical": "Uplink Control Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UDC",
+      "canonical": "UDC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UDM",
+      "canonical": "UDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MBR",
+      "canonical": "MBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UL-RTOA",
+      "canonical": "UL-RTOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UL-SCH",
+      "canonical": "UL-SCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "URLLC",
+      "canonical": "Low Latency Communications",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "VR",
+      "canonical": "VR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-DU",
+      "canonical": "IAB-DU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DU",
+      "canonical": "DU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB1",
+      "canonical": "SIB1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CU",
+      "canonical": "CU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-MT",
+      "canonical": "IAB-MT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-UE",
+      "canonical": "IAB-UE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CN",
+      "canonical": "CN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EPC",
+      "canonical": "EPC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CE",
+      "canonical": "CE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MBSR",
+      "canonical": "MBSR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSG1",
+      "canonical": "MSG1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSG3",
+      "canonical": "MSG3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSGA",
+      "canonical": "MSGA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSGB",
+      "canonical": "MSGB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RF",
+      "canonical": "RF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-MT",
+      "canonical": "NCR-MT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG-C",
+      "canonical": "NG-C",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG-U",
+      "canonical": "NG-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Overall Architecture",
+      "canonical": "Overall Architecture",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Functional Split",
+      "canonical": "Functional Split",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NOTE",
+      "canonical": "NOTE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "OAM",
+      "canonical": "OAM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDF",
+      "canonical": "SDF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UP",
+      "canonical": "UP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Network Interfaces",
+      "canonical": "Network Interfaces",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG Interface",
+      "canonical": "NG Interface",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "GTP-U",
+      "canonical": "GTP-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UDP",
+      "canonical": "UDP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG User Plane",
+      "canonical": "NG User Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SCTP",
+      "canonical": "SCTP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG Control Plane",
+      "canonical": "NG Control Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Xn Interface",
+      "canonical": "Xn Interface",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Xn User Plane",
+      "canonical": "Xn User Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Xn Control Plane",
+      "canonical": "Xn Control Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Protocol Architecture",
+      "canonical": "Radio Protocol Architecture",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "User Plane",
+      "canonical": "User Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Control Plane",
+      "canonical": "Control Plane",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MR-DC",
+      "canonical": "Multi-Radio Dual Connectivity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-Radio Dual Connectivity",
+      "canonical": "Multi-Radio Dual Connectivity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TAC",
+      "canonical": "TAC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PNI",
+      "canonical": "PNI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Access Network Sharing",
+      "canonical": "Radio Access Network Sharing",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Integrated Access",
+      "canonical": "Integrated Access",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SA",
+      "canonical": "SA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EN-DC",
+      "canonical": "EN-DC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "X2-C",
+      "canonical": "X2-C",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "F1-U",
+      "canonical": "F1-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "F1-C",
+      "canonical": "F1-C",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BH-RLC",
+      "canonical": "BH-RLC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRB",
+      "canonical": "SRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Protocol Stacks",
+      "canonical": "Protocol Stacks",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Backhaul Adaptation Protocol",
+      "canonical": "Backhaul Adaptation Protocol",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "User-plane Aspects",
+      "canonical": "User-plane Aspects",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Congestion Control",
+      "canonical": "Congestion Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BSR",
+      "canonical": "BSR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Scheduling Latency",
+      "canonical": "Uplink Scheduling Latency",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-node Integration",
+      "canonical": "IAB-node Integration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-node Migration",
+      "canonical": "IAB-node Migration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DC",
+      "canonical": "DC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCG",
+      "canonical": "MCG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SCG",
+      "canonical": "SCG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NR-DC",
+      "canonical": "NR-DC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MN",
+      "canonical": "MN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SN",
+      "canonical": "SN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRB2",
+      "canonical": "SRB2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "X2AP",
+      "canonical": "X2AP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Topological Redundancy",
+      "canonical": "Topological Redundancy",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RLF",
+      "canonical": "Radio Link Failure",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Backhaul RLF Recovery",
+      "canonical": "Backhaul RLF Recovery",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MAC-CE",
+      "canonical": "MAC-CE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CSI-RS",
+      "canonical": "CSI-RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile IAB",
+      "canonical": "Mobile IAB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Public Networks",
+      "canonical": "Non-Public Networks",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Public Network",
+      "canonical": "Non-Public Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Network-Controlled Repeaters",
+      "canonical": "Network-Controlled Repeaters",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DRB",
+      "canonical": "DRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CA",
+      "canonical": "Carrier Aggregation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CPAC",
+      "canonical": "CPAC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Carrier Aggregation",
+      "canonical": "Carrier Aggregation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RRM",
+      "canonical": "RRM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BFR",
+      "canonical": "BFR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Layer",
+      "canonical": "Physical Layer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "OFDM",
+      "canonical": "OFDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FR1",
+      "canonical": "FR1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CP-OFDM",
+      "canonical": "CP-OFDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Demodulation Reference Signal",
+      "canonical": "Demodulation Reference Signal",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ARQ",
+      "canonical": "ARQ",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HARQ-ACK",
+      "canonical": "HARQ-ACK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RB",
+      "canonical": "RB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CG-DFI",
+      "canonical": "CG-DFI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Downlink Control Channel",
+      "canonical": "Physical Downlink Control Channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BWP",
+      "canonical": "BWP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Power Control",
+      "canonical": "Power Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "HARQ",
+      "canonical": "HARQ",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TDD",
+      "canonical": "TDD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Master Information Block",
+      "canonical": "Master Information Block",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PRS-RSRP",
+      "canonical": "PRS-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Downlink Reference Signals",
+      "canonical": "Downlink Reference Signals",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SRI",
+      "canonical": "SRI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CG-UCI",
+      "canonical": "CG-UCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FR2-2",
+      "canonical": "FR2-2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ACK",
+      "canonical": "ACK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NAK",
+      "canonical": "NAK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Control Information",
+      "canonical": "Uplink Control Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Power",
+      "canonical": "Uplink Power",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RTOA",
+      "canonical": "RTOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRS-RSRP",
+      "canonical": "SRS-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TDOA",
+      "canonical": "TDOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Reference Signals",
+      "canonical": "Uplink Reference Signals",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TAG",
+      "canonical": "TAG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CC",
+      "canonical": "CC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SFN",
+      "canonical": "SFN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FDD",
+      "canonical": "FDD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Supplementary Uplink",
+      "canonical": "Supplementary Uplink",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Tx",
+      "canonical": "Uplink Tx",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-BCH",
+      "canonical": "SL-BCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-SCH",
+      "canonical": "SL-SCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL",
+      "canonical": "SL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Transport Channels",
+      "canonical": "Transport Channels",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Shared Spectrum",
+      "canonical": "Shared Spectrum",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SRB0",
+      "canonical": "SRB0",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRB1",
+      "canonical": "SRB1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRB3",
+      "canonical": "SRB3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CCCH",
+      "canonical": "CCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDU",
+      "canonical": "SDU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DCCH",
+      "canonical": "DCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Channel Access Priority Classes",
+      "canonical": "Channel Access Priority Classes",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PSCCH",
+      "canonical": "Physical Sidelink Control Channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PSSCH",
+      "canonical": "PSSCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DM-RS",
+      "canonical": "DM-RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PT-RS",
+      "canonical": "PT-RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSFCH",
+      "canonical": "PSFCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "S-PSS",
+      "canonical": "S-PSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "S-SSS",
+      "canonical": "S-SSS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSBCH",
+      "canonical": "PSBCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Sidelink Control Channel",
+      "canonical": "Physical Sidelink Control Channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NACK",
+      "canonical": "NACK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSSCH-RSRP",
+      "canonical": "PSSCH-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PSCCH-RSRP",
+      "canonical": "PSCCH-RSRP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CR",
+      "canonical": "CR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CBR",
+      "canonical": "CBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-TOA",
+      "canonical": "SL-TOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-TDOA",
+      "canonical": "SL-TDOA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-RTT",
+      "canonical": "SL-RTT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RSRPP",
+      "canonical": "RSRPP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Reference Signal",
+      "canonical": "Sidelink Reference Signal",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Positioning Reference Signal",
+      "canonical": "Sidelink Positioning Reference Signal",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PCCH",
+      "canonical": "PCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Medium Access Control",
+      "canonical": "Medium Access Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MAC Sublayer",
+      "canonical": "MAC Sublayer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DTCH",
+      "canonical": "DTCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Logical Channels",
+      "canonical": "Logical Channels",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SCH",
+      "canonical": "SCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RLC Sublayer",
+      "canonical": "RLC Sublayer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UM",
+      "canonical": "UM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AM",
+      "canonical": "AM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Transmission Modes",
+      "canonical": "Transmission Modes",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDCP Sublayer",
+      "canonical": "PDCP Sublayer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ROHC",
+      "canonical": "ROHC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DEFLATE",
+      "canonical": "DEFLATE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "COUNT",
+      "canonical": "COUNT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDAP Sublayer",
+      "canonical": "SDAP Sublayer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2 Data Flow",
+      "canonical": "L2 Data Flow",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Dual Connectivity",
+      "canonical": "Dual Connectivity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BWP1",
+      "canonical": "BWP1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BWP2",
+      "canonical": "BWP2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BWP3",
+      "canonical": "BWP3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Bandwidth Adaptation",
+      "canonical": "Bandwidth Adaptation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Backhaul Adaptation Protocol Sublayer",
+      "canonical": "Backhaul Adaptation Protocol Sublayer",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Traffic Mapping",
+      "canonical": "Traffic Mapping",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Upper Layers",
+      "canonical": "Upper Layers",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BAP Header Rewriting",
+      "canonical": "BAP Header Rewriting",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BH-RLC-channel Mapping",
+      "canonical": "BH-RLC-channel Mapping",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TCI",
+      "canonical": "TCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SDM",
+      "canonical": "SDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Multiple Transmit",
+      "canonical": "Multiple Transmit",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Receive Point Operation",
+      "canonical": "Receive Point Operation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Protocol States",
+      "canonical": "Protocol States",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "System Information Handling",
+      "canonical": "System Information Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SIB2",
+      "canonical": "SIB2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB3",
+      "canonical": "SIB3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB4",
+      "canonical": "SIB4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB5",
+      "canonical": "SIB5",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB6",
+      "canonical": "SIB6",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB7",
+      "canonical": "SIB7",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB8",
+      "canonical": "SIB8",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB9",
+      "canonical": "SIB9",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GPS",
+      "canonical": "GPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UTC",
+      "canonical": "UTC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB10",
+      "canonical": "SIB10",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB11",
+      "canonical": "SIB11",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB15",
+      "canonical": "SIB15",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB16",
+      "canonical": "SIB16",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB17",
+      "canonical": "SIB17",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB18",
+      "canonical": "SIB18",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB19",
+      "canonical": "SIB19",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TN",
+      "canonical": "Terrestrial Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SIB12",
+      "canonical": "SIB12",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB13",
+      "canonical": "SIB13",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB14",
+      "canonical": "SIB14",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB23",
+      "canonical": "SIB23",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB25",
+      "canonical": "SIB25",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB20",
+      "canonical": "SIB20",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB21",
+      "canonical": "SIB21",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB24",
+      "canonical": "SIB24",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SIB22",
+      "canonical": "SIB22",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "System Information",
+      "canonical": "System Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MSG2",
+      "canonical": "MSG2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSG",
+      "canonical": "MSG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSG4",
+      "canonical": "MSG4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UL-DCCH",
+      "canonical": "UL-DCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SI Modification",
+      "canonical": "SI Modification",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MPS",
+      "canonical": "MPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCS",
+      "canonical": "MCS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Access Control",
+      "canonical": "Access Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UE Capability Retrieval",
+      "canonical": "UE Capability Retrieval",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG-AP",
+      "canonical": "NG-AP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NAS Messages",
+      "canonical": "NAS Messages",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "K0",
+      "canonical": "K0",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "K2",
+      "canonical": "K2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IDC",
+      "canonical": "IDC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TDM",
+      "canonical": "TDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QCL",
+      "canonical": "QCL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FR2",
+      "canonical": "FR2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE Assistance Information",
+      "canonical": "UE Assistance Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG Identities",
+      "canonical": "NG Identities",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CG-SDT-CS-RNTI",
+      "canonical": "CG-SDT-CS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CI-RNTI",
+      "canonical": "CI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CS-RNTI",
+      "canonical": "CS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCS-C-RNTI",
+      "canonical": "MCS-C-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SP-CSI-RNTI",
+      "canonical": "SP-CSI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TPC-PUCCH-RNTI",
+      "canonical": "TPC-PUCCH-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TPC-PUSCH-RNTI",
+      "canonical": "TPC-PUSCH-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TPC-SRS-RNTI",
+      "canonical": "TPC-SRS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSGB-RNTI",
+      "canonical": "MSGB-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PEI-RNTI",
+      "canonical": "PEI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AI-RNTI",
+      "canonical": "AI-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-RNTI",
+      "canonical": "NCR-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCCH-RNTI",
+      "canonical": "MCCH-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-RNTI",
+      "canonical": "SL-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-CS-RNTI",
+      "canonical": "SL-CS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "V-RNTI",
+      "canonical": "V-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-PRS-RNTI",
+      "canonical": "SL-PRS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-PRS-CS-RNTI",
+      "canonical": "SL-PRS-CS-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE Identities",
+      "canonical": "UE Identities",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NCI",
+      "canonical": "NCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MCC",
+      "canonical": "MCC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MNC",
+      "canonical": "MNC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TAI",
+      "canonical": "TAI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Network Identities",
+      "canonical": "Network Identities",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "User Data Transport",
+      "canonical": "User Data Transport",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CN-RAN Interface",
+      "canonical": "CN-RAN Interface",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "LSB",
+      "canonical": "LSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSB",
+      "canonical": "MSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PC5-RRC",
+      "canonical": "PC5-RRC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "State Transitions",
+      "canonical": "State Transitions",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UTRA",
+      "canonical": "UTRA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UTRAN",
+      "canonical": "UTRAN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RM-DEREGISTERED",
+      "canonical": "RM-DEREGISTERED",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RM-REGISTERED",
+      "canonical": "RM-REGISTERED",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CM-IDLE",
+      "canonical": "CM-IDLE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CM-CONNECTED",
+      "canonical": "CM-CONNECTED",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CD",
+      "canonical": "CD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Cell Selection",
+      "canonical": "Cell Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cell Reselection",
+      "canonical": "Cell Reselection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RESET",
+      "canonical": "RESET",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RAN-Based Notification Area",
+      "canonical": "RAN-Based Notification Area",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RETRIEVE",
+      "canonical": "RETRIEVE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CONTEXT",
+      "canonical": "CONTEXT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FAILURE",
+      "canonical": "FAILURE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NOTE1",
+      "canonical": "NOTE1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HANDOVER",
+      "canonical": "HANDOVER",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "REQUEST",
+      "canonical": "REQUEST",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ACKNOWLEDGE",
+      "canonical": "ACKNOWLEDGE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HO",
+      "canonical": "HO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ICBM",
+      "canonical": "ICBM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SUCCESS",
+      "canonical": "SUCCESS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EARLY",
+      "canonical": "EARLY",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "STATUS",
+      "canonical": "STATUS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TRANSFER",
+      "canonical": "TRANSFER",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HFN",
+      "canonical": "HFN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RLC-AM",
+      "canonical": "RLC-AM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RLC-UM",
+      "canonical": "RLC-UM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PATH",
+      "canonical": "PATH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SWITCH",
+      "canonical": "SWITCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RELEASE",
+      "canonical": "RELEASE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "C-Plane Handling",
+      "canonical": "C-Plane Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "U-Plane Handling",
+      "canonical": "U-Plane Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Data Forwarding",
+      "canonical": "Data Forwarding",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Conditional Handover",
+      "canonical": "Conditional Handover",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "A3",
+      "canonical": "A3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "A5",
+      "canonical": "A5",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SINR",
+      "canonical": "SINR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CANCEL",
+      "canonical": "CANCEL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L2 Triggered Mobility",
+      "canonical": "L2 Triggered Mobility",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NTA",
+      "canonical": "NTA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "A1",
+      "canonical": "A1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "C1",
+      "canonical": "C1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "FR",
+      "canonical": "FR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CM",
+      "canonical": "CM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CONNECTED",
+      "canonical": "CONNECTED",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NUL",
+      "canonical": "NUL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PTAG",
+      "canonical": "PTAG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Random Access Procedure",
+      "canonical": "Random Access Procedure",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Link Failure",
+      "canonical": "Radio Link Failure",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BFD-RS",
+      "canonical": "BFD-RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Timing Advance",
+      "canonical": "Timing Advance",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Extended DRX",
+      "canonical": "Extended DRX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Inter RAT",
+      "canonical": "Inter RAT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "EPS",
+      "canonical": "EPS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "N26",
+      "canonical": "N26",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E-RAB",
+      "canonical": "E-RAB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TEID",
+      "canonical": "TEID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SGW",
+      "canonical": "SGW",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PGW-U",
+      "canonical": "PGW-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AN-APDU",
+      "canonical": "AN-APDU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UTRA-FDD",
+      "canonical": "UTRA-FDD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Access Restrictions",
+      "canonical": "Access Restrictions",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Basic Scheduler Operation",
+      "canonical": "Basic Scheduler Operation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Downlink Scheduling",
+      "canonical": "Downlink Scheduling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Scheduling",
+      "canonical": "Uplink Scheduling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "LCG",
+      "canonical": "LCG",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PHR",
+      "canonical": "PHR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Support Scheduler Operation",
+      "canonical": "Support Scheduler Operation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Rate Control",
+      "canonical": "Rate Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "GBR",
+      "canonical": "GBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE-AMBR",
+      "canonical": "UE-AMBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PBR",
+      "canonical": "PBR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "BSD",
+      "canonical": "BSD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CQI",
+      "canonical": "CQI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Deactivation Mechanism",
+      "canonical": "Deactivation Mechanism",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "FDM",
+      "canonical": "FDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E-UTRA-NR Cell Resource Coordination",
+      "canonical": "E-UTRA-NR Cell Resource Coordination",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CIF",
+      "canonical": "Carrier Indicator Field",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cross Carrier Scheduling",
+      "canonical": "Cross Carrier Scheduling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Carrier Indicator Field",
+      "canonical": "Carrier Indicator Field",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PSD",
+      "canonical": "PSD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB Resource Configuration",
+      "canonical": "IAB Resource Configuration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Autonomous Denial",
+      "canonical": "Autonomous Denial",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UE Power Saving",
+      "canonical": "UE Power Saving",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Explicit Congestion Notification",
+      "canonical": "Explicit Congestion Notification",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "KAMF",
+      "canonical": "KAMF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ME",
+      "canonical": "ME",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SEAF",
+      "canonical": "SEAF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "KSEAF",
+      "canonical": "KSEAF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NH",
+      "canonical": "NH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCC",
+      "canonical": "NCC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MAC-I",
+      "canonical": "MAC-I",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "KRRC",
+      "canonical": "KRRC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "KUP",
+      "canonical": "KUP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Security Termination Points",
+      "canonical": "Security Termination Points",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ARFCN-DL",
+      "canonical": "ARFCN-DL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EUTRA",
+      "canonical": "EUTRA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "INTER",
+      "canonical": "INTER",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "INFO",
+      "canonical": "INFO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "START-CS",
+      "canonical": "START-CS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "START-PS",
+      "canonical": "START-PS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "START",
+      "canonical": "START",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE Capabilities",
+      "canonical": "UE Capabilities",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Dynamic Configuration",
+      "canonical": "Dynamic Configuration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Automatic Neighbour Cell Relation Function",
+      "canonical": "Automatic Neighbour Cell Relation Function",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ANR",
+      "canonical": "ANR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CGI",
+      "canonical": "CGI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ECGI",
+      "canonical": "ECGI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Intra-system Automatic Neighbour Cell Relation Function",
+      "canonical": "Intra-system Automatic Neighbour Cell Relation Function",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-system Automatic Neighbour Cell Relation Function",
+      "canonical": "Inter-system Automatic Neighbour Cell Relation Function",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PLMN ID",
+      "canonical": "PLMN ID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UPLINK",
+      "canonical": "UPLINK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CONFIGURATION",
+      "canonical": "CONFIGURATION",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DOWNLINK",
+      "canonical": "DOWNLINK",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Xn-C TNL",
+      "canonical": "Xn-C TNL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Energy Saving",
+      "canonical": "Energy Saving",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "S1",
+      "canonical": "S1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Cell DTX",
+      "canonical": "Cell DTX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Camping Restrictions",
+      "canonical": "Camping Restrictions",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SSB-less SCell",
+      "canonical": "SSB-less SCell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobility Load Balancing",
+      "canonical": "Mobility Load Balancing",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "X2",
+      "canonical": "X2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E1",
+      "canonical": "E1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "HW",
+      "canonical": "HW",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NR-U",
+      "canonical": "NR-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "S1AP",
+      "canonical": "S1AP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MME",
+      "canonical": "MME",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Mobility Robustness Optimization",
+      "canonical": "Mobility Robustness Optimization",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MRO",
+      "canonical": "MRO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RPLMN",
+      "canonical": "RPLMN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "EPLMN",
+      "canonical": "EPLMN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IE",
+      "canonical": "IE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "REPORT",
+      "canonical": "REPORT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "INDICATION",
+      "canonical": "INDICATION",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "REQUIRED",
+      "canonical": "REQUIRED",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-system Unnecessary HO",
+      "canonical": "Inter-system Unnecessary HO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-system Ping-pong",
+      "canonical": "Inter-system Ping-pong",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "M Requirements",
+      "canonical": "M Requirements",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "T310",
+      "canonical": "T310",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "T312",
+      "canonical": "T312",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ACCESS",
+      "canonical": "ACCESS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AND",
+      "canonical": "AND",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MOBILITY",
+      "canonical": "MOBILITY",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Successful HO",
+      "canonical": "Successful HO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Successful PSCell Addition",
+      "canonical": "Successful PSCell Addition",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Change Report",
+      "canonical": "Change Report",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RACH Optimization",
+      "canonical": "RACH Optimization",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "XN",
+      "canonical": "XN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UHI",
+      "canonical": "UHI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE History Information",
+      "canonical": "UE History Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Capacity Optimisation",
+      "canonical": "Capacity Optimisation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CCO",
+      "canonical": "CCO",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NODE",
+      "canonical": "NODE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UPDATE",
+      "canonical": "UPDATE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PCI Optimisation",
+      "canonical": "PCI Optimisation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Centralized PCI Assignment",
+      "canonical": "Centralized PCI Assignment",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Distributed PCI Assignment",
+      "canonical": "Distributed PCI Assignment",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Verticals Support",
+      "canonical": "Verticals Support",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Low Latency Communications",
+      "canonical": "Low Latency Communications",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "LCP",
+      "canonical": "LCP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LCP Restrictions",
+      "canonical": "LCP Restrictions",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Packet Duplication",
+      "canonical": "Packet Duplication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Unlicensed Controlled Environment",
+      "canonical": "Unlicensed Controlled Environment",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IMS Voice",
+      "canonical": "IMS Voice",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PS",
+      "canonical": "PS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MMTEL IMS",
+      "canonical": "MMTEL IMS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MGW",
+      "canonical": "MGW",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "E2E",
+      "canonical": "E2E",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Network Slicing",
+      "canonical": "Network Slicing",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NSSAI",
+      "canonical": "NSSAI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "General Principles",
+      "canonical": "General Principles",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NW Slice Selection",
+      "canonical": "NW Slice Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Interface Aspects",
+      "canonical": "Radio Interface Aspects",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Resource Isolation",
+      "canonical": "Resource Isolation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Slice Resources",
+      "canonical": "Slice Resources",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Signalling Aspects",
+      "canonical": "Signalling Aspects",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UE Context Handling",
+      "canonical": "UE Context Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Session Setup Handling",
+      "canonical": "PDU Session Setup Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "EU",
+      "canonical": "EU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Public Warning System",
+      "canonical": "Public Warning System",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Emergency Services",
+      "canonical": "Emergency Services",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TAU",
+      "canonical": "TAU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IMS Emergency",
+      "canonical": "IMS Emergency",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IDLE",
+      "canonical": "IDLE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Stand-Alone NPN",
+      "canonical": "Stand-Alone NPN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR-NR",
+      "canonical": "NR-NR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Inactive Mode",
+      "canonical": "Inactive Mode",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Connected Mode",
+      "canonical": "Connected Mode",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CH",
+      "canonical": "Credentials Holder",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Credentials Holder",
+      "canonical": "Credentials Holder",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Public Network Integrated NPN",
+      "canonical": "Public Network Integrated NPN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Time Sensitive Communications",
+      "canonical": "Time Sensitive Communications",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TSC",
+      "canonical": "TSC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSCAI",
+      "canonical": "TSCAI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSCTSF",
+      "canonical": "TSCTSF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Burst Arrival Time",
+      "canonical": "Burst Arrival Time",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SCCH",
+      "canonical": "SCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PC5-S",
+      "canonical": "PC5-S",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SBCCH",
+      "canonical": "SBCCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "STCH",
+      "canonical": "STCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SLRB",
+      "canonical": "SLRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RX",
+      "canonical": "RX",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TX",
+      "canonical": "TX",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LCID",
+      "canonical": "LCID",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Resource Allocation",
+      "canonical": "Radio Resource Allocation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Scheduled Resource Allocation",
+      "canonical": "Scheduled Resource Allocation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UE Autonomous Resource Selection",
+      "canonical": "UE Autonomous Resource Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR Sidelink",
+      "canonical": "NR Sidelink",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uu Control",
+      "canonical": "Uu Control",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-V-RNTI",
+      "canonical": "SL-V-RNTI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PPPP",
+      "canonical": "PPPP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Discovery",
+      "canonical": "Sidelink Discovery",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL DRX",
+      "canonical": "SL DRX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SCI",
+      "canonical": "SCI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "OOC",
+      "canonical": "OOC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Uu DRX",
+      "canonical": "Uu DRX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Power Savings Resource Allocation",
+      "canonical": "Power Savings Resource Allocation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IUC",
+      "canonical": "IUC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-UE Coordination",
+      "canonical": "Inter-UE Coordination",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-CAPC",
+      "canonical": "SL-CAPC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-DRB",
+      "canonical": "SL-DRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-U",
+      "canonical": "SL-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Specific Consistent LBT Failure",
+      "canonical": "Sidelink Specific Consistent LBT Failure",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "COT",
+      "canonical": "COT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-SSB",
+      "canonical": "SL-SSB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "COT Sharing",
+      "canonical": "COT Sharing",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Resource Allocation",
+      "canonical": "Resource Allocation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink CA",
+      "canonical": "Sidelink CA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast Services",
+      "canonical": "Broadcast Services",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NE-DC",
+      "canonical": "NE-DC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Network Architecture",
+      "canonical": "Network Architecture",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Protocol Architecture",
+      "canonical": "Protocol Architecture",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "G-CS",
+      "canonical": "G-CS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Group Scheduling",
+      "canonical": "Group Scheduling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multicast Handling",
+      "canonical": "Multicast Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Session Management",
+      "canonical": "Session Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "INACTIVE",
+      "canonical": "INACTIVE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Service Continuity",
+      "canonical": "Service Continuity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MB-SMF",
+      "canonical": "MB-SMF",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MBS Multicast",
+      "canonical": "MBS Multicast",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast Handling",
+      "canonical": "Broadcast Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "USD",
+      "canonical": "User Service Description",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "User Service Description",
+      "canonical": "User Service Description",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CORESET0",
+      "canonical": "CORESET0",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RE",
+      "canonical": "RE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LTE-CRS",
+      "canonical": "LTE-CRS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Resource Sharing",
+      "canonical": "Resource Sharing",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast MBS",
+      "canonical": "Broadcast MBS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN Sharing Scenario",
+      "canonical": "RAN Sharing Scenario",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Service Interruption",
+      "canonical": "Service Interruption",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Relay",
+      "canonical": "Sidelink Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PHY",
+      "canonical": "PHY",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L2 UE-to-Network Relay",
+      "canonical": "L2 UE-to-Network Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2 UE-to-UE Relay",
+      "canonical": "L2 UE-to-UE Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DCA",
+      "canonical": "DCA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Relay Discovery",
+      "canonical": "Relay Discovery",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Relay Selection",
+      "canonical": "Relay Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2 U2N Relay",
+      "canonical": "L2 U2N Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RRC Connection Management",
+      "canonical": "RRC Connection Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RRC Connection Re-establishment",
+      "canonical": "RRC Connection Re-establishment",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RRC Connection Resume",
+      "canonical": "RRC Connection Resume",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "S-TMSI",
+      "canonical": "S-TMSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UAC",
+      "canonical": "UAC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Mobility Registration Update",
+      "canonical": "Mobility Registration Update",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN Area Update",
+      "canonical": "RAN Area Update",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2 U2N",
+      "canonical": "L2 U2N",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-SRB",
+      "canonical": "SL-SRB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SL-SRB3",
+      "canonical": "SL-SRB3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "L2 U2U Relay",
+      "canonical": "L2 U2U Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reduced Capability",
+      "canonical": "Reduced Capability",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CCCH1",
+      "canonical": "CCCH1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CG-SDT",
+      "canonical": "CG-SDT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCD",
+      "canonical": "NCD",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Terrestrial Networks",
+      "canonical": "Non-Terrestrial Networks",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN4",
+      "canonical": "RAN4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Terrestrial Network",
+      "canonical": "Non-Terrestrial Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RP",
+      "canonical": "RP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RAR",
+      "canonical": "RAR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Frequency Pre-compensation",
+      "canonical": "Frequency Pre-compensation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NTN-TN",
+      "canonical": "NTN-TN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Terrestrial Network",
+      "canonical": "Terrestrial Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "A4",
+      "canonical": "A4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NW",
+      "canonical": "NW",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ULI",
+      "canonical": "ULI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Coarse UE",
+      "canonical": "Coarse UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR NTN",
+      "canonical": "NR NTN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reality Services",
+      "canonical": "Reality Services",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AP",
+      "canonical": "AP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "N6",
+      "canonical": "N6",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Power Saving",
+      "canonical": "Power Saving",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Layer Enhancements",
+      "canonical": "Physical Layer Enhancements",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "LCH",
+      "canonical": "LCH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Assistance Information",
+      "canonical": "Assistance Information",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Delay Status Report",
+      "canonical": "Delay Status Report",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "FEC",
+      "canonical": "FEC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TSN",
+      "canonical": "TSN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Transport Network",
+      "canonical": "Transport Network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Aerial UE Communication",
+      "canonical": "Aerial UE Communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "INITIAL",
+      "canonical": "INITIAL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SETUP",
+      "canonical": "SETUP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RESPONSE",
+      "canonical": "RESPONSE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Subscription-based Identification",
+      "canonical": "Subscription-based Identification",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Aerial UE",
+      "canonical": "Aerial UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Altitude-based Reporting",
+      "canonical": "Altitude-based Reporting",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Altitude-dependent Configurations",
+      "canonical": "Altitude-dependent Configurations",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Interference Detection",
+      "canonical": "Interference Detection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Flight Path Information Reporting",
+      "canonical": "Flight Path Information Reporting",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Location Reporting",
+      "canonical": "Location Reporting",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DAA Support",
+      "canonical": "DAA Support",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "A2X Communication",
+      "canonical": "A2X Communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Ground Networks",
+      "canonical": "Ground Networks",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Air-to-ground",
+      "canonical": "Air-to-ground",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Artificial Intelligence",
+      "canonical": "Artificial Intelligence",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Data Collection",
+      "canonical": "Data Collection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-path Relay",
+      "canonical": "Multi-path Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2 MP Relay",
+      "canonical": "L2 MP Relay",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Path Management",
+      "canonical": "Path Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Path Failure Report",
+      "canonical": "Path Failure Report",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Interference Management",
+      "canonical": "Interference Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RIM-RS",
+      "canonical": "RIM-RS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Remote Interference Management",
+      "canonical": "Remote Interference Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DL-UL",
+      "canonical": "DL-UL",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CLI-RSSI",
+      "canonical": "CLI-RSSI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Cross-Link Interference Management",
+      "canonical": "Cross-Link Interference Management",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Small Data Transmission",
+      "canonical": "Small Data Transmission",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ADDRESS",
+      "canonical": "ADDRESS",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CONFIRM",
+      "canonical": "CONFIRM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PAGING",
+      "canonical": "PAGING",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DFT-S-OFDM",
+      "canonical": "DFT-S-OFDM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MPR",
+      "canonical": "MPR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "PAR",
+      "canonical": "PAR",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "USIM",
+      "canonical": "USIM",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Collision Avoidance",
+      "canonical": "Paging Collision Avoidance",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Network Switching",
+      "canonical": "Network Switching",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Temporary UE",
+      "canonical": "Temporary UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Application Layer Measurement Collection",
+      "canonical": "Application Layer Measurement Collection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DASH",
+      "canonical": "DASH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Configuration",
+      "canonical": "QoE Measurement Configuration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MDT",
+      "canonical": "MDT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Collection Activation",
+      "canonical": "QoE Measurement Collection Activation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Collection Deactivation",
+      "canonical": "QoE Measurement Collection Deactivation",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN Overload",
+      "canonical": "RAN Overload",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SRB4",
+      "canonical": "SRB4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SRB5",
+      "canonical": "SRB5",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Handling",
+      "canonical": "QoE Measurement Handling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Per-slice QoE Measurement",
+      "canonical": "Per-slice QoE Measurement",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Continuity",
+      "canonical": "QoE Measurement Continuity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN Visible QoE Measurements",
+      "canonical": "RAN Visible QoE Measurements",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurements",
+      "canonical": "QoE Measurements",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "HSDN",
+      "canonical": "HSDN",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "QoE Measurement Collection",
+      "canonical": "QoE Measurement Collection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "High Mobility Scenarios",
+      "canonical": "High Mobility Scenarios",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SESSION",
+      "canonical": "SESSION",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RESOURCE",
+      "canonical": "RESOURCE",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "RDI",
+      "canonical": "RDI",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MODIFY",
+      "canonical": "MODIFY",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSB1",
+      "canonical": "SSB1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSB3",
+      "canonical": "SSB3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSB2",
+      "canonical": "SSB2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "SSB4",
+      "canonical": "SSB4",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "C-1",
+      "canonical": "C-1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "D-1",
+      "canonical": "D-1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "F-1",
+      "canonical": "F-1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "F-2",
+      "canonical": "F-2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "G-1",
+      "canonical": "G-1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "TRRC",
+      "canonical": "TRRC",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "G-2",
+      "canonical": "G-2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "G-3",
+      "canonical": "G-3",
+      "type": "abbreviation",
+      "aliases": []
     }
   ]
 }

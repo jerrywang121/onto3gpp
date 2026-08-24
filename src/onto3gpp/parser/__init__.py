@@ -80,3 +80,27 @@ def parse_text(text: str, spec: str, release: str) -> list[Section]:
 def parse_file(path: Path, spec: str, release: str) -> list[Section]:
     """Parse a text file into sections."""
     return parse_text(path.read_text(encoding="utf-8"), spec=spec, release=release)
+
+
+def _is_toc_entry(line: str) -> bool:
+    """True if a clause heading is a table-of-contents entry (ends in a page
+    number), e.g. "5.6.1 General\t114"."""
+    m = _CLAUSE_RE.match(line)
+    if not m:
+        return False
+    parts = line.split()
+    return bool(parts) and parts[-1].isdigit()
+
+
+def parse_docx(path: Path, spec: str, release: str) -> list[Section]:
+    """Parse a .docx file into sections.
+
+    Extracts paragraph text, drops table-of-contents entries (clause headings
+    that end in a page number), and feeds the rest to :func:`parse_text`.
+    """
+    from docx import Document
+
+    doc = Document(str(path))
+    lines = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
+    body = [ln for ln in lines if not _is_toc_entry(ln)]
+    return parse_text("\n".join(body), spec=spec, release=release)
