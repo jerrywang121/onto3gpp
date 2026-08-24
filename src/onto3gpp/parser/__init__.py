@@ -42,6 +42,15 @@ def _is_spurious_clause(clause: str, title: str) -> bool:
     return False
 
 
+def _norm_toc_title(title: str) -> str:
+    """Normalize a TOC title: strip dotted leaders and page numbers, collapse
+    whitespace. Handles TOC entries that wrap across lines (a continuation line
+    has no dotted leader on the same line, so the captured title may contain
+    embedded newlines and leader fragments)."""
+    t = re.sub(r"\s*\.{3,}\s*\d*\s*", " ", title)
+    return re.sub(r"\s+", " ", t).strip()
+
+
 @dataclass
 class Section:
     """A structured section of a document."""
@@ -74,10 +83,19 @@ def parse_text(text: str, spec: str, release: str) -> list[Section]:
     first top-level (non-dotted) clause heading that is not itself a TOC entry.
     This handles TOC entries that wrap across lines (a continuation line like
     "5.3.3.6 Cell re-selection ..." has no dotted leader on the same line).
+
+    While scanning the TOC, the normalized titles of single-number (top-level)
+    entries are collected. Body lines whose clause is a single number are only
+    accepted as headings if their title is a prefix of one of those TOC titles.
+    This rejects table rows and bit-field enumerations (e.g. NAS specs like
+    TS 24.501 have rows like "1 UAS services enabled" or "21 Authentication
+    parameter RAND") that start with a number but are not real top-level
+    headings. Real top-level headings (1-10) always appear in the TOC.
     """
     sections: list[Section] = []
     current: Section | None = None
     in_toc = False
+    toc_top_level: set[str] = set()
 
     for raw_line in text.splitlines():
         line = raw_line.strip()
@@ -88,16 +106,35 @@ def parse_text(text: str, spec: str, release: str) -> list[Section]:
             in_toc = True
             continue
         if in_toc:
-            # exit on the first real top-level clause heading
             m = _CLAUSE_RE.match(line)
             if m and "." not in m.group(1) and not _TOC_RE.match(line) \
                     and not _is_spurious_clause(m.group(1), m.group(2)):
                 in_toc = False
             else:
+                # record single-number TOC entries (real top-level headings)
+                if m and "." not in m.group(1) and _TOC_RE.match(line):
+                    toc_top_level.add(_norm_toc_title(m.group(2)))
                 continue
         m = _CLAUSE_RE.match(line)
         if m and not _is_spurious_clause(m.group(1), m.group(2)):
             clause, title = m.group(1), m.group(2)
+            # a single-number heading is only real if its title is a prefix of
+            # a TOC top-level title (rejects table rows / bit-field values)
+            if "." not in clause and toc_top_level:
+                nt = _norm_toc_title(title)
+                if not any(t.startswith(nt) or nt.startswith(t)
+                           for t in toc_top_level):
+                    if current is None:
+                        current = Section(
+                            spec=spec,
+                            release=release,
+                            clause="",
+                            title="",
+                            text="",
+                        )
+                        sections.append(current)
+                    current.text = (current.text + " " + line).strip()
+                    continue
             current = Section(
                 spec=spec,
                 release=release,

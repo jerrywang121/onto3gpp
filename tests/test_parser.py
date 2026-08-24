@@ -141,3 +141,45 @@ The following documents contain provisions.
     # only the real body headings survive; the wrapped TOC entry is dropped
     assert clauses == ["1", "2"]
     assert "Cell re-selection" not in " ".join(s.text for s in sections)
+
+
+def test_parse_text_skips_nas_table_rows() -> None:
+    """NAS specs (e.g. TS 24.501) have table rows that start with a number and
+    an uppercase title but are not real top-level headings. Only headings whose
+    title appears in the TOC are kept."""
+    text = """\
+Contents
+1 Scope ......................................................28
+2 References .................................................28
+3 Definitions and abbreviations ...............................33
+4 General ....................................................50
+5 Elementary procedures for 5GS mobility management ...........165
+6 Elementary procedures for 5GS session management ............578
+7 Handling of unknown, unforeseen, and erroneous protocol data ...777
+8 Message functional definitions and contents .................783
+9 General message format and information elements coding ......866
+10 List of system parameters ..................................1128
+1     Scope
+The present document specifies the 5GS NAS protocol.
+2     References
+The following documents contain provisions.
+3     Definitions and abbreviations
+4     General
+5     Elementary procedures for 5GS mobility
+6     Elementary procedures for 5GS session
+7     Handling of unknown, unforeseen, and erroneous
+8     Message functional definitions and contents
+9     General message format and information elements
+10    List of system parameters
+0     UE is not configured with any parameters from this table
+1     UAS services enabled
+21    Authentication parameter RAND
+5     MO MMTel voice call; or
+"""
+    sections = parse_text(text, spec="24.501", release="Rel-19")
+    clauses = [s.clause for s in sections]
+    # only the 10 real top-level headings survive; table rows are dropped
+    assert clauses == ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    # the spurious table rows accumulate into the last section's text
+    assert "UAS services enabled" in sections[-1].text
+    assert "Authentication parameter RAND" in sections[-1].text
