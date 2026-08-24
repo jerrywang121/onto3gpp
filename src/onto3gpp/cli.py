@@ -230,5 +230,84 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
     click.echo(f"Wrote ontology to {out}")
 
 
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--gold", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--ontology", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
+@click.option("--domain", type=click.Path(exists=True, path_type=Path), default=None)
+@click.option("--top-k", default=10, show_default=True)
+def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int) -> None:
+    """Run one closed-loop improvement iteration (AI-as-judge).
+
+    Evaluates the ontology against the gold set, finds gaps, asks the LLM
+    (configured in the domain pack's config.yaml) to propose improvements,
+    applies valid ones, and re-evaluates. Writes the improved ontology to
+    --out.
+    """
+    import json
+
+    from onto3gpp.config import load_domain
+    from onto3gpp.evaluate import load_gold
+    from onto3gpp.improve import run_improvement_loop
+    from onto3gpp.llm import LLMClient
+    from onto3gpp.ontology.schema import ontology_from_dict
+    from onto3gpp.search.chunker import Chunk
+
+    # Load domain pack (for LLM config + prompt templates).
+    if domain is None:
+        domain = Path("docs/domain/3gpp")
+    cfg = load_domain(domain)
+
+    if not cfg.llm.enabled:
+        click.echo("LLM is disabled in the domain pack config.yaml (llm.enabled: false).")
+        click.echo("Enable it to run the AI-as-judge improvement loop.")
+        raise SystemExit(1)
+
+    # Build the BM25 index from parsed sections.
+    chunks: list[Chunk] = []
+    for path in sorted(parsed.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            chunks.append(
+                Chunk(
+                    spec=data["spec"],
+                    release=data["release"],
+                    clause=data["clause"],
+                    title=data["title"],
+                    text=data["text"],
+                )
+            )
+    index = BM25Index.build(chunks)
+
+    gold_queries = load_gold(gold)
+    onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
+    llm = LLMClient(cfg.llm)
+
+    result = run_improvement_loop(
+        index,
+        gold_queries,
+        onto,
+        llm,
+        top_k=top_k,
+        domain_dir=domain,
+    )
+
+    click.echo(f"Gaps (queries missing relevant clause in top-{min(top_k,5)}): {len(result.gaps)}")
+    click.echo(f"Proposals: {len(result.proposals)}")
+    click.echo(f"Applied:   {result.applied}")
+    click.echo(f"MRR before: {result.before_mrr:.4f}")
+    click.echo(f"MRR after:  {result.after_mrr:.4f}")
+    click.echo(f"Delta:      {result.after_mrr - result.before_mrr:+.4f}")
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    from onto3gpp.ontology.schema import ontology_to_dict
+
+    out.write_text(json.dumps(ontology_to_dict(onto), indent=2), encoding="utf-8")
+    click.echo(f"Wrote improved ontology to {out}")
+
+
 if __name__ == "__main__":
     main()

@@ -152,11 +152,35 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
   `propose_improvements` (log analysis → LLM proposals via
   `propose_improvements.txt`) + `apply_proposals` (referential-integrity
   review → apply valid terms/aliases/relations).
-- 13 new TDD tests (llm + improve + judge). **All 68 tests pass; ruff clean.**
+- 13 new TDD tests (llm + improve + judge). **All 71 tests pass; ruff clean.**
+- CLI wiring: `onto3gpp improve` command (loads domain config, checks
+  `llm.enabled`, builds index, runs `run_improvement_loop`, prints
+  gaps/proposals/applied/MRR before/after/delta, writes improved ontology).
+  Handles disabled LLM gracefully.
+
+**Closed-loop demonstration (real gold set, scripted LLM):**
+
+| Metric | Before | After | Delta |
+|--------|--------|-------|-------|
+| MRR | 0.6278 | 0.6278 | +0.0000 |
+
+- The loop **detected 2 gaps** (handover in RRC_CONNECTED → 9.2.3.2; small
+  data transmission over RACH → 18.1), **proposed 2 improvements** (add `HO`
+  and `Intra-NR RAN handover` aliases to the `handover` concept), **applied
+  both**, and re-evaluated.
+- **Honest finding:** MRR delta is 0 because the ontology-aware search path
+  does **not yet consume aliases** at query time — the improvement loop can
+  propose and apply ontology edits, but the runtime must be extended to use
+  them (alias→canonical expansion in the reasoner/reranker) before the loop
+  produces measurable lift. This is the next step.
+- The handover query misses in **all** search modes (plain BM25, term-expanded,
+  ontology-aware) — a genuine retrieval gap, not an ontology issue. The target
+  clauses 9.2.3.2.1/9.2.3.2.2 contain "handover" and "RRC_CONNECTED" but rank
+  below the top-10.
 
 **Pending:**
-- CLI wiring (`onto3gpp improve`, `--llm` flags on build-dict/build-ontology).
-- Demonstrate a closed-loop improvement iteration on the real gold set.
+- Extend the runtime to consume aliases (alias→canonical expansion in the
+  reasoner/reranker) so the improvement loop produces measurable MRR lift.
 - Stage gate: closed-loop improvement demonstrated; metrics improve over
   multiple iterations without human review.
 

@@ -18,6 +18,7 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from onto3gpp.evaluate import GoldQuery, evaluate
 from onto3gpp.llm import LLMClient
 from onto3gpp.ontology.schema import Ontology, Relation
 
@@ -111,3 +112,76 @@ def apply_proposals(onto: Ontology, proposals: list[ImprovementProposal]) -> int
                 )
                 applied += 1
     return applied
+
+
+def build_search_logs(gold: list[GoldQuery]) -> list[dict]:
+    """Convert a gold set into synthetic search logs (query + relevant clicks)."""
+    return [
+        {"query": gq.query, "clicks": list(gq.relevant_clauses)}
+        for gq in gold
+    ]
+
+
+def find_gaps(per_query: list[dict], gold: list[GoldQuery]) -> list[str]:
+    """Return the queries whose relevant clause is not in their top-5 results.
+
+    These are the "gaps" the improvement loop should target.
+    """
+    relevant_by_query = {gq.query: set(gq.relevant_clauses) for gq in gold}
+    gaps: list[str] = []
+    for row in per_query:
+        top = set(row.get("top_clauses", []))
+        relevant = relevant_by_query.get(row["query"], set())
+        if relevant and not (relevant & top):
+            gaps.append(row["query"])
+    return gaps
+
+
+@dataclass
+class LoopResult:
+    """Outcome of one closed-loop improvement iteration."""
+
+    applied: int
+    before_mrr: float | None
+    after_mrr: float | None
+    gaps: list[str]
+    proposals: list[ImprovementProposal]
+
+
+def run_improvement_loop(
+    index,
+    gold: list[GoldQuery],
+    ontology: Ontology,
+    llm: LLMClient,
+    top_k: int = 10,
+    domain_dir: Path | None = None,
+) -> LoopResult:
+    """Run one closed-loop improvement iteration.
+
+    1. Evaluate the current ontology to find gaps (queries that miss).
+    2. Build search logs from the gold set.
+    3. Ask the LLM to propose improvements.
+    4. Apply valid proposals.
+    5. Re-evaluate and report before/after MRR.
+    """
+    before = evaluate(index, gold, top_k=top_k, ontology=ontology)
+    gaps = find_gaps(before.per_query, gold)
+
+    logs = build_search_logs(gold)
+    summary = (
+        f"{len(ontology.concepts)} concepts, {len(ontology.relations)} relations; "
+        f"gaps: {', '.join(gaps) if gaps else 'none'}"
+    )
+    proposals = propose_improvements(
+        llm, search_logs=logs, ontology_summary=summary, domain_dir=domain_dir
+    )
+    applied = apply_proposals(ontology, proposals)
+
+    after = evaluate(index, gold, top_k=top_k, ontology=ontology)
+    return LoopResult(
+        applied=applied,
+        before_mrr=before.mrr,
+        after_mrr=after.mrr,
+        gaps=gaps,
+        proposals=proposals,
+    )
