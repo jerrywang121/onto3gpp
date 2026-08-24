@@ -17,7 +17,7 @@ class StubIndex:
     def __init__(self, alias_helps: bool = True):
         self.alias_helps = alias_helps
 
-    def search_structure(self, query, ontology, top_k=10):
+    def search_structure(self, query, ontology, dictionary=None, top_k=10):
         return []
 
     def search(self, query, top_k=10):
@@ -59,7 +59,7 @@ def test_auto_judge_promotes_when_holdout_improves():
     holdout = [GoldQuery(query="smf", relevant_clauses=["5.6.2"])]
 
     class ImprovingIndex(StubIndex):
-        def search_structure(self, query, ontology, top_k=30):
+        def search_structure(self, query, ontology, dictionary=None, top_k=30):
             # MRR 1.0 if alias present, else 0.0
             has = any("Session Management Function" in c.aliases for c in ontology.concepts)
             if has:
@@ -88,7 +88,7 @@ def test_auto_judge_rejects_when_holdout_regresses():
     holdout = [GoldQuery(query="smf", relevant_clauses=["5.6.2"])]
 
     class RegressingIndex(StubIndex):
-        def search_structure(self, query, ontology, top_k=30):
+        def search_structure(self, query, ontology, dictionary=None, top_k=30):
             # MRR 1.0 WITHOUT the alias, 0.0 WITH it (the proposal hurts).
             has_alias = any("Session Management Function" in c.aliases for c in ontology.concepts)
             if has_alias:

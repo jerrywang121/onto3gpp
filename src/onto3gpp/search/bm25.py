@@ -130,7 +130,7 @@ class BM25Index:
         return candidates[:top_k]
 
     def search_structure(
-        self, query: str, onto, top_k: int = 10
+        self, query: str, onto, dictionary=None, top_k: int = 10
     ) -> list[SearchResult]:
         """Search with ontology + structure-aware candidate generation.
 
@@ -139,6 +139,11 @@ class BM25Index:
         candidate set (with a floor score). This surfaces clauses whose
         *title* matches the query even when their body text doesn't, so the
         structure-aware reranker can boost them into the top-k.
+
+        If ``dictionary`` is provided, the query is additionally expanded with
+        the Level 0-4 NER fallback chain (dictionary exact → fuzzy matcher →
+        alias resolver → ontology reasoning), so ambiguous surface forms and
+        related concepts contribute to the query tokens.
         """
         from onto3gpp.runtime.reasoner import reason
         from onto3gpp.runtime.structure import build_ancestor_map
@@ -147,6 +152,16 @@ class BM25Index:
         q_tokens = tokenize(query)
         for term in plan.primary_terms:
             q_tokens.extend(tokenize(term))
+        if dictionary is not None:
+            from onto3gpp.runtime.ner_chain import NERChain
+
+            # Only add L2 (fuzzy) and L3 (alias) resolutions to the query
+            # tokens. L0 (dictionary exact) and L4 (ontology reasoning) are
+            # already handled by `reason()` above — adding them again would
+            # pollute the query with hub-related terms and regress ranking.
+            for m in NERChain(dictionary, onto).annotate(query):
+                if m.level in (2, 3):
+                    q_tokens.extend(tokenize(m.canonical))
         if not q_tokens:
             return []
         scores = self.bm25.get_scores(q_tokens)

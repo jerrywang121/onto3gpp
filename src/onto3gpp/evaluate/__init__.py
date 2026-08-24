@@ -64,12 +64,15 @@ def evaluate(
     top_k: int = 10,
     dictionary=None,
     ontology=None,
+    chain: bool = False,
 ) -> EvalResult:
     """Evaluate an index against a gold set.
 
     If `dictionary` is provided, queries are expanded with canonical terms
     (term-expanded search); otherwise plain BM25 is used. If `ontology` is
-    provided, results are reranked with the relationship-aware reranker.
+    provided, results are reranked with the relationship-aware reranker. If
+    `chain` is True, the Level 0-4 NER fallback chain is used for query
+    expansion (requires both `dictionary` and `ontology`).
     """
     from onto3gpp.runtime.reranker import rerank
 
@@ -81,7 +84,12 @@ def evaluate(
 
     for gq in gold:
         if ontology is not None:
-            results = index.search_structure(gq.query, ontology, top_k=top_k)
+            # pass dictionary so the NER fallback chain expands the query
+            # when --chain is set (chain requires both dict + ontology)
+            dict_for_chain = dictionary if chain else None
+            results = index.search_structure(
+                gq.query, ontology, dictionary=dict_for_chain, top_k=top_k
+            )
         elif dictionary is not None:
             results = index.search_expanded(gq.query, dictionary, top_k=top_k)
         else:
