@@ -15,21 +15,55 @@ stateless wrapper over the existing search/reasoning code.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from onto3gpp.compile.dictionary import Dictionary
 from onto3gpp.ontology.schema import Ontology, ontology_from_dict
+from onto3gpp.parser import extract_pdf_text, parse_text
 from onto3gpp.runtime.ner_chain import NERChain
 from onto3gpp.runtime.reasoner import reason
 from onto3gpp.runtime.reranker import rerank
 from onto3gpp.search.bm25 import BM25Index
-from onto3gpp.search.chunker import Chunk
+from onto3gpp.search.chunker import Chunk, chunk_sections
+from onto3gpp.search.chunker import load_chunks as load_chunks_from_dir
 
 STATIC_DIR = Path(__file__).parent / "static"
+
+# A spec number is a dotted numeric identifier like "23.501" or "38300".
+_SPEC_RE = re.compile(r"^\d+(?:\.\d+)*$")
+
+
+def _spec_from_filename(filename: str) -> str:
+    """Derive a spec number from a PDF filename.
+
+    Handles common 3GPP naming patterns: ``ts_23501v190700p.pdf`` →
+    ``23.501``, ``ts_38300v190000p.pdf`` → ``38.300``, ``38300-i30.pdf`` →
+    ``38.300``. A numeric run of 5+ digits is formatted in the standard
+    ``XX.NNN`` spec form (dot before the last three digits). Returns ``""``
+    if no spec number can be found.
+    """
+    stem = Path(filename).stem
+    # Strip a leading "ts_" / "tr_" prefix and a trailing version like
+    # "v190700p" or "-i30".
+    m = re.search(r"(?:ts|tr)_?(\d+(?:\.\d+)*)", stem, re.IGNORECASE)
+    if not m:
+        m = re.search(r"(\d+(?:\.\d+)*)", stem)
+    if not m:
+        return ""
+    digits = m.group(1).replace(".", "")
+    if len(digits) >= 5:
+        return f"{digits[:-3]}.{digits[-3:]}"
+    return digits
+
+
+def load_chunks(parsed_dir: Path, max_chars: int = 500, overlap: int = 80) -> list[Chunk]:
+    """Load chunks from a directory of parsed JSONL files."""
+    return load_chunks_from_dir(parsed_dir, max_chars=max_chars, overlap=overlap)
 
 
 class Runtime:
@@ -46,34 +80,23 @@ class Runtime:
         self.dictionary = dictionary
         self.ontology = onto
 
-
-def load_chunks(parsed_dir: Path) -> list[Chunk]:
-    """Load chunks from a directory of parsed JSONL files."""
-    chunks: list[Chunk] = []
-    for path in sorted(parsed_dir.glob("*.jsonl")):
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            data = json.loads(line)
-            chunks.append(
-                Chunk(
-                    spec=data["spec"],
-                    release=data["release"],
-                    clause=data["clause"],
-                    title=data["title"],
-                    text=data["text"],
-                )
-            )
-    return chunks
+    def add_chunks(self, new_chunks: list[Chunk]) -> None:
+        """Append chunks and rebuild the BM25 index to include them."""
+        if not new_chunks:
+            return
+        self.chunks.extend(new_chunks)
+        self.index = BM25Index.build(self.chunks)
 
 
 def build_runtime(
     parsed_dir: Path,
     dict_path: Path | None = None,
     ontology_path: Path | None = None,
+    max_chars: int = 500,
+    overlap: int = 80,
 ) -> Runtime:
     """Build the runtime state from data files."""
-    chunks = load_chunks(parsed_dir)
+    chunks = load_chunks(parsed_dir, max_chars=max_chars, overlap=overlap)
 
     dictionary = None
     if dict_path is not None and dict_path.exists():
@@ -94,9 +117,17 @@ def create_app(
     parsed_dir: Path,
     dict_path: Path | None = None,
     ontology_path: Path | None = None,
+    max_chars: int = 500,
+    overlap: int = 80,
 ) -> FastAPI:
     """Create the FastAPI app with the given data paths."""
-    runtime = build_runtime(parsed_dir, dict_path, ontology_path)
+    runtime = build_runtime(
+        parsed_dir,
+        dict_path,
+        ontology_path,
+        max_chars=max_chars,
+        overlap=overlap,
+    )
 
     app = FastAPI(title="onto3gpp explorer", version="0.1.0")
     app.state.runtime = runtime
@@ -115,6 +146,78 @@ def create_app(
             "dictionary_entries": len(runtime.dictionary.entries)
             if runtime.dictionary
             else 0,
+        }
+
+    @app.post("/api/upload")
+    async def upload(
+        file: UploadFile = File(...),
+        release: str = Form("Rel-18"),
+        spec: str = Form(""),
+    ) -> dict:
+        """Upload a PDF, parse it into sections, persist them, and update the
+        live index so new content is immediately searchable.
+
+        The spec number is taken from the ``spec`` form field if provided,
+        otherwise derived from the filename (e.g. ``ts_23501v190700p.pdf`` →
+        ``23.501``). The parsed JSONL is appended to ``<parsed_dir>/<spec>.jsonl``
+        and the runtime index is rebuilt to include the new chunks.
+        """
+        if not file.filename:
+            raise HTTPException(status_code=400, detail="no file provided")
+        if not file.filename.lower().endswith(".pdf"):
+            raise HTTPException(status_code=400, detail="only PDF files are supported")
+
+        # Derive the spec number from the filename if not given explicitly.
+        spec = spec.strip()
+        if not spec:
+            spec = _spec_from_filename(file.filename)
+        if not spec:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "could not determine a spec number from the filename; "
+                    "provide one via the spec field"
+                ),
+            )
+
+        # Read the uploaded bytes and extract text.
+        data = await file.read()
+        if not data:
+            raise HTTPException(status_code=400, detail="empty file")
+        tmp = Path(file.filename or "upload.pdf")
+        tmp.write_bytes(data)
+        try:
+            text = extract_pdf_text(tmp)
+        except RuntimeError as exc:
+            raise HTTPException(status_code=400, detail=str(exc))
+        finally:
+            tmp.unlink(missing_ok=True)
+
+        if not text.strip():
+            raise HTTPException(status_code=400, detail="no text could be extracted from the PDF")
+
+        sections = parse_text(text, spec=spec, release=release)
+        if not sections:
+            raise HTTPException(status_code=400, detail="no sections parsed from the PDF")
+
+        # Persist the parsed sections to the parsed directory.
+        parsed_dir.mkdir(parents=True, exist_ok=True)
+        out_path = parsed_dir / f"{spec}.jsonl"
+        with out_path.open("a", encoding="utf-8") as f:
+            for s in sections:
+                f.write(json.dumps(s.__dict__) + "\n")
+
+        # Update the live runtime so the new content is searchable immediately.
+        new_chunks = chunk_sections(sections, max_chars=max_chars, overlap=overlap)
+        runtime.add_chunks(new_chunks)
+
+        return {
+            "spec": spec,
+            "release": release,
+            "sections": len(sections),
+            "chunks": len(new_chunks),
+            "total_chunks": len(runtime.chunks),
+            "parsed_file": str(out_path),
         }
 
     @app.post("/api/query")

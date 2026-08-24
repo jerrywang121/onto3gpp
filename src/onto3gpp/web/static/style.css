@@ -208,3 +208,23 @@ button:hover { filter: brightness(1.1); }
 #graph-info { color: var(--muted); font-size: 13px; margin-top: 8px; }
 
 .empty { color: var(--muted); font-style: italic; }
+
+.upload-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  max-width: 720px;
+}
+.upload-box h3 { margin: 0 0 6px; font-size: 16px; color: var(--accent2, var(--accent)); }
+.upload-box .hint { color: var(--muted); font-size: 13px; margin: 0 0 16px; }
+.upload-box input[type="file"] {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+#upload-status { margin-top: 12px; font-size: 13px; }
+.upload-ok { color: var(--accent2, var(--accent)); }

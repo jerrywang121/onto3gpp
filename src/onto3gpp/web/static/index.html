@@ -16,6 +16,7 @@
     <button class="tab active" data-tab="query">Query</button>
     <button class="tab" data-tab="concepts">Concepts</button>
     <button class="tab" data-tab="graph">Graph</button>
+    <button class="tab" data-tab="upload">Upload</button>
   </nav>
 
   <main>
@@ -78,6 +79,28 @@
         </aside>
       </div>
       <div id="graph-info"></div>
+    </section>
+
+    <!-- ============ UPLOAD TAB ============ -->
+    <section id="tab-upload" class="tab-panel">
+      <div class="upload-box">
+        <h3>Upload a PDF</h3>
+        <p class="hint">
+          Parse a 3GPP specification PDF into structured sections, persist it to the
+          parsed corpus, and make it immediately searchable.
+        </p>
+        <div class="query-bar">
+          <input id="upload-file" type="file" accept="application/pdf,.pdf" />
+          <label>spec
+            <input id="upload-spec" type="text" placeholder="auto from filename" />
+          </label>
+          <label>release
+            <input id="upload-release" type="text" value="Rel-18" />
+          </label>
+          <button id="upload-btn">Upload &amp; process</button>
+        </div>
+        <div id="upload-status"></div>
+      </div>
     </section>
   </main>
 

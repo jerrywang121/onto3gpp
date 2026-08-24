@@ -157,3 +157,72 @@ def test_index_serves_html(client):
     res = client.get("/")
     assert res.status_code == 200
     assert "onto3gpp" in res.text
+
+
+def _make_pdf(text: str) -> bytes:
+    """Build a minimal single-page PDF containing ``text`` using PyMuPDF."""
+    import fitz
+
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((72, 72), text)
+    data = doc.tobytes()
+    doc.close()
+    return data
+
+
+def test_upload_endpoint_parses_and_updates_index(client, tmp_path):
+    pdf = _make_pdf("6.1 SMF\n\nThe Session Management Function (SMF) selects the UPF.")
+    res = client.post(
+        "/api/upload",
+        files={"file": ("ts_23501v190700p.pdf", pdf, "application/pdf")},
+        data={"release": "Rel-18"},
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["spec"] == "23.501"
+    assert data["release"] == "Rel-18"
+    assert data["sections"] >= 1
+    assert data["chunks"] >= 1
+    # The corpus grew from the initial 2 chunks.
+    assert data["total_chunks"] > 2
+
+    # The parsed file was persisted.
+    parsed_file = tmp_path / "parsed" / "23.501.jsonl"
+    assert parsed_file.exists()
+    assert "SMF" in parsed_file.read_text(encoding="utf-8")
+
+    # The new content is immediately searchable.
+    res = client.post("/api/query", json={"query": "SMF selects UPF", "top_k": 5})
+    assert res.status_code == 200
+    assert len(res.json()["results"]) > 0
+
+
+def test_upload_rejects_non_pdf(client):
+    res = client.post(
+        "/api/upload",
+        files={"file": ("notes.txt", b"hello", "text/plain")},
+    )
+    assert res.status_code == 400
+
+
+def test_upload_requires_spec_when_not_in_filename(client):
+    pdf = _make_pdf("1 Scope\nSome text.")
+    res = client.post(
+        "/api/upload",
+        files={"file": ("document.pdf", pdf, "application/pdf")},
+    )
+    assert res.status_code == 400
+    assert "spec" in res.json()["detail"]
+
+
+def test_upload_accepts_explicit_spec(client, tmp_path):
+    pdf = _make_pdf("1 Scope\nSome text.")
+    res = client.post(
+        "/api/upload",
+        files={"file": ("document.pdf", pdf, "application/pdf")},
+        data={"spec": "99999"},
+    )
+    assert res.status_code == 200
+    assert res.json()["spec"] == "99999"
+    assert (tmp_path / "parsed" / "99999.jsonl").exists()

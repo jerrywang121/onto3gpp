@@ -165,15 +165,35 @@ def parse_file(path: Path, spec: str, release: str) -> list[Section]:
     return parse_text(path.read_text(encoding="utf-8"), spec=spec, release=release)
 
 
-def parse_pdf(path: Path, spec: str, release: str) -> list[Section]:
-    """Parse a PDF that has been pre-extracted to a .txt file.
+def extract_pdf_text(path: Path) -> str:
+    """Extract plain text from a PDF using PyMuPDF (fitz).
 
-    PDF text extraction is delegated to an external tool (e.g. LiteParse's
-    ``lit parse --format text``). This function reads the extracted text and
-    feeds it through :func:`parse_text`, so PDFs share the same clause
-    structure as text/docx sources.
+    Returns the concatenated text of all pages. Raises ``RuntimeError`` if
+    PyMuPDF is not installed or the file cannot be opened.
     """
-    return parse_text(path.read_text(encoding="utf-8"), spec=spec, release=release)
+    try:
+        import fitz  # PyMuPDF
+    except ImportError as exc:  # pragma: no cover - depends on optional dep
+        raise RuntimeError(
+            "PyMuPDF is required to parse PDFs. Install it with "
+            "`pip install pymupdf`."
+        ) from exc
+
+    doc = fitz.open(str(path))
+    try:
+        return "\n".join(page.get_text() for page in doc)
+    finally:
+        doc.close()
+
+
+def parse_pdf(path: Path, spec: str, release: str) -> list[Section]:
+    """Parse a PDF into sections.
+
+    Extracts text with :func:`extract_pdf_text` and feeds it through
+    :func:`parse_text`, so PDFs share the same clause structure as text/docx
+    sources.
+    """
+    return parse_text(extract_pdf_text(path), spec=spec, release=release)
 
 
 def _is_toc_entry(line: str) -> bool:

@@ -19,6 +19,8 @@ dependencies = [
     "pyyaml>=6.0",
     "fastapi>=0.110",
     "uvicorn>=0.29",
+    "python-multipart>=0.0.9",
+    "pymupdf>=1.24",
 ]
 
 [project.optional-dependencies]
@@ -43,6 +45,9 @@ addopts = "-q -n auto"
 [tool.ruff]
 line-length = 88
 target-version = "py311"
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.File", "fastapi.Form"]
 
 [tool.mypy]
 python_version = "3.11"

@@ -345,6 +345,49 @@ function showEdgeDetails(d) {
   `;
 }
 
+/* ---------- upload ---------- */
+async function uploadPdf() {
+  const fileInput = $("upload-file");
+  const file = fileInput.files && fileInput.files[0];
+  const status = $("upload-status");
+  if (!file) {
+    status.innerHTML = '<div class="empty">Choose a PDF file first.</div>';
+    return;
+  }
+  if (!file.name.toLowerCase().endsWith(".pdf")) {
+    status.innerHTML = '<div class="empty">Only PDF files are supported.</div>';
+    return;
+  }
+
+  const form = new FormData();
+  form.append("file", file);
+  const spec = $("upload-spec").value.trim();
+  if (spec) form.append("spec", spec);
+  form.append("release", $("upload-release").value.trim() || "Rel-18");
+
+  status.innerHTML = '<div class="empty">Uploading &amp; parsing…</div>';
+  try {
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || res.statusText);
+    status.innerHTML = `
+      <div class="upload-ok">
+        <b>${esc(data.spec)}</b> (${esc(data.release)}) — parsed
+        ${data.sections} sections into ${data.chunks} chunks.
+        Corpus now has ${data.total_chunks} chunks.
+      </div>`;
+    fileInput.value = "";
+    loadMeta();
+  } catch (e) {
+    status.innerHTML = `<div class="empty">Error: ${esc(e.message)}</div>`;
+  }
+}
+
+$("upload-btn").addEventListener("click", uploadPdf);
+$("upload-file").addEventListener("change", () => {
+  $("upload-status").innerHTML = "";
+});
+
 /* ---------- init ---------- */
 loadMeta();
 loadConceptTypes();
