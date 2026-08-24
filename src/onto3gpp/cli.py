@@ -10,7 +10,6 @@ import click
 
 from onto3gpp.parser import parse_docx, parse_file
 from onto3gpp.search.bm25 import BM25Index
-from onto3gpp.search.chunker import chunk_sections
 
 
 @click.group()
@@ -72,7 +71,7 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
     import json
 
     from onto3gpp.compile.dictionary import Dictionary
-    from onto3gpp.evaluate import load_gold, evaluate
+    from onto3gpp.evaluate import EvalResult, evaluate, load_gold
     from onto3gpp.ontology.schema import ontology_from_dict
     from onto3gpp.search.chunker import Chunk
 
@@ -123,8 +122,6 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
                 )
             )
         # aggregate per-query results into a single EvalResult
-        from onto3gpp.evaluate import EvalResult
-
         n = len(results)
         result = EvalResult(
             mrr=sum(r.mrr for r in results) / n if n else 0.0,
@@ -135,6 +132,7 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
             per_query=[q for r in results for q in r.per_query],
         )
     else:
+        index = BM25Index.build(chunks)
         result = evaluate(
             index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto
         )
@@ -333,9 +331,12 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
     click.echo(f"Gaps (queries missing relevant clause in top-{min(top_k,5)}): {len(result.gaps)}")
     click.echo(f"Proposals: {len(result.proposals)}")
     click.echo(f"Applied:   {result.applied}")
+    click.echo(f"Promoted:  {result.promoted}")
     click.echo(f"MRR before: {result.before_mrr:.4f}")
     click.echo(f"MRR after:  {result.after_mrr:.4f}")
     click.echo(f"Delta:      {result.after_mrr - result.before_mrr:+.4f}")
+    if result.holdout_delta is not None:
+        click.echo(f"Hold-out delta: {result.holdout_delta:+.4f}")
 
     out.parent.mkdir(parents=True, exist_ok=True)
     from onto3gpp.ontology.schema import ontology_to_dict
