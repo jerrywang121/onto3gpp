@@ -1,12 +1,12 @@
-{"query": "How does a UE in RRC_IDLE perform cell reselection?", "relevant_clauses": ["9.2.1.2"]}
-{"query": "What is the RAN-based notification area in RRC_INACTIVE?", "relevant_clauses": ["9.2.2.3"]}
-{"query": "How is handover handled in RRC_CONNECTED?", "relevant_clauses": ["9.2.3.2", "9.2.3.2.1", "9.2.3.2.2"]}
-{"query": "What is the 5G QoS model based on?", "relevant_clauses": ["12.1"]}
-{"query": "How does the gNB support explicit congestion notification?", "relevant_clauses": ["12.2"]}
-{"query": "What are the security principles for NR connected to 5GC?", "relevant_clauses": ["13.1"]}
-{"query": "Where are the security termination points?", "relevant_clauses": ["13.2"]}
-{"query": "How does the MAC scheduler allocate radio resources?", "relevant_clauses": ["10.1"]}
-{"query": "What is remote interference management?", "relevant_clauses": ["17.1"]}
-{"query": "How is small data transmission supported over RACH?", "relevant_clauses": ["18.1"]}
-{"query": "What is QoE measurement collection?", "relevant_clauses": ["21.1"]}
-{"query": "How does the UE perform cell selection in RRC_IDLE?", "relevant_clauses": ["9.2.1.1"]}
+{"query": "How does a UE in RRC_IDLE perform cell reselection?", "relevant_clauses": ["9.2.1.2"], "spec": "38300-i30"}
+{"query": "What is the RAN-based notification area in RRC_INACTIVE?", "relevant_clauses": ["9.2.2.3"], "spec": "38300-i30"}
+{"query": "How is handover handled in RRC_CONNECTED?", "relevant_clauses": ["9.2.3.2", "9.2.3.2.1", "9.2.3.2.2"], "spec": "38300-i30"}
+{"query": "What is the 5G QoS model based on?", "relevant_clauses": ["12.1"], "spec": "38300-i30"}
+{"query": "How does the gNB support explicit congestion notification?", "relevant_clauses": ["12.2"], "spec": "38300-i30"}
+{"query": "What are the security principles for NR connected to 5GC?", "relevant_clauses": ["13.1"], "spec": "38300-i30"}
+{"query": "Where are the security termination points?", "relevant_clauses": ["13.2"], "spec": "38300-i30"}
+{"query": "How does the MAC scheduler allocate radio resources?", "relevant_clauses": ["10.1"], "spec": "38300-i30"}
+{"query": "What is remote interference management?", "relevant_clauses": ["17.1"], "spec": "38300-i30"}
+{"query": "How is small data transmission supported over RACH?", "relevant_clauses": ["18.1"], "spec": "38300-i30"}
+{"query": "What is QoE measurement collection?", "relevant_clauses": ["21.1"], "spec": "38300-i30"}
+{"query": "How does the UE perform cell selection in RRC_IDLE?", "relevant_clauses": ["9.2.1.1"], "spec": "38300-i30"}

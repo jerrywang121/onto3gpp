@@ -17,10 +17,16 @@ from onto3gpp.search.bm25 import BM25Index
 
 @dataclass
 class GoldQuery:
-    """A single gold query: text + set of relevant clause IDs."""
+    """A single gold query: text + set of relevant clause IDs.
+
+    `spec` optionally scopes the query to a single spec (e.g. "38300"). When
+    set, the query is evaluated against an index built only from that spec's
+    chunks, so other specs' chunks don't dilute the gold-relevant results.
+    """
 
     query: str
     relevant_clauses: list[str]
+    spec: str = ""
 
 
 @dataclass
@@ -46,6 +52,7 @@ def load_gold(path: Path) -> list[GoldQuery]:
             GoldQuery(
                 query=data["query"],
                 relevant_clauses=data["relevant_clauses"],
+                spec=data.get("spec", ""),
             )
         )
     return queries

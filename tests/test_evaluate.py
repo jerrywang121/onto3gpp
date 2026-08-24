@@ -1,6 +1,6 @@
 """Tests for the eval harness."""
 
-from onto3gpp.evaluate import GoldQuery, evaluate
+from onto3gpp.evaluate import GoldQuery, evaluate, load_gold
 from onto3gpp.ontology.schema import Concept, Ontology, Relation
 from onto3gpp.search.bm25 import BM25Index
 from onto3gpp.search.chunker import Chunk
@@ -8,6 +8,17 @@ from onto3gpp.search.chunker import Chunk
 
 def _chunk(clause: str, text: str) -> Chunk:
     return Chunk(spec="23.501", release="Rel-18", clause=clause, title="", text=text)
+
+
+def test_load_gold_reads_spec_field(tmp_path) -> None:
+    p = tmp_path / "gold.jsonl"
+    p.write_text(
+        '{"query": "q1", "relevant_clauses": ["5.6.1"], "spec": "38300"}\n'
+        '{"query": "q2", "relevant_clauses": ["5.6.2"]}\n'
+    )
+    gold = load_gold(p)
+    assert gold[0].spec == "38300"
+    assert gold[1].spec == ""  # absent spec defaults to empty
 
 
 def test_evaluate_returns_metrics() -> None:

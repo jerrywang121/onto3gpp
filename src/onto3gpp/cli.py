@@ -91,7 +91,6 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
                     text=data["text"],
                 )
             )
-    index = BM25Index.build(chunks)
     gold_queries = load_gold(gold)
 
     dictionary = None
@@ -102,7 +101,43 @@ def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Pa
     if ontology is not None:
         onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
 
-    result = evaluate(index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto)
+    # If gold queries carry a `spec`, evaluate each query against an index
+    # built only from that spec's chunks. This avoids diluting gold-relevant
+    # results with chunks from other specs in a multi-spec corpus.
+    scoped = any(gq.spec for gq in gold_queries)
+    if scoped:
+        by_spec: dict[str, list[Chunk]] = {}
+        for c in chunks:
+            by_spec.setdefault(c.spec, []).append(c)
+        results: list[EvalResult] = []
+        for gq in gold_queries:
+            spec_chunks = by_spec.get(gq.spec, chunks)
+            spec_index = BM25Index.build(spec_chunks)
+            results.append(
+                evaluate(
+                    spec_index,
+                    [gq],
+                    top_k=top_k,
+                    dictionary=dictionary,
+                    ontology=onto,
+                )
+            )
+        # aggregate per-query results into a single EvalResult
+        from onto3gpp.evaluate import EvalResult
+
+        n = len(results)
+        result = EvalResult(
+            mrr=sum(r.mrr for r in results) / n if n else 0.0,
+            ndcg_at_10=sum(r.ndcg_at_10 for r in results) / n if n else 0.0,
+            recall_at_5=sum(r.recall_at_5 for r in results) / n if n else 0.0,
+            recall_at_10=sum(r.recall_at_10 for r in results) / n if n else 0.0,
+            num_queries=n,
+            per_query=[q for r in results for q in r.per_query],
+        )
+    else:
+        result = evaluate(
+            index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto
+        )
 
     modes = []
     if dictionary is not None:
