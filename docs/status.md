@@ -6,15 +6,15 @@
 
 ## Current Stage
 
-**Stage 1 — Terminology** (in progress)
+**Stage 2 — Ontology + Relations** (in progress)
 
 ## Stage Status
 
 | Stage | Status | Branch | Metrics (MRR / NDCG@10 / Recall@10) | Notes |
 |-------|--------|--------|-------------------------------------|-------|
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
-| 1 Terminology | 🔵 in progress | `stage/1-terminology` | 1.000 / 0.992 / 1.000 | Expansion mechanism works; no lift on synthetic sample |
-| 2 Ontology | ⚪ not started | — | — | |
+| 1 Terminology | 🔵 in progress | `stage/1-terminology` | 1.000 / 0.992 / 1.000 | Real docs now available; lift measurement pending |
+| 2 Ontology | 🔵 in progress | `stage/2-ontology` | — | Schema + relation extraction done; reasoner/reranker pending |
 | 3 Intent | ⚪ not started | — | — | |
 | 4 Improve loop | ⚪ not started | — | — | |
 | 5 CPU NER | ⚪ not started | — | — | |
@@ -77,10 +77,27 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 - ADR-0002: Domain-general pipeline via domain packs.
 - ADR-0003: Compiled terminology dictionary (Aho-Corasick) for runtime NER.
 
+## Stage 2 — Ontology + Relations (in progress)
+
+**Delivered:**
+- Concept/relation schema + validation + merge + serialization
+  (`src/onto3gpp/ontology/schema.py`).
+- Rules-based relation extraction with word-boundary matching
+  (`src/onto3gpp/extract/relations.py`).
+- CLI: `onto3gpp build-ontology`.
+- Real 3GPP spec (TS 38.300 V18.3.0) parsed → 532 sections, 911-term
+  dictionary, 879-concept / 2027-relation ontology.
+
+**Pending:**
+- Ontology reasoner → query IR.
+- Relationship-aware reranker.
+- Stage gate: relationship-aware ranking lift vs. Stage 1.
+
 ## Open Questions / Next Actions
 
-- [ ] Obtain real 3GPP documents to measure the term-expansion lift (Stage 1 gate).
-- [ ] Stage 2: ontology + relations.
+- [ ] Measure term-expansion lift on real 3GPP docs (Stage 1 gate) — real
+      docs now available (`data/raw/38300/38300-i30.docx`).
+- [ ] Stage 2: ontology reasoner + relationship-aware reranker.
 - [ ] Decide domain-pack schema (ADR-0003).
 
 ## Roll-back / Trial History

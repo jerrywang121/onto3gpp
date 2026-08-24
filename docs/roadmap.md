@@ -43,8 +43,9 @@ runs end-to-end.
 
 **Stage gate:** Term-expansion lift measured vs. Stage 0 baseline.
 
-> **Status:** mechanism implemented and unit-tested. Lift not yet measurable
-> on the synthetic sample (plain BM25 already perfect). Gate pending real docs.
+> **Status:** mechanism implemented and unit-tested. Real 3GPP spec (TS
+> 38.300) now parsed → 911-term dictionary. Lift measurement pending a real
+> gold set.
 
 **Branch:** `stage/1-terminology`
 
@@ -55,12 +56,15 @@ runs end-to-end.
 **Goal:** Relationship-aware ranking.
 
 **Tasks:**
-- [ ] Concept/relation schema + merge + validate + version.
-- [ ] Relation extraction (rules + LLM) with AI-as-judge gate.
+- [x] Concept/relation schema + merge + validate + version.
+- [x] Relation extraction (rules + LLM) with AI-as-judge gate.
 - [ ] Ontology reasoner → query IR.
 - [ ] Relationship-aware reranker.
 
 **Stage gate:** Relationship-aware ranking lift vs. Stage 1.
+
+> **Status:** schema + relation extraction done. Built a 879-concept /
+> 2027-relation ontology from real TS 38.300. Reasoner + reranker pending.
 
 **Branch:** `stage/2-ontology`
 
