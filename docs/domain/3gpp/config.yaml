@@ -46,3 +46,15 @@ document_metadata:
   - title
 
 judge_threshold: 0.8
+
+# External AI model hooks (optional). The pipeline is deterministic and
+# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
+# the improvement loop. See docs/architecture.md §"AI as Judge".
+llm:
+  enabled: false
+  model: gpt-4o-mini
+  provider: null        # e.g. openai, anthropic, ollama, vllm
+  api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
+  api_key: null         # set via env (OPENAI_API_KEY) or here
+  temperature: 0.0
+  max_tokens: 1024

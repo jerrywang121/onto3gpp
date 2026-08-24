@@ -15,8 +15,13 @@ when overall_confidence >= threshold.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 from onto3gpp.extract.terms import CandidateTerm
+
+if TYPE_CHECKING:
+    from onto3gpp.llm import LLMClient
 
 
 @dataclass
@@ -111,3 +116,57 @@ def gate_candidates(
         for c in candidates
         if judge_candidate(c, threshold=threshold, gold_evidence=gold_evidence).accepted
     ]
+
+
+def llm_judge_candidate(
+    llm: LLMClient,
+    term: CandidateTerm,
+    text: str = "",
+    gold_evidence: list[str] | None = None,
+    domain_dir: Path | None = None,
+) -> JudgeResult:
+    """Judge a candidate using an external AI model (AI-as-judge path).
+
+    Uses the ``judge_candidates.txt`` prompt template from the domain pack.
+    Falls back to the deterministic judge if the LLM response is malformed.
+    """
+    from onto3gpp.llm import LLMDisabledError
+
+    if domain_dir is not None:
+        template = (domain_dir / "prompts" / "judge_candidates.txt").read_text(
+            encoding="utf-8"
+        )
+    else:
+        template = (
+            "You are an AI judge evaluating a candidate ontology entry for the "
+            "{domain} domain.\n\nCandidate:\n{candidate}\n\nSource text:\n{text}\n\n"
+            "Ground-truth gold set:\n{gold_evidence}\n\n"
+            "Return JSON with support, accuracy, non_redundancy, "
+            "overall_confidence, accepted, reason."
+        )
+    prompt = template.format(
+        domain="3gpp",
+        candidate=term.canonical,
+        text=text,
+        gold_evidence="\n".join(gold_evidence or []),
+    )
+    try:
+        data = llm.complete_json(prompt)
+    except (LLMDisabledError, ValueError, KeyError):
+        # Fall back to the deterministic judge when the LLM is unavailable.
+        return judge_candidate(term, gold_evidence=gold_evidence)
+
+    support = float(data.get("support", 0.0))
+    accuracy = float(data.get("accuracy", 0.0))
+    non_redundancy = float(data.get("non_redundancy", 0.0))
+    overall = float(data.get("overall_confidence", 0.0))
+    accepted = bool(data.get("accepted", overall >= 0.8))
+    reason = str(data.get("reason", ""))
+    return JudgeResult(
+        support=support,
+        accuracy=accuracy,
+        non_redundancy=non_redundancy,
+        overall_confidence=overall,
+        accepted=accepted,
+        reason=reason,
+    )

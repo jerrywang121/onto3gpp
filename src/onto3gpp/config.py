@@ -11,6 +11,8 @@ from pathlib import Path
 
 import yaml
 
+from onto3gpp.llm import LLMConfig
+
 
 @dataclass
 class DomainConfig:
@@ -22,12 +24,14 @@ class DomainConfig:
     intents: list[str] = field(default_factory=list)
     document_metadata: list[str] = field(default_factory=list)
     judge_threshold: float = 0.8
+    llm: LLMConfig = field(default_factory=LLMConfig)
 
     @classmethod
-    def from_yaml(cls, path: Path) -> "DomainConfig":
+    def from_yaml(cls, path: Path) -> DomainConfig:
         """Load a DomainConfig from a config.yaml file."""
         data = yaml.safe_load(path.read_text())
-        return cls(**data)
+        llm = LLMConfig.from_dict(data.pop("llm", None))
+        return cls(**data, llm=llm)
 
 
 def load_domain(domain_dir: Path) -> DomainConfig:

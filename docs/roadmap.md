@@ -45,8 +45,9 @@ runs end-to-end.
 
 > **Status:** mechanism implemented and unit-tested. Real 3GPP spec (TS
 > 38.300) parsed → 911-term dictionary. On the real gold set
-> (`data/gold_queries_38300.jsonl`), term-expansion **regresses** vs. plain
-> BM25 (MRR 0.484 vs 0.625). **Gate NOT passed** — needs investigation.
+> (`data/gold_queries_38300.jsonl`), term-expansion now **beats plain BM25**
+> (MRR 0.667 vs 0.625) after fixing a word-boundary bug in `Dictionary.find`
+> (short abbreviations were matching inside longer words). **Gate PASSED.**
 
 **Branch:** `stage/1-terminology`
 
@@ -94,9 +95,14 @@ runs end-to-end.
 **Goal:** Closed-loop recursive improvement with no human-in-the-loop.
 
 **Tasks:**
+- [x] LLM client abstraction (external AI hooks, LiteLLM-backed) + domain-pack
+      `llm:` config.
+- [x] LLM judge path (`llm_judge_candidate`) with deterministic fallback.
+- [x] Improvement loop scaffold: `propose_improvements` + `apply_proposals`
+      (log analysis → LLM proposals → referential-integrity review).
 - [ ] Search-log collection.
 - [ ] Offline analysis (missed terms, mismatches, co-occurrences).
-- [ ] LLM proposal generation.
+- [ ] CLI wiring (`onto3gpp improve`, `--llm` flags).
 - [ ] AI-as-judge scoring against hold-out eval set.
 - [ ] Auto-promote / auto-reject with regression logging.
 

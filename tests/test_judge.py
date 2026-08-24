@@ -39,3 +39,22 @@ def test_judge_uses_gold_evidence_for_accuracy():
     )
     without_gold = judge_candidate(term, threshold=0.5, gold_evidence=[])
     assert with_gold.overall_confidence >= without_gold.overall_confidence
+
+
+def test_llm_judge_parses_verdict():
+    from onto3gpp.judge import llm_judge_candidate
+    from onto3gpp.llm import LLMClient, LLMConfig
+
+    class FakeLLM(LLMClient):
+        def _call(self, prompt: str) -> str:
+            return (
+                '{"support": 0.9, "accuracy": 0.8, "non_redundancy": 0.7,'
+                ' "overall_confidence": 0.8, "accepted": true,'
+                ' "reason": "well supported"}'
+            )
+
+    term = _term("SMF", provenance={"spec": "23.501", "clause": "5.6.2"})
+    result = llm_judge_candidate(FakeLLM(LLMConfig(enabled=True)), term)
+    assert result.accepted is True
+    assert result.overall_confidence == 0.8
+    assert result.reason == "well supported"
