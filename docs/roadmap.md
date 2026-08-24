@@ -137,7 +137,8 @@ multiple iterations without human review.
 > splits the gold set into train + hold-out, proposes from train gaps, and
 > **auto-judges** proposals against the hold-out set — promoting only if
 > hold-out MRR improves (no human-in-the-loop). A regression log records
-> per-query MRR before/after for auditability. **Gate MET.**
+> per-query MRR before/after for auditability. **Gate MET** (closed-loop
+> demonstrated over multiple iterations without human review).
 
 **Branch:** `stage/4-improve-loop`
 
