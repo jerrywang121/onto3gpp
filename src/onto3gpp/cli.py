@@ -72,6 +72,8 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
     default=False,
     help="Use the Level 0-4 NER fallback chain for query expansion.",
 )
+@click.option("--max-chars", default=500, show_default=True, help="Max chunk length in characters.")
+@click.option("--overlap", default=80, show_default=True, help="Chunk overlap in characters.")
 def eval(
     parsed: Path,
     gold: Path,
@@ -79,6 +81,8 @@ def eval(
     expand: Path | None,
     ontology: Path | None,
     chain: bool,
+    max_chars: int,
+    overlap: int,
 ) -> None:
     """Build a BM25 index from parsed sections and evaluate against a gold set."""
     import json
@@ -86,23 +90,9 @@ def eval(
     from onto3gpp.compile.dictionary import Dictionary
     from onto3gpp.evaluate import EvalResult, evaluate, load_gold
     from onto3gpp.ontology.schema import ontology_from_dict
-    from onto3gpp.search.chunker import Chunk
+    from onto3gpp.search.chunker import Chunk, load_chunks
 
-    chunks: list[Chunk] = []
-    for path in sorted(parsed.glob("*.jsonl")):
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            data = json.loads(line)
-            chunks.append(
-                Chunk(
-                    spec=data["spec"],
-                    release=data["release"],
-                    clause=data["clause"],
-                    title=data["title"],
-                    text=data["text"],
-                )
-            )
+    chunks = load_chunks(parsed, max_chars=max_chars, overlap=overlap)
     gold_queries = load_gold(gold)
 
     dictionary = None
@@ -291,7 +281,9 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
 @click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
 @click.option("--domain", type=click.Path(exists=True, path_type=Path), default=None)
 @click.option("--top-k", default=10, show_default=True)
-def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int) -> None:
+@click.option("--max-chars", default=500, show_default=True, help="Max chunk length in characters.")
+@click.option("--overlap", default=80, show_default=True, help="Chunk overlap in characters.")
+def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int, max_chars: int, overlap: int) -> None:
     """Run one closed-loop improvement iteration (AI-as-judge).
 
     Evaluates the ontology against the gold set, finds gaps, asks the LLM
@@ -306,7 +298,7 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
     from onto3gpp.improve import run_improvement_loop
     from onto3gpp.llm import LLMClient
     from onto3gpp.ontology.schema import ontology_from_dict
-    from onto3gpp.search.chunker import Chunk
+    from onto3gpp.search.chunker import load_chunks
 
     # Load domain pack (for LLM config + prompt templates).
     if domain is None:
@@ -319,21 +311,7 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
         raise SystemExit(1)
 
     # Build the BM25 index from parsed sections.
-    chunks: list[Chunk] = []
-    for path in sorted(parsed.glob("*.jsonl")):
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            data = json.loads(line)
-            chunks.append(
-                Chunk(
-                    spec=data["spec"],
-                    release=data["release"],
-                    clause=data["clause"],
-                    title=data["title"],
-                    text=data["text"],
-                )
-            )
+    chunks = load_chunks(parsed, max_chars=max_chars, overlap=overlap)
     index = BM25Index.build(chunks)
 
     gold_queries = load_gold(gold)
@@ -383,23 +361,34 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
 )
 @click.option("--host", default="127.0.0.1", show_default=True)
 @click.option("--port", default=8000, show_default=True)
+@click.option("--max-chars", default=500, show_default=True, help="Max chunk length in characters.")
+@click.option("--overlap", default=80, show_default=True, help="Chunk overlap in characters.")
 def serve(
     parsed: Path,
     dict_path: Path | None,
     ontology: Path | None,
     host: str,
     port: int,
+    max_chars: int,
+    overlap: int,
 ) -> None:
     """Serve the web interface for exploring the runtime (query + ontology)."""
     import uvicorn
 
     from onto3gpp.web.app import create_app
 
-    app = create_app(parsed, dict_path=dict_path, ontology_path=ontology)
+    app = create_app(
+        parsed,
+        dict_path=dict_path,
+        ontology_path=ontology,
+        max_chars=max_chars,
+        overlap=overlap,
+    )
     click.echo(f"Serving onto3gpp explorer at http://{host}:{port}")
     click.echo(f"  parsed:   {parsed}")
     click.echo(f"  dict:     {dict_path or '(none)'}")
     click.echo(f"  ontology: {ontology or '(none)'}")
+    click.echo(f"  chunk:    max_chars={max_chars}, overlap={overlap}")
     uvicorn.run(app, host=host, port=port)
 
 
