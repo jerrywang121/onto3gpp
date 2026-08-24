@@ -12,6 +12,8 @@ from __future__ import annotations
 
 import re
 
+import ahocorasick
+
 from onto3gpp.ontology.schema import Concept, Ontology, Relation
 from onto3gpp.parser import Section
 
@@ -53,31 +55,56 @@ def _concept_by_canonical(onto: Ontology) -> dict[str, Concept]:
     return {c.canonical.lower(): c for c in onto.concepts}
 
 
+def _build_automaton(by_canonical: dict[str, Concept]) -> ahocorasick.Automaton:
+    """Build a case-insensitive Aho-Corasick automaton over concept canonicals.
+
+    Each key is the lowercase canonical; the value is the lowercase canonical
+    itself (used to look up the concept). This gives O(text) matching instead
+    of O(concepts) regex scans per sentence.
+    """
+    automaton = ahocorasick.Automaton()
+    for canonical in by_canonical:
+        automaton.add_word(canonical, canonical)
+    automaton.make_automaton()
+    return automaton
+
+
 def _find_concepts_in_sentence(
-    sentence: str, by_canonical: dict[str, Concept]
+    sentence: str, by_canonical: dict[str, Concept], automaton: ahocorasick.Automaton
 ) -> list[tuple[Concept, int]]:
     """Return (concept, position) for concepts whose canonical appears in the
-    sentence as a whole word (word-boundary match, case-insensitive)."""
+    sentence as a whole word (word-boundary match, case-insensitive).
+
+    Uses an Aho-Corasick automaton for a single pass over the sentence. Only
+    the first occurrence of each concept is kept (matching the previous
+    regex-based behaviour).
+    """
     found: list[tuple[Concept, int]] = []
+    seen: set[str] = set()
     lower = sentence.lower()
-    for canonical, concept in by_canonical.items():
-        # word-boundary match so short abbreviations ("re", "up") don't match
-        # inside longer words ("procedure", "support")
-        pattern = r"(?<![a-z0-9])" + re.escape(canonical.lower()) + r"(?![a-z0-9])"
-        m = re.search(pattern, lower)
-        if m:
-            found.append((concept, m.start()))
+    for end_index, canonical in automaton.iter(lower):
+        start_index = end_index - len(canonical) + 1
+        # word-boundary check: char before and after must not be alnum
+        before = lower[start_index - 1] if start_index > 0 else " "
+        after = lower[end_index + 1] if end_index + 1 < len(lower) else " "
+        if before.isalnum() or after.isalnum():
+            continue
+        if canonical in seen:
+            continue
+        seen.add(canonical)
+        found.append((by_canonical[canonical], start_index))
     return found
 
 
 def extract_relations(sections: list[Section], onto: Ontology) -> list[Relation]:
     """Extract typed relations between known concepts from sections."""
     by_canonical = _concept_by_canonical(onto)
+    automaton = _build_automaton(by_canonical)
     relations: list[Relation] = []
 
     for s in sections:
         for sentence in _SENTENCE_RE.findall(s.text):
-            found = _find_concepts_in_sentence(sentence, by_canonical)
+            found = _find_concepts_in_sentence(sentence, by_canonical, automaton)
             if len(found) < 2:
                 continue
             # find a verb between the first and last concept
