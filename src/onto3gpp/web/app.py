@@ -153,6 +153,8 @@ def create_app(
         file: UploadFile = File(...),
         release: str = Form("Rel-18"),
         spec: str = Form(""),
+        max_chars: int = Form(max_chars),
+        overlap: int = Form(overlap),
     ) -> dict:
         """Upload a PDF, parse it into sections, persist them, and update the
         live index so new content is immediately searchable.
@@ -160,7 +162,9 @@ def create_app(
         The spec number is taken from the ``spec`` form field if provided,
         otherwise derived from the filename (e.g. ``ts_23501v190700p.pdf`` →
         ``23.501``). The parsed JSONL is appended to ``<parsed_dir>/<spec>.jsonl``
-        and the runtime index is rebuilt to include the new chunks.
+        and the runtime index is rebuilt to include the new chunks. The chunk
+        ``max_chars`` and ``overlap`` parameters default to the app's configured
+        values but can be overridden per upload.
         """
         if not file.filename:
             raise HTTPException(status_code=400, detail="no file provided")
@@ -214,6 +218,8 @@ def create_app(
         return {
             "spec": spec,
             "release": release,
+            "max_chars": max_chars,
+            "overlap": overlap,
             "sections": len(sections),
             "chunks": len(new_chunks),
             "total_chunks": len(runtime.chunks),

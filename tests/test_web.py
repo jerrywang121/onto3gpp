@@ -160,12 +160,24 @@ def test_index_serves_html(client):
 
 
 def _make_pdf(text: str) -> bytes:
-    """Build a minimal single-page PDF containing ``text`` using PyMuPDF."""
+    """Build a minimal PDF containing ``text`` using PyMuPDF.
+
+    Long text is wrapped and spread across multiple pages so it is not clipped
+    by a single page's capacity.
+    """
     import fitz
 
     doc = fitz.open()
     page = doc.new_page()
-    page.insert_text((72, 72), text)
+    y = 72
+    for raw_line in text.split("\n"):
+        # Wrap each logical line to ~90 chars so it fits the page width.
+        for i in range(0, len(raw_line), 90):
+            if y > 780:
+                page = doc.new_page()
+                y = 72
+            page.insert_text((72, y), raw_line[i : i + 90])
+            y += 16
     data = doc.tobytes()
     doc.close()
     return data
@@ -184,6 +196,9 @@ def test_upload_endpoint_parses_and_updates_index(client, tmp_path):
     assert data["release"] == "Rel-18"
     assert data["sections"] >= 1
     assert data["chunks"] >= 1
+    # Chunk params default to the app's configured values.
+    assert data["max_chars"] == 500
+    assert data["overlap"] == 80
     # The corpus grew from the initial 2 chunks.
     assert data["total_chunks"] > 2
 
@@ -226,3 +241,29 @@ def test_upload_accepts_explicit_spec(client, tmp_path):
     assert res.status_code == 200
     assert res.json()["spec"] == "99999"
     assert (tmp_path / "parsed" / "99999.jsonl").exists()
+
+
+def test_upload_honors_chunk_params(client):
+    # A long text with no sentence boundaries forces hard character cuts, so
+    # a small max_chars yields more chunks than a large one.
+    long_text = "word " * 2000
+    pdf = _make_pdf("6.1 SMF\n\n" + long_text)
+
+    small = client.post(
+        "/api/upload",
+        files={"file": ("ts_23501v190700p.pdf", pdf, "application/pdf")},
+        data={"max_chars": "100", "overlap": "0"},
+    ).json()
+    assert small["max_chars"] == 100
+    assert small["overlap"] == 0
+
+    large = client.post(
+        "/api/upload",
+        files={"file": ("ts_23501v190700p.pdf", pdf, "application/pdf")},
+        data={"max_chars": "1000", "overlap": "0"},
+    ).json()
+    assert large["max_chars"] == 1000
+    assert large["overlap"] == 0
+
+    # Smaller max_chars -> more chunks for the same text.
+    assert small["chunks"] > large["chunks"]

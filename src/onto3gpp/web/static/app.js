@@ -364,6 +364,8 @@ async function uploadPdf() {
   const spec = $("upload-spec").value.trim();
   if (spec) form.append("spec", spec);
   form.append("release", $("upload-release").value.trim() || "Rel-18");
+  form.append("max_chars", $("upload-maxchars").value || "500");
+  form.append("overlap", $("upload-overlap").value || "80");
 
   status.innerHTML = '<div class="empty">Uploading &amp; parsing…</div>';
   try {
@@ -373,7 +375,8 @@ async function uploadPdf() {
     status.innerHTML = `
       <div class="upload-ok">
         <b>${esc(data.spec)}</b> (${esc(data.release)}) — parsed
-        ${data.sections} sections into ${data.chunks} chunks.
+        ${data.sections} sections into ${data.chunks} chunks
+        (max_chars=${esc(data.max_chars)}, overlap=${esc(data.overlap)}).
         Corpus now has ${data.total_chunks} chunks.
       </div>`;
     fileInput.value = "";
