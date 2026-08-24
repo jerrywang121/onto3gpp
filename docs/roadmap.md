@@ -77,6 +77,12 @@ runs end-to-end.
 > enabled") via TOC-title matching (commit `4d74f69`). 124501 now parses to
 > 1181 clean sections (was 2107 with ~926 spurious rows). Dictionary rebuilt
 > to 5825 entries across all specs.
+>
+> **Ontology rebuilt over all 4 specs** (commit `f578ed2`): 5788 concepts /
+> 26885 relations. Relation extraction optimized with an Aho-Corasick
+> automaton (build time 43min → 1.8s). On the 38.300 corpus, ontology-aware
+> ranking now gives a **strong lift**: MRR 0.786 (vs 0.669 plain BM25),
+> NDCG 0.816, Recall@10 0.917. **Gate MET.**
 
 **Branch:** `stage/2-ontology`
 
