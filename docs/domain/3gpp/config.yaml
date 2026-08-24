@@ -38,6 +38,75 @@ intents:
   - ARCHITECTURE
   - REQUIREMENT
 
+# Deterministic query-intent classification patterns (Stage 3). Each intent
+# maps to a list of regexes; a query is classified by counting regex matches
+# (ties broken by the latest match position). See src/onto3gpp/runtime/intent.py.
+intent_patterns:
+  DEFINITION:
+    - "\\bwhat is\\b"
+    - "\\bwhat are\\b"
+    - "\\bdefine\\b"
+    - "\\bdefinition\\b"
+    - "\\bmeaning\\b"
+  PURPOSE:
+    - "\\bwhy\\b"
+    - "\\bpurpose\\b"
+    - "\\bfor what\\b"
+    - "\\bintended for\\b"
+  PROCEDURE:
+    - "\\bhow (does|is|are|do)\\b"
+    - "\\bprocedure\\b"
+    - "\\bprocess\\b"
+    - "\\bsteps?\\b"
+  MESSAGE_FLOW:
+    - "\\bmessage flow\\b"
+    - "\\bsignalling flow\\b"
+    - "\\bsequence\\b"
+    - "\\bexchange\\b"
+  CONFIGURATION:
+    - "\\bconfigure\\b"
+    - "\\bconfiguration\\b"
+    - "\\bsetup\\b"
+    - "\\bestablish\\b"
+  PARAMETER:
+    - "\\bparameter\\b"
+    - "\\bvalue\\b"
+    - "\\bfield\\b"
+    - "\\bIE\\b"
+  FAILURE:
+    - "\\b(fail|failure|error|break)\\b"
+    - "\\bunsuccessful\\b"
+    - "\\bnot supported\\b"
+  ERROR_HANDLING:
+    - "\\berror handling\\b"
+    - "\\bexception\\b"
+    - "\\bwhen .* fails\\b"
+  SECURITY:
+    - "\\bsecurity\\b"
+    - "\\bauthentication\\b"
+    - "\\bencryption\\b"
+    - "\\bintegrity\\b"
+  COMPARISON:
+    - "\\bvs\\.?\\b"
+    - "\\bcompare\\b"
+    - "\\bdifference\\b"
+    - "\\bversus\\b"
+  DEPENDENCY:
+    - "\\bdepend(s|ed)? on\\b"
+    - "\\brequires?\\b"
+    - "\\bprerequisite\\b"
+    - "\\bneeds?\\b"
+  ARCHITECTURE:
+    - "\\barchitecture\\b"
+    - "\\boverview\\b"
+    - "\\bcomponents?\\b"
+    - "\\bstructure\\b"
+  REQUIREMENT:
+    - "\\bshall\\b"
+    - "\\bmust\\b"
+    - "\\brequirement\\b"
+    - "\\bmandatory\\b"
+
 document_metadata:
   - spec_number
   - release
@@ -46,3 +115,15 @@ document_metadata:
   - title
 
 judge_threshold: 0.8
+
+# External AI model hooks (optional). The pipeline is deterministic and
+# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
+# the improvement loop. See docs/architecture.md §"AI as Judge".
+llm:
+  enabled: false
+  model: gpt-4o-mini
+  provider: null        # e.g. openai, anthropic, ollama, vllm
+  api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
+  api_key: null         # set via env (OPENAI_API_KEY) or here
+  temperature: 0.0
+  max_tokens: 1024

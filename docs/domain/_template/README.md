@@ -43,6 +43,22 @@ intents:
   - CONFIGURATION
   - FAILURE
 
+# Deterministic query-intent classification patterns (Stage 3). Each intent
+# maps to a list of regexes; a query is classified by counting regex matches
+# (ties broken by the latest match position). See src/onto3gpp/runtime/intent.py.
+intent_patterns:
+  DEFINITION:
+    - "\\bwhat is\\b"
+    - "\\bdefine\\b"
+  PROCEDURE:
+    - "\\bhow (does|is|are|do)\\b"
+    - "\\bprocedure\\b"
+  CONFIGURATION:
+    - "\\bconfigure\\b"
+    - "\\bsetup\\b"
+  FAILURE:
+    - "\\b(fail|failure|error|break)\\b"
+
 # Document metadata fields (spec number, release, clause, etc.)
 document_metadata:
   - spec_number

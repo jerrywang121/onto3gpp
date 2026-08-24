@@ -23,6 +23,7 @@ dependencies = [
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
+    "pytest-xdist>=3.0",
     "ruff>=0.5",
     "mypy>=1.10",
 ]
@@ -35,7 +36,7 @@ packages = ["src/onto3gpp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = "-q -n auto"
 
 [tool.ruff]
 line-length = 88

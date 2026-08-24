@@ -34,13 +34,20 @@ runs end-to-end.
 **Goal:** Measure the lift from a compiled terminology dictionary.
 
 **Tasks:**
-- [ ] Candidate term extraction (rules first, optional LLM).
-- [ ] AI-as-judge gate for candidate terms (against gold set + provenance).
-- [ ] Ontology compiler → Aho-Corasick trie + dictionary.
-- [ ] Runtime NER (dictionary path).
-- [ ] Query expansion → BM25.
+- [x] Candidate term extraction (rules first, optional LLM).
+- [x] AI-as-judge gate for candidate terms (against gold set + provenance).
+- [x] Ontology compiler → Aho-Corasick trie + dictionary.
+- [x] Runtime NER (dictionary path).
+- [x] Query expansion → BM25.
+- [x] Measure term-expansion lift on **real** 3GPP documents.
 
 **Stage gate:** Term-expansion lift measured vs. Stage 0 baseline.
+
+> **Status:** mechanism implemented and unit-tested. Real 3GPP spec (TS
+> 38.300) parsed → 911-term dictionary. On the real gold set
+> (`data/gold_queries_38300.jsonl`), term-expansion now **beats plain BM25**
+> (MRR 0.667 vs 0.625) after fixing a word-boundary bug in `Dictionary.find`
+> (short abbreviations were matching inside longer words). **Gate PASSED.**
 
 **Branch:** `stage/1-terminology`
 
@@ -51,12 +58,31 @@ runs end-to-end.
 **Goal:** Relationship-aware ranking.
 
 **Tasks:**
-- [ ] Concept/relation schema + merge + validate + version.
-- [ ] Relation extraction (rules + LLM) with AI-as-judge gate.
-- [ ] Ontology reasoner → query IR.
-- [ ] Relationship-aware reranker.
+- [x] Concept/relation schema + merge + validate + version.
+- [x] Relation extraction (rules + LLM) with AI-as-judge gate.
+- [x] Ontology reasoner → query IR.
+- [x] Relationship-aware reranker.
 
 **Stage gate:** Relationship-aware ranking lift vs. Stage 1.
+
+> **Status:** schema + relation extraction done. Built a 879-concept /
+> 2027-relation ontology from real TS 38.300. Reasoner + reranker
+> implemented. On the real gold set, ontology-aware ranking gives a modest
+> MRR lift (0.628 vs 0.625) and a clear Recall@5 lift (0.833 vs 0.750) over
+> plain BM25. **Gate partially met** (Recall@5 lift confirmed; MRR marginal).
+>
+> **Spec coverage expanded:** added TS 38.331 (RRC, V19.3.0) and TS 24.501
+> (NAS, V19.7.0) as knowledge sources. The parser was hardened to reject
+> NAS table-row clauses (bit-field/IE enumeration rows like "1 UAS services
+> enabled") via TOC-title matching (commit `4d74f69`). 124501 now parses to
+> 1181 clean sections (was 2107 with ~926 spurious rows). Dictionary rebuilt
+> to 5825 entries across all specs.
+>
+> **Ontology rebuilt over all 4 specs** (commit `f578ed2`): 5788 concepts /
+> 26885 relations. Relation extraction optimized with an Aho-Corasick
+> automaton (build time 43min → 1.8s). On the 38.300 corpus, ontology-aware
+> ranking now gives a **strong lift**: MRR 0.786 (vs 0.669 plain BM25),
+> NDCG 0.816, Recall@10 0.917. **Gate MET.**
 
 **Branch:** `stage/2-ontology`
 
@@ -67,11 +93,21 @@ runs end-to-end.
 **Goal:** Intent-aware results.
 
 **Tasks:**
-- [ ] Intent detector (pattern-based, from domain pack).
-- [ ] Structure-aware boosts (spec/clause relevance).
-- [ ] Reranker integration.
+- [x] Intent detector (pattern-based, from domain pack).
+- [x] Structure-aware boosts (spec/clause relevance).
+- [x] Reranker integration.
 
 **Stage gate:** Intent-aware results lift vs. Stage 2.
+
+> **Status:** intent detector (`src/onto3gpp/runtime/intent.py`) classifies a
+> query into one of 13 intents via domain-pack regexes (ties broken by latest
+> match position). Structure-aware boosts (`src/onto3gpp/runtime/structure.py`)
+> lift chunks whose clause title or ancestor titles share query tokens,
+> proportional to overlap count and scaled to the best BM25 score (additive
+> boost, factor 0.4). Integrated into `search_structure` (BM25) and the
+> reranker. On the real gold set, intent+structure ranking gives a **strong
+> lift**: MRR 0.854 (vs 0.786 Stage 2), NDCG 0.895, Recall@5 0.944, Recall@10
+> 0.972. **Gate MET.**
 
 **Branch:** `stage/3-intent`
 
@@ -82,9 +118,14 @@ runs end-to-end.
 **Goal:** Closed-loop recursive improvement with no human-in-the-loop.
 
 **Tasks:**
+- [x] LLM client abstraction (external AI hooks, LiteLLM-backed) + domain-pack
+      `llm:` config.
+- [x] LLM judge path (`llm_judge_candidate`) with deterministic fallback.
+- [x] Improvement loop scaffold: `propose_improvements` + `apply_proposals`
+      (log analysis → LLM proposals → referential-integrity review).
 - [ ] Search-log collection.
 - [ ] Offline analysis (missed terms, mismatches, co-occurrences).
-- [ ] LLM proposal generation.
+- [ ] CLI wiring (`onto3gpp improve`, `--llm` flags).
 - [ ] AI-as-judge scoring against hold-out eval set.
 - [ ] Auto-promote / auto-reject with regression logging.
 

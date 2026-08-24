@@ -121,6 +121,18 @@ itself. The judge's decisions are auditable via provenance and eval logs.
   hallucinations as correct)?
 - What is the minimum gold-set size for reliable gating?
 
+### 3.1.1 External AI Hooks (ADR-0004)
+
+The AI-as-judge / AI-extraction / improvement-loop paths are **optional** and
+driven by a configurable LLM client (`src/onto3gpp/llm.py`, LiteLLM-backed).
+The app configures the model via the domain pack's `config.yaml` `llm:`
+section (enabled, model, provider, api_base, api_key, temperature,
+max_tokens). Deterministic by default (`enabled: false`); the runtime query
+path is always AI-free. Consumers:
+
+- `llm_judge_candidate` — AI-as-judge with deterministic fallback.
+- `propose_improvements` / `apply_proposals` — the improvement loop.
+
 ### 3.2 Domain-General Pipeline
 
 Every AI prompt and pipeline stage is driven by a **domain pack**:

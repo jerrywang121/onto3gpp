@@ -205,6 +205,7 @@ data/index/
 data/logs/
 data/review_queue/
 data/candidates/
+data/raw/
 *.pack
 *.trie#   you could uncomment the following to ignore the entire vscode folder
 # .vscode/

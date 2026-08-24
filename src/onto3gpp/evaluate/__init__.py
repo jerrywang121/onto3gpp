@@ -17,10 +17,16 @@ from onto3gpp.search.bm25 import BM25Index
 
 @dataclass
 class GoldQuery:
-    """A single gold query: text + set of relevant clause IDs."""
+    """A single gold query: text + set of relevant clause IDs.
+
+    `spec` optionally scopes the query to a single spec (e.g. "38300"). When
+    set, the query is evaluated against an index built only from that spec's
+    chunks, so other specs' chunks don't dilute the gold-relevant results.
+    """
 
     query: str
     relevant_clauses: list[str]
+    spec: str = ""
 
 
 @dataclass
@@ -46,13 +52,27 @@ def load_gold(path: Path) -> list[GoldQuery]:
             GoldQuery(
                 query=data["query"],
                 relevant_clauses=data["relevant_clauses"],
+                spec=data.get("spec", ""),
             )
         )
     return queries
 
 
-def evaluate(index: BM25Index, gold: list[GoldQuery], top_k: int = 10) -> EvalResult:
-    """Evaluate an index against a gold set."""
+def evaluate(
+    index: BM25Index,
+    gold: list[GoldQuery],
+    top_k: int = 10,
+    dictionary=None,
+    ontology=None,
+) -> EvalResult:
+    """Evaluate an index against a gold set.
+
+    If `dictionary` is provided, queries are expanded with canonical terms
+    (term-expanded search); otherwise plain BM25 is used. If `ontology` is
+    provided, results are reranked with the relationship-aware reranker.
+    """
+    from onto3gpp.runtime.reranker import rerank
+
     mrr_scores: list[float] = []
     ndcg_scores: list[float] = []
     recall5_scores: list[float] = []
@@ -60,7 +80,15 @@ def evaluate(index: BM25Index, gold: list[GoldQuery], top_k: int = 10) -> EvalRe
     per_query: list[dict] = []
 
     for gq in gold:
-        results = index.search(gq.query, top_k=top_k)
+        if ontology is not None:
+            results = index.search_structure(gq.query, ontology, top_k=top_k)
+        elif dictionary is not None:
+            results = index.search_expanded(gq.query, dictionary, top_k=top_k)
+        else:
+            results = index.search(gq.query, top_k=top_k)
+        if ontology is not None:
+            chunks = getattr(index, "chunks", None)
+            results = rerank(results, gq.query, ontology, chunks=chunks)
         relevant = set(gq.relevant_clauses)
         # relevance label per result: 1 if the result's clause is relevant
         relevance = [1 if r.chunk.clause in relevant else 0 for r in results]

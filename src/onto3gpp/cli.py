@@ -8,7 +8,7 @@ from pathlib import Path
 
 import click
 
-from onto3gpp.parser import parse_file
+from onto3gpp.parser import parse_docx, parse_file
 from onto3gpp.search.bm25 import BM25Index
 from onto3gpp.search.chunker import chunk_sections
 
@@ -36,9 +36,12 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
 
     out.mkdir(parents=True, exist_ok=True)
     total = 0
-    for path in sorted(spec_dir.glob("*.txt")):
+    for path in sorted(spec_dir.glob("*.txt")) + sorted(spec_dir.glob("*.docx")):
         spec = path.stem
-        sections = parse_file(path, spec=spec, release=release)
+        if path.suffix == ".docx":
+            sections = parse_docx(path, spec=spec, release=release)
+        else:
+            sections = parse_file(path, spec=spec, release=release)
         out_path = out / f"{spec}.jsonl"
         with out_path.open("w", encoding="utf-8") as f:
             for s in sections:
@@ -52,11 +55,25 @@ def parse(spec_dir: Path, release: str, out: Path) -> None:
 @click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option("--gold", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option("--top-k", default=10, show_default=True)
-def eval(parsed: Path, gold: Path, top_k: int) -> None:
+@click.option(
+    "--expand",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to a compiled dictionary (JSON) to enable term-expanded search.",
+)
+@click.option(
+    "--ontology",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to an ontology (JSON) to enable relationship-aware reranking.",
+)
+def eval(parsed: Path, gold: Path, top_k: int, expand: Path | None, ontology: Path | None) -> None:
     """Build a BM25 index from parsed sections and evaluate against a gold set."""
     import json
 
+    from onto3gpp.compile.dictionary import Dictionary
     from onto3gpp.evaluate import load_gold, evaluate
+    from onto3gpp.ontology.schema import ontology_from_dict
     from onto3gpp.search.chunker import Chunk
 
     chunks: list[Chunk] = []
@@ -74,14 +91,257 @@ def eval(parsed: Path, gold: Path, top_k: int) -> None:
                     text=data["text"],
                 )
             )
-    index = BM25Index.build(chunks)
     gold_queries = load_gold(gold)
-    result = evaluate(index, gold_queries, top_k=top_k)
+
+    dictionary = None
+    if expand is not None:
+        dictionary = Dictionary.from_dict(json.loads(expand.read_text(encoding="utf-8")))
+
+    onto = None
+    if ontology is not None:
+        onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
+
+    # If gold queries carry a `spec`, evaluate each query against an index
+    # built only from that spec's chunks. This avoids diluting gold-relevant
+    # results with chunks from other specs in a multi-spec corpus.
+    scoped = any(gq.spec for gq in gold_queries)
+    if scoped:
+        by_spec: dict[str, list[Chunk]] = {}
+        for c in chunks:
+            by_spec.setdefault(c.spec, []).append(c)
+        results: list[EvalResult] = []
+        for gq in gold_queries:
+            spec_chunks = by_spec.get(gq.spec, chunks)
+            spec_index = BM25Index.build(spec_chunks)
+            results.append(
+                evaluate(
+                    spec_index,
+                    [gq],
+                    top_k=top_k,
+                    dictionary=dictionary,
+                    ontology=onto,
+                )
+            )
+        # aggregate per-query results into a single EvalResult
+        from onto3gpp.evaluate import EvalResult
+
+        n = len(results)
+        result = EvalResult(
+            mrr=sum(r.mrr for r in results) / n if n else 0.0,
+            ndcg_at_10=sum(r.ndcg_at_10 for r in results) / n if n else 0.0,
+            recall_at_5=sum(r.recall_at_5 for r in results) / n if n else 0.0,
+            recall_at_10=sum(r.recall_at_10 for r in results) / n if n else 0.0,
+            num_queries=n,
+            per_query=[q for r in results for q in r.per_query],
+        )
+    else:
+        result = evaluate(
+            index, gold_queries, top_k=top_k, dictionary=dictionary, ontology=onto
+        )
+
+    modes = []
+    if dictionary is not None:
+        modes.append("term-expanded search")
+    if onto is not None:
+        modes.append("relationship-aware reranking")
+    if not modes:
+        modes.append("plain BM25")
+    click.echo(f"Mode: {' + '.join(modes)}")
+
     click.echo(f"Queries: {result.num_queries}")
     click.echo(f"MRR:        {result.mrr:.4f}")
     click.echo(f"NDCG@10:    {result.ndcg_at_10:.4f}")
     click.echo(f"Recall@5:   {result.recall_at_5:.4f}")
     click.echo(f"Recall@10:  {result.recall_at_10:.4f}")
+
+
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--out", type=click.Path(path_type=Path), default="data/dict.json")
+@click.option("--threshold", default=0.8, show_default=True)
+def build_dict(parsed: Path, out: Path, threshold: float) -> None:
+    """Extract + judge + compile a terminology dictionary from parsed sections."""
+    import json
+
+    from onto3gpp.compile.dictionary import build_dictionary
+    from onto3gpp.extract.terms import extract_candidates
+    from onto3gpp.judge import gate_candidates
+    from onto3gpp.parser import Section
+
+    sections: list[Section] = []
+    for path in sorted(parsed.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            sections.append(
+                Section(
+                    spec=data["spec"],
+                    release=data["release"],
+                    clause=data["clause"],
+                    title=data["title"],
+                    text=data["text"],
+                    parent_clause=data.get("parent_clause", ""),
+                    metadata=data.get("metadata", {}),
+                )
+            )
+
+    candidates = extract_candidates(sections)
+    gated = gate_candidates(candidates, threshold=threshold)
+    dictionary = build_dictionary(gated)
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(dictionary.to_dict(), indent=2), encoding="utf-8")
+    click.echo(f"Candidates: {len(candidates)}")
+    click.echo(f"Accepted:   {len(gated)}")
+    click.echo(f"Entries:    {len(dictionary.entries)}")
+    click.echo(f"Wrote dictionary to {out}")
+
+
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--dict", "dict_path", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
+def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
+    """Build an ontology (concepts + relations) from parsed sections + dictionary."""
+    import json
+
+    from onto3gpp.compile.dictionary import Dictionary
+    from onto3gpp.extract.relations import extract_relations
+    from onto3gpp.ontology.schema import (
+        Concept,
+        Ontology,
+        ontology_to_dict,
+        validate_ontology,
+    )
+    from onto3gpp.parser import Section
+
+    dictionary = Dictionary.from_dict(json.loads(dict_path.read_text(encoding="utf-8")))
+
+    sections: list[Section] = []
+    for path in sorted(parsed.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            sections.append(
+                Section(
+                    spec=data["spec"],
+                    release=data["release"],
+                    clause=data["clause"],
+                    title=data["title"],
+                    text=data["text"],
+                    parent_clause=data.get("parent_clause", ""),
+                    metadata=data.get("metadata", {}),
+                )
+            )
+
+    # Concepts from dictionary entries (dedup by canonical)
+    concepts: dict[str, Concept] = {}
+    for entry in dictionary.entries.values():
+        cid = entry.canonical.lower().replace(" ", "_")
+        if cid not in concepts:
+            concepts[cid] = Concept(
+                id=cid,
+                canonical=entry.canonical,
+                type=entry.type,
+                aliases=[a for a in entry.aliases if a != entry.canonical],
+            )
+
+    onto = Ontology(concepts=list(concepts.values()))
+    relations = extract_relations(sections, onto)
+    onto.relations = relations
+
+    errors = validate_ontology(onto)
+    if errors:
+        click.echo("Validation errors:")
+        for e in errors[:20]:
+            click.echo(f"  {e}")
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(ontology_to_dict(onto), indent=2), encoding="utf-8")
+    click.echo(f"Concepts:  {len(onto.concepts)}")
+    click.echo(f"Relations: {len(onto.relations)}")
+    click.echo(f"Wrote ontology to {out}")
+
+
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--gold", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--ontology", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
+@click.option("--domain", type=click.Path(exists=True, path_type=Path), default=None)
+@click.option("--top-k", default=10, show_default=True)
+def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int) -> None:
+    """Run one closed-loop improvement iteration (AI-as-judge).
+
+    Evaluates the ontology against the gold set, finds gaps, asks the LLM
+    (configured in the domain pack's config.yaml) to propose improvements,
+    applies valid ones, and re-evaluates. Writes the improved ontology to
+    --out.
+    """
+    import json
+
+    from onto3gpp.config import load_domain
+    from onto3gpp.evaluate import load_gold
+    from onto3gpp.improve import run_improvement_loop
+    from onto3gpp.llm import LLMClient
+    from onto3gpp.ontology.schema import ontology_from_dict
+    from onto3gpp.search.chunker import Chunk
+
+    # Load domain pack (for LLM config + prompt templates).
+    if domain is None:
+        domain = Path("docs/domain/3gpp")
+    cfg = load_domain(domain)
+
+    if not cfg.llm.enabled:
+        click.echo("LLM is disabled in the domain pack config.yaml (llm.enabled: false).")
+        click.echo("Enable it to run the AI-as-judge improvement loop.")
+        raise SystemExit(1)
+
+    # Build the BM25 index from parsed sections.
+    chunks: list[Chunk] = []
+    for path in sorted(parsed.glob("*.jsonl")):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            data = json.loads(line)
+            chunks.append(
+                Chunk(
+                    spec=data["spec"],
+                    release=data["release"],
+                    clause=data["clause"],
+                    title=data["title"],
+                    text=data["text"],
+                )
+            )
+    index = BM25Index.build(chunks)
+
+    gold_queries = load_gold(gold)
+    onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
+    llm = LLMClient(cfg.llm)
+
+    result = run_improvement_loop(
+        index,
+        gold_queries,
+        onto,
+        llm,
+        top_k=top_k,
+        domain_dir=domain,
+    )
+
+    click.echo(f"Gaps (queries missing relevant clause in top-{min(top_k,5)}): {len(result.gaps)}")
+    click.echo(f"Proposals: {len(result.proposals)}")
+    click.echo(f"Applied:   {result.applied}")
+    click.echo(f"MRR before: {result.before_mrr:.4f}")
+    click.echo(f"MRR after:  {result.after_mrr:.4f}")
+    click.echo(f"Delta:      {result.after_mrr - result.before_mrr:+.4f}")
+
+    out.parent.mkdir(parents=True, exist_ok=True)
+    from onto3gpp.ontology.schema import ontology_to_dict
+
+    out.write_text(json.dumps(ontology_to_dict(onto), indent=2), encoding="utf-8")
+    click.echo(f"Wrote improved ontology to {out}")
 
 
 if __name__ == "__main__":
