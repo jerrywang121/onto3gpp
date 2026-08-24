@@ -52,3 +52,32 @@ def test_reason_related_terms_are_deduped():
     )
     plan = reason("AMF", onto)
     assert plan.related_terms.count("SMF") == 1
+
+
+def test_reason_resolves_alias_to_canonical():
+    onto = Ontology(
+        concepts=[
+            Concept(id="handover", canonical="handover", aliases=["HO", "Intra-NR RAN handover"]),
+            Concept(id="ue", canonical="UE"),
+        ],
+        relations=[
+            Relation(source="handover", rel="handles", target="ue"),
+        ],
+    )
+    # query mentions the alias "HO" → should resolve to canonical "handover"
+    plan = reason("How is HO handled?", onto)
+    assert "handover" in plan.primary_terms
+    # related terms from the resolved concept's neighbors
+    assert "UE" in plan.related_terms
+
+
+def test_reason_alias_does_not_match_other_concept():
+    onto = Ontology(
+        concepts=[
+            Concept(id="handover", canonical="handover", aliases=["HO"]),
+            Concept(id="ho_thing", canonical="HO Thing"),
+        ],
+    )
+    plan = reason("HO", onto)
+    # "HO" alias resolves to handover, not to the "HO Thing" canonical
+    assert "handover" in plan.primary_terms

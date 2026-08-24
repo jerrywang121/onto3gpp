@@ -49,3 +49,26 @@ def test_evaluate_with_ontology_reranking() -> None:
     # the top results (it shares no exact token with the query)
     reranked = evaluate(index, gold, ontology=onto)
     assert "5.6.2" in reranked.per_query[0]["top_clauses"]
+
+
+def test_evaluate_ontology_resolves_alias_to_surface_relevant_clause() -> None:
+    chunks = [
+        # relevant clause mentions ONLY the canonical "handover", NOT the alias "HO"
+        _chunk("9.2.3.2.1", "The intra-NR RAN handover performs the preparation phase."),
+        _chunk("9.2.3.2.2", "U-plane handling during handover avoids data loss."),
+        _chunk("5.7.1", "The AMF handles registration."),
+    ]
+    index = BM25Index.build(chunks)
+    onto = Ontology(
+        concepts=[
+            Concept(id="handover", canonical="HANDOVER", aliases=["HO"]),
+            Concept(id="amf", canonical="AMF"),
+        ],
+        relations=[Relation(source="handover", rel="handles", target="amf")],
+    )
+    # query uses the alias "HO" — the reasoner must resolve it to HANDOVER so
+    # the ontology-aware search surfaces the relevant clause 9.2.3.2.2 (which
+    # contains "handover" but NOT "HO")
+    gold = [GoldQuery(query="How is HO handled?", relevant_clauses=["9.2.3.2.2"])]
+    result = evaluate(index, gold, ontology=onto)
+    assert "9.2.3.2.2" in result.per_query[0]["top_clauses"]

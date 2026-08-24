@@ -101,7 +101,13 @@ class BM25Index:
         from onto3gpp.runtime.reasoner import reason
 
         plan = reason(query, onto)
+        # score with the query's own tokens PLUS the resolved primary terms
+        # (canonicals of concepts the query mentions, including via aliases).
+        # This lets a query that uses an alias ("HO") match chunks that only
+        # contain the canonical ("handover").
         q_tokens = tokenize(query)
+        for term in plan.primary_terms:
+            q_tokens.extend(tokenize(term))
         if not q_tokens:
             return []
         scores = self.bm25.get_scores(q_tokens)

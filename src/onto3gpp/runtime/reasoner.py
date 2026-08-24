@@ -47,6 +47,25 @@ def _concept_by_canonical(onto: Ontology) -> dict[str, str]:
     return {c.canonical.lower(): (c.id, c.canonical) for c in onto.concepts}
 
 
+def _concept_by_alias(onto: Ontology) -> dict[str, str]:
+    """Map lowercase alias → (concept id, original canonical).
+
+    Aliases are additional surface forms for a concept (e.g. "HO" for
+    "handover"). Resolving them lets the reasoner recognize a concept even
+    when the query uses a non-canonical surface form. A canonical that is
+    also an alias of another concept is not shadowed here — canonical
+    resolution takes precedence in `reason`.
+    """
+    by_alias: dict[str, str] = {}
+    for c in onto.concepts:
+        for alias in c.aliases:
+            key = alias.lower()
+            # don't let an alias shadow a canonical (canonical wins)
+            if key not in by_alias:
+                by_alias[key] = (c.id, c.canonical)
+    return by_alias
+
+
 def _neighbors(onto: Ontology, concept_id: str) -> list[str]:
     """Return the canonical names of 1-hop neighbors of a concept, ranked by
     the neighbor's own degree (most-connected first) and capped.
@@ -89,31 +108,47 @@ def reason(query: str, onto: Ontology) -> SearchPlan:
     full surface-form resolution at runtime; here we use canonicals directly).
     """
     by_canonical = _concept_by_canonical(onto)
+    by_alias = _concept_by_alias(onto)
     lower = query.lower()
 
     primary: list[str] = []
     related: list[str] = []
     explanation: list[str] = []
 
+    # canonical resolution first (canonical wins over alias)
+    resolved: dict[str, str] = {}  # concept id -> original canonical
     for canonical, (cid, original) in by_canonical.items():
         # whole-word match so short canonicals don't match inside longer words
         import re
 
         pattern = r"(?<![a-z0-9])" + re.escape(canonical) + r"(?![a-z0-9])"
         if re.search(pattern, lower):
-            primary.append(original)
-            explanation.append(f"query mentions concept: {original}")
-            for neighbor in _neighbors(onto, cid):
-                # skip stopwords and single-char noise so expansion doesn't
-                # pollute the query with meaningless terms
-                if neighbor.lower() in _STOPWORDS or len(neighbor) <= 1:
-                    continue
-                if neighbor not in related:
-                    related.append(neighbor)
-            if related:
-                explanation.append(
-                    f"expanded to related concepts: {', '.join(related)}"
-                )
+            resolved[cid] = original
+
+    # alias resolution for concepts not already matched by canonical
+    for alias, (cid, original) in by_alias.items():
+        if cid in resolved:
+            continue
+        import re
+
+        pattern = r"(?<![a-z0-9])" + re.escape(alias) + r"(?![a-z0-9])"
+        if re.search(pattern, lower):
+            resolved[cid] = original
+
+    for cid, original in resolved.items():
+        primary.append(original)
+        explanation.append(f"query mentions concept: {original}")
+        for neighbor in _neighbors(onto, cid):
+            # skip stopwords and single-char noise so expansion doesn't
+            # pollute the query with meaningless terms
+            if neighbor.lower() in _STOPWORDS or len(neighbor) <= 1:
+                continue
+            if neighbor not in related:
+                related.append(neighbor)
+        if related:
+            explanation.append(
+                f"expanded to related concepts: {', '.join(related)}"
+            )
 
     return SearchPlan(
         primary_terms=primary,
