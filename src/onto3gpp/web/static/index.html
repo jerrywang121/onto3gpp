@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onto3gpp explorer</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>onto3gpp <span class="sub">ontology-guided RAG explorer</span></h1>
+    <div id="meta" class="meta"></div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="query">Query</button>
+    <button class="tab" data-tab="concepts">Concepts</button>
+    <button class="tab" data-tab="graph">Graph</button>
+  </nav>
+
+  <main>
+    <!-- ============ QUERY TAB ============ -->
+    <section id="tab-query" class="tab-panel active">
+      <div class="query-bar">
+        <input id="query-input" type="text" placeholder="e.g. How does a UE in RRC_IDLE perform cell reselection?" />
+        <button id="query-btn">Search</button>
+      </div>
+
+      <div class="params">
+        <label>top_k
+          <input id="p-topk" type="number" min="1" max="50" value="10" />
+        </label>
+        <label>max_hops
+          <input id="p-hops" type="number" min="0" max="3" value="1" />
+        </label>
+        <label>fuzzy_threshold
+          <input id="p-fuzzy" type="number" min="0" max="1" step="0.05" value="0" />
+        </label>
+        <label class="check"><input id="p-chain" type="checkbox" checked /> NER chain</label>
+        <label class="check"><input id="p-ontology" type="checkbox" checked /> ontology</label>
+        <label class="check"><input id="p-structure" type="checkbox" checked /> structure</label>
+      </div>
+
+      <div id="query-results"></div>
+    </section>
+
+    <!-- ============ CONCEPTS TAB ============ -->
+    <section id="tab-concepts" class="tab-panel">
+      <div class="query-bar">
+        <input id="concept-filter" type="text" placeholder="Filter concepts by text..." />
+        <select id="concept-type">
+          <option value="">all types</option>
+        </select>
+        <button id="concept-btn">Filter</button>
+      </div>
+      <div id="concept-list"></div>
+    </section>
+
+    <!-- ============ GRAPH TAB ============ -->
+    <section id="tab-graph" class="tab-panel">
+      <div class="query-bar">
+        <input id="graph-concept" type="text" placeholder="Concept id or canonical, e.g. ue or UE" />
+        <label>radius
+          <input id="graph-radius" type="number" min="1" max="3" value="1" />
+        </label>
+        <label>max nodes
+          <input id="graph-limit" type="number" min="10" max="2000" value="200" />
+        </label>
+        <button id="graph-btn">Show graph</button>
+      </div>
+      <div class="graph-wrap">
+        <div id="graph-container"></div>
+        <aside id="graph-details" class="details">
+          <h3>Details</h3>
+          <div id="graph-details-body" class="details-body">
+            <div class="empty">Click a node or edge to see its details.</div>
+          </div>
+        </aside>
+      </div>
+      <div id="graph-info"></div>
+    </section>
+  </main>
+
+  <script src="/static/vendor/cytoscape.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -94,6 +94,32 @@ def test_chain_l2_fuzzy_resolves_ambiguous_phrase():
     assert qos.level == 2
 
 
+# --- L2: fuzzy_threshold controls how strict the fuzzy matcher is ---
+
+
+def test_chain_l2_default_threshold_matches_partial_token_subset():
+    # "qos" is a token-subset of "QoS Flow" (token containment holds), and the
+    # default fuzzy threshold (0.0) lets it resolve at L2.
+    chain = NERChain(_dict(), _onto())
+    matches = chain.annotate("qos")
+    assert any(m.canonical == "QoS Flow" for m in matches)
+
+
+def test_chain_l2_high_threshold_rejects_low_similarity_match():
+    # With a high fuzzy threshold, "qos" (fuzzy_similarity ~0.44 vs "QoS Flow")
+    # is rejected even though token containment holds.
+    chain = NERChain(_dict(), _onto(), fuzzy_threshold=0.9)
+    matches = chain.annotate("qos")
+    assert not any(m.canonical == "QoS Flow" for m in matches)
+
+
+def test_chain_l2_high_threshold_still_resolves_identical_phrase():
+    # An identical phrase has fuzzy_similarity 1.0, so it passes any threshold.
+    chain = NERChain(_dict(), _onto(), fuzzy_threshold=0.9)
+    matches = chain.annotate("qos flow")
+    assert any(m.canonical == "QoS Flow" for m in matches)
+
+
 # --- L3: resolver (alias -> canonical) ---
 
 

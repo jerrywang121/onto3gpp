@@ -88,7 +88,7 @@ class BM25Index:
         return results[:top_k]
 
     def search_ontology(
-        self, query: str, onto, top_k: int = 10
+        self, query: str, onto, top_k: int = 10, max_hops: int = 1
     ) -> list[SearchResult]:
         """Search with ontology-aware candidate generation.
 
@@ -100,7 +100,7 @@ class BM25Index:
         """
         from onto3gpp.runtime.reasoner import reason
 
-        plan = reason(query, onto)
+        plan = reason(query, onto, max_hops=max_hops)
         # score with the query's own tokens PLUS the resolved primary terms
         # (canonicals of concepts the query mentions, including via aliases).
         # This lets a query that uses an alias ("HO") match chunks that only
@@ -130,7 +130,13 @@ class BM25Index:
         return candidates[:top_k]
 
     def search_structure(
-        self, query: str, onto, dictionary=None, top_k: int = 10
+        self,
+        query: str,
+        onto,
+        dictionary=None,
+        top_k: int = 10,
+        max_hops: int = 1,
+        fuzzy_threshold: float = 0.0,
     ) -> list[SearchResult]:
         """Search with ontology + structure-aware candidate generation.
 
@@ -144,11 +150,16 @@ class BM25Index:
         the Level 0-4 NER fallback chain (dictionary exact → fuzzy matcher →
         alias resolver → ontology reasoning), so ambiguous surface forms and
         related concepts contribute to the query tokens.
+
+        ``max_hops`` controls the ontology reasoning depth (1 = 1-hop
+        neighbors, 2 = 2-hop, etc.). ``fuzzy_threshold`` sets the minimum Dice
+        similarity for the L2 fuzzy matcher to accept an ambiguous-phrase
+        match.
         """
         from onto3gpp.runtime.reasoner import reason
         from onto3gpp.runtime.structure import build_ancestor_map
 
-        plan = reason(query, onto)
+        plan = reason(query, onto, max_hops=max_hops)
         q_tokens = tokenize(query)
         for term in plan.primary_terms:
             q_tokens.extend(tokenize(term))
@@ -159,7 +170,8 @@ class BM25Index:
             # tokens. L0 (dictionary exact) and L4 (ontology reasoning) are
             # already handled by `reason()` above — adding them again would
             # pollute the query with hub-related terms and regress ranking.
-            for m in NERChain(dictionary, onto).annotate(query):
+            chain = NERChain(dictionary, onto, fuzzy_threshold=fuzzy_threshold)
+            for m in chain.annotate(query):
                 if m.level in (2, 3):
                     q_tokens.extend(tokenize(m.canonical))
         if not q_tokens:

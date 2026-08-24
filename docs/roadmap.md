@@ -170,6 +170,35 @@ multiple iterations without human review.
 
 ---
 
+## Stage 6 — Web Explorer
+
+**Goal:** Interactive exploration of the runtime and ontology.
+
+**Tasks:**
+- [x] FastAPI web app (`src/onto3gpp/web/app.py`) exposing query, concepts,
+      graph, and meta endpoints.
+- [x] Query parameter controls (top-k, reasoning hop count, fuzzy threshold,
+      pipeline-stage toggles).
+- [x] Concepts browser (filterable by text/type).
+- [x] Ontology topology graph (force-directed canvas).
+- [x] `onto3gpp serve` CLI command.
+
+**Stage gate:** Web app serves real data; all endpoints return correct
+results; no regression on the deterministic runtime.
+
+> **Status:** Web explorer implemented (FastAPI + vanilla JS, no build step).
+> `onto3gpp serve --parsed data/parsed --dict data/dict.json --ontology
+> data/ontology.json` boots and serves `/api/query`, `/api/concepts`,
+> `/api/graph`, `/api/meta`, and the single-page frontend. Verified against
+> real data (2318 chunks, 5778 concepts, 22719 relations). The web layer is a
+> thin stateless HTTP/UI wrapper over the existing runtime modules — it adds
+> no query logic, so the deterministic eval metrics are unaffected. **Gate
+> MET** (web tests green; full suite 134 tests green).
+
+**Branch:** `stage/6-web-explorer`
+
+---
+
 ## Cross-Cutting Work
 
 - **Domain generality:** every stage must keep the pipeline domain-agnostic

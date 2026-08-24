@@ -74,9 +74,16 @@ def _token_contained(query: str, canonical: str) -> bool:
 class NERChain:
     """The Level 0-4 fallback chain."""
 
-    def __init__(self, dictionary: Dictionary, onto: Ontology) -> None:
+    def __init__(
+        self,
+        dictionary: Dictionary,
+        onto: Ontology,
+        fuzzy_threshold: float = 0.0,
+    ) -> None:
         self.dictionary = dictionary
         self.onto = onto
+        # minimum Dice similarity for the L2 fuzzy matcher to accept a match
+        self.fuzzy_threshold = fuzzy_threshold
         # concept canonicals for fuzzy matching (L2)
         self._canonicals = [c.canonical for c in onto.concepts]
         # alias -> canonical map (L3)
@@ -119,9 +126,17 @@ class NERChain:
                 # must appear in the canonical. This resolves "qos flow" ->
                 # "QoS Flow" but not "handover procedure" -> "Random Access
                 # Procedure" (which merely shares a common word).
-                if _token_contained(text, canonical):
-                    seen.add(canonical)
-                    matches.append(NERMatch(canonical=canonical, level=2))
+                if not _token_contained(text, canonical):
+                    continue
+                # fuzzy_threshold is a secondary strictness control: require
+                # the Dice similarity to be at least the threshold. The
+                # default (0.0) keeps the historical behavior (token
+                # containment alone); raising it rejects low-similarity
+                # matches like "qos" -> "QoS Flow".
+                if fuzzy_similarity(text, canonical) < self.fuzzy_threshold:
+                    continue
+                seen.add(canonical)
+                matches.append(NERMatch(canonical=canonical, level=2))
 
         # L3: alias -> canonical via ontology
         for token in tokenize(text):
@@ -143,7 +158,10 @@ class NERChain:
 
 
 def resolve_chain(
-    text: str, dictionary: Dictionary, onto: Ontology
+    text: str,
+    dictionary: Dictionary,
+    onto: Ontology,
+    fuzzy_threshold: float = 0.0,
 ) -> list[NERMatch]:
     """Convenience wrapper: build a chain and resolve ``text``."""
-    return NERChain(dictionary, onto).annotate(text)
+    return NERChain(dictionary, onto, fuzzy_threshold=fuzzy_threshold).annotate(text)

@@ -366,5 +366,42 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
     click.echo(f"Wrote improved ontology to {out}")
 
 
+@main.command()
+@click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
+@click.option(
+    "--dict",
+    "dict_path",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to a compiled dictionary (JSON) to enable NER chain + expansion.",
+)
+@click.option(
+    "--ontology",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to an ontology (JSON) to enable relationship-aware search + graph.",
+)
+@click.option("--host", default="127.0.0.1", show_default=True)
+@click.option("--port", default=8000, show_default=True)
+def serve(
+    parsed: Path,
+    dict_path: Path | None,
+    ontology: Path | None,
+    host: str,
+    port: int,
+) -> None:
+    """Serve the web interface for exploring the runtime (query + ontology)."""
+    import uvicorn
+
+    from onto3gpp.web.app import create_app
+
+    app = create_app(parsed, dict_path=dict_path, ontology_path=ontology)
+    click.echo(f"Serving onto3gpp explorer at http://{host}:{port}")
+    click.echo(f"  parsed:   {parsed}")
+    click.echo(f"  dict:     {dict_path or '(none)'}")
+    click.echo(f"  ontology: {ontology or '(none)'}")
+    uvicorn.run(app, host=host, port=port)
+
+
 if __name__ == "__main__":
     main()

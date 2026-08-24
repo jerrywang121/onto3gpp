@@ -66,42 +66,71 @@ def _concept_by_alias(onto: Ontology) -> dict[str, str]:
     return by_alias
 
 
-def _neighbors(onto: Ontology, concept_id: str) -> list[str]:
-    """Return the canonical names of 1-hop neighbors of a concept, ranked by
-    the neighbor's own degree (most-connected first) and capped.
+def _adjacency(onto: Ontology) -> dict[str, list[str]]:
+    """Map concept id -> list of neighbor concept ids (undirected)."""
+    adj: dict[str, list[str]] = {}
+    for r in onto.relations:
+        adj.setdefault(r.source, []).append(r.target)
+        adj.setdefault(r.target, []).append(r.source)
+    return adj
 
-    Ranking by degree keeps the most salient neighbors of a hub concept
-    (e.g. the top few neighbors of "UE") while dropping the long tail of
-    weakly-connected noise.
+
+def _neighbors_up_to(
+    onto: Ontology, start_id: str, max_hops: int
+) -> list[str]:
+    """Return the canonical names of concepts reachable from ``start_id`` in
+    1..max_hops hops (BFS), ranked by the neighbor's own degree (most-connected
+    first) and capped per hop.
+
+    Multi-hop reasoning lets a query reach second-degree (and beyond) related
+    concepts. Each hop's frontier is capped so hub concepts don't explode the
+    expansion.
     """
-    # degree of each concept (number of relations it participates in)
+    if max_hops <= 0:
+        return []
+
+    adj = _adjacency(onto)
+    id_to_canonical = {c.id: c.canonical for c in onto.concepts}
     degree: dict[str, int] = {}
     for r in onto.relations:
         degree[r.source] = degree.get(r.source, 0) + 1
         degree[r.target] = degree.get(r.target, 0) + 1
 
-    neighbors: list[str] = []
-    seen: set[str] = set()
-    for r in onto.relations:
-        if r.source == concept_id:
-            target = next((c for c in onto.concepts if c.id == r.target), None)
-            if target and target.canonical not in seen:
-                seen.add(target.canonical)
-                neighbors.append(target.canonical)
-        elif r.target == concept_id:
-            source = next((c for c in onto.concepts if c.id == r.source), None)
-            if source and source.canonical not in seen:
-                seen.add(source.canonical)
-                neighbors.append(source.canonical)
+    # BFS from start_id, tracking hop distance
+    visited: set[str] = {start_id}
+    frontier: list[str] = [start_id]
+    distance: dict[str, int] = {start_id: 0}
+    collected: list[str] = []
 
-    # rank by degree (descending), then by name for determinism
-    neighbors.sort(key=lambda n: (-degree.get(n, 0), n))
-    return neighbors[:_MAX_RELATED_PER_CONCEPT]
+    for hop in range(1, max_hops + 1):
+        next_frontier: list[str] = []
+        hop_neighbors: list[str] = []
+        for node in frontier:
+            for nb in adj.get(node, []):
+                if nb in visited:
+                    continue
+                visited.add(nb)
+                distance[nb] = hop
+                next_frontier.append(nb)
+                canonical = id_to_canonical.get(nb)
+                if canonical:
+                    hop_neighbors.append(canonical)
+        # rank this hop's neighbors by degree (descending), then name
+        hop_neighbors.sort(key=lambda n: (-degree.get(n, 0), n))
+        collected.extend(hop_neighbors[:_MAX_RELATED_PER_CONCEPT])
+        frontier = next_frontier
+        if not frontier:
+            break
+
+    return collected
 
 
-def reason(query: str, onto: Ontology) -> SearchPlan:
+def reason(query: str, onto: Ontology, max_hops: int = 1) -> SearchPlan:
     """Build a search plan from a query by resolving concepts and expanding
-    to their 1-hop neighbors in the ontology graph.
+    to their neighbors in the ontology graph.
+
+    ``max_hops`` controls the reasoning depth: 1 (default) expands to 1-hop
+    neighbors, 2 to 2-hop neighbors, etc. 0 disables expansion entirely.
 
     Concept resolution is a simple case-insensitive whole-word match of the
     query against concept canonicals (the compiled dictionary provides the
@@ -138,7 +167,7 @@ def reason(query: str, onto: Ontology) -> SearchPlan:
     for cid, original in resolved.items():
         primary.append(original)
         explanation.append(f"query mentions concept: {original}")
-        for neighbor in _neighbors(onto, cid):
+        for neighbor in _neighbors_up_to(onto, cid, max_hops):
             # skip stopwords and single-char noise so expansion doesn't
             # pollute the query with meaningless terms
             if neighbor.lower() in _STOPWORDS or len(neighbor) <= 1:

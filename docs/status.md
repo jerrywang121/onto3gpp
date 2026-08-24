@@ -6,18 +6,19 @@
 
 ## Current Stage
 
-**Stage 5 — Optional Small CPU NER Model** (gate met, ready to promote)
+**Stage 6 — Web Explorer** (gate met, ready to promote)
 
 ## Stage Status
 
 | Stage | Status | Branch | Metrics (MRR / NDCG@10 / Recall@10) | Notes |
 |-------|--------|--------|-------------------------------------|-------|
 | 0 Baseline | 🟢 done | `stage/0-baseline` | 1.000 / 0.992 / 1.000 | Synthetic sample; see caveat |
-| 1 Terminology | � done | `stage/1-terminology` | 0.667 / 0.729 / 0.917 | Real gold set; word-boundary fix resolved regression |
-| 2 Ontology | � done | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
-| 3 Intent | � done | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
-| 4 Improve loop | � done | `stage/4-improve-loop` | — | LLM hooks + improve loop + hold-out auto-judge; gate met |
+| 1 Terminology | 🟢 done | `stage/1-terminology` | 0.667 / 0.729 / 0.917 | Real gold set; word-boundary fix resolved regression |
+| 2 Ontology | 🟢 done | `stage/2-ontology` | 0.786 / 0.816 / 0.917 | Reasoner + reranker done; 4-spec ontology (5788/26885); gate met |
+| 3 Intent | 🟢 done | `stage/3-intent` | 0.854 / 0.895 / 0.972 | Intent detector + structure boosts; gate met |
+| 4 Improve loop | 🟢 done | `stage/4-improve-loop` | — | LLM hooks + improve loop + hold-out auto-judge; gate met |
 | 5 CPU NER | 🟢 done | `stage/5-cpu-ner` | 0.854 / 0.895 / 0.972 | Level 0-4 fallback chain; no regression; gate met |
+| 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 
@@ -79,6 +80,10 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 - ADR-0004: Configurable external AI hooks (LiteLLM-backed).
 - ADR-0005: Ontology evolution strategy (evidence-based; relation-centric,
   feedback-gated, chunk-grounded).
+- ADR-0006: Structure-aware boosts.
+- ADR-0007: Hold-out auto-judge for the improvement loop.
+- ADR-0008: Level 0-4 NER fallback chain (small CPU model).
+- ADR-0009: Web interface for runtime exploration.
 
 ## Stage 2 — Ontology + Relations (in progress)
 
@@ -318,6 +323,40 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 - **Design note:** applying the chain at all levels regressed MRR to 0.467
   (L4 expansion added hundreds of hub-related terms). Restricting to L2/L3
   query-token contribution restored parity. **Stage 5 gate MET.**
+
+## Stage 6 — Web Explorer (done)
+
+**Delivered:**
+- FastAPI web app (`src/onto3gpp/web/app.py`): `create_app(parsed_dir,
+  dict_path, ontology_path)` loads chunks, compiled dictionary, and ontology
+  into a `Runtime`, then exposes:
+  - `POST /api/query` — ranked results. Params: `query`, `top_k`, `max_hops`,
+    `fuzzy_threshold`, `use_chain`, `use_ontology`, `use_structure`. Returns
+    the search plan (primary/related terms + explanation) plus ranked chunks.
+  - `GET /api/concepts` — extracted concepts, filterable by `q` (text) and
+    `type`, with `limit`.
+  - `GET /api/graph` — ontology neighborhood around a `concept` within
+    `radius` hops, capped by `limit`.
+  - `GET /api/meta` — counts (chunks, specs, concepts, relations, dictionary
+    entries).
+  - `GET /` + `/static/*` — single-page frontend.
+- Frontend (`src/onto3gpp/web/static/`): three tabs — **Query**, **Concepts**,
+  **Graph**. Vanilla JS/HTML/CSS, no build step. Graph tab renders a
+  self-contained force-directed layout on a `<canvas>`.
+- CLI: `onto3gpp serve --parsed <dir> --dict <path> --ontology <path>
+  [--host] [--port]` runs uvicorn.
+- New runtime params exposed: `max_hops` (reasoner multi-hop expansion) and
+  `fuzzy_threshold` (NERChain L2 fuzzy matcher).
+- 10 new TDD tests (web) + reasoner/ner_chain param tests. **Full suite: 134
+  tests green.**
+
+**Verified against real data** (`data/parsed`, `data/dict.json`,
+`data/ontology.json`): 2318 chunks, 5778 concepts, 22719 relations. All
+endpoints return correct results.
+
+> The web layer is a thin stateless HTTP/UI wrapper over the existing runtime
+> modules — it adds no query logic, so the deterministic eval metrics are
+> unaffected. **Stage 6 gate MET.**
 
 ## Roll-back / Trial History
 
