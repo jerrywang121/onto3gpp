@@ -42,8 +42,17 @@ class CandidateTerm:
 
 
 def _abbreviations(text: str) -> list[str]:
-    """Return all-caps tokens that look like abbreviations."""
-    return list(dict.fromkeys(_ABBR_RE.findall(text)))
+    """Return all-caps tokens that look like abbreviations.
+
+    Filters out common English stopwords that appear in all-caps in specs
+    (e.g. THE, TO, OF, AND, OR, AN, ON, FROM) — these are not abbreviations
+    and would otherwise pollute the ontology as noisy hub concepts.
+    """
+    return [
+        a
+        for a in dict.fromkeys(_ABBR_RE.findall(text))
+        if a.lower() not in _STOP_START
+    ]
 
 
 # Words that should not start a phrase (articles, prepositions, conjunctions)

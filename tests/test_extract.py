@@ -51,3 +51,21 @@ def test_phrase_abbreviation_also_standalone():
     canonicals = {c.canonical for c in cands}
     assert "PDU Session" in canonicals
     assert "PDU" in canonicals
+
+
+def test_allcaps_stopwords_not_extracted_as_abbreviations():
+    # Common English words in all-caps (THE, TO, OF, AND, OR, AN, ON, FROM)
+    # must not be extracted as abbreviation concepts.
+    sections = [
+        _sec(
+            "5.6.1",
+            "General",
+            "THE SMF forwards TO the UPF OF the network AND OR the session.",
+        )
+    ]
+    cands = extract_candidates(sections)
+    abbrs = {c.canonical for c in cands if c.type == "abbreviation"}
+    assert "SMF" in abbrs
+    assert "UPF" in abbrs
+    for stop in ("THE", "TO", "OF", "AND", "OR"):
+        assert stop not in abbrs
