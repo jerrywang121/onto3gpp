@@ -43,12 +43,24 @@ class Dictionary:
         Uses the Aho-Corasick automaton (case-insensitive) to find all surface
         forms, then resolves each to its canonical term. Returns canonical
         terms in order of first occurrence.
+
+        Matches are required to sit on word boundaries: a surface form only
+        counts if the characters immediately before and after it are not
+        alphanumeric. This prevents short abbreviations (e.g. "RA", "AR")
+        from matching inside longer words (e.g. "RAN", "area").
         """
         if self.automaton is None:
             return []
         found: list[str] = []
         seen: set[str] = set()
-        for _, lower_surface in self.automaton.iter(text.lower()):
+        lower = text.lower()
+        for end_index, lower_surface in self.automaton.iter(lower):
+            start_index = end_index - len(lower_surface) + 1
+            # word-boundary check: char before and after must not be alnum
+            before = lower[start_index - 1] if start_index > 0 else " "
+            after = lower[end_index + 1] if end_index + 1 < len(lower) else " "
+            if before.isalnum() or after.isalnum():
+                continue
             surface = self._lower_to_surface.get(lower_surface, lower_surface)
             entry = self.entries[surface]
             if entry.canonical not in seen:

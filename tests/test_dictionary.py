@@ -55,3 +55,26 @@ def test_dictionary_serialize_roundtrip():
     d2 = Dictionary.from_dict(data)
     assert d2.entries == d.entries
     assert d2.find("SMF") == d.find("SMF")
+
+
+def test_dictionary_find_requires_word_boundaries():
+    """Short abbreviations must not match inside longer words.
+
+    E.g. "RA" (Random Access) must not match inside "RAN", and "AR" must not
+    match inside "area". This is the root cause of the term-expansion
+    regression: short surfaces polluted the query with spurious matches.
+    """
+    terms = [
+        _term("RA", abbreviations=["Random Access"]),
+        _term("AR"),
+        _term("RAN"),
+    ]
+    d = build_dictionary(terms)
+    # "RAN" is a whole word here → should match
+    assert "RAN" in d.find("the RAN node")
+    # "RA" is a substring of "RAN" → must NOT match
+    assert "RA" not in d.find("the RAN node")
+    # "AR" is a substring of "area" → must NOT match
+    assert "AR" not in d.find("the coverage area")
+    # standalone "RA" should still match
+    assert "RA" in d.find("the RA procedure")
