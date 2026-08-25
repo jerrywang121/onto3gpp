@@ -34,11 +34,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 from ai_helpers import complete_json  # noqa: E402
 
 from onto3gpp.compile.dictionary import Dictionary, DictionaryEntry, build_automaton  # noqa: E402
+from onto3gpp.config import load_domain  # noqa: E402
 from onto3gpp.extract.relations import extract_relations  # noqa: E402
 from onto3gpp.extract.terms import extract_candidates  # noqa: E402
+from onto3gpp.llm import LLMConfig  # noqa: E402
 from onto3gpp.ontology.schema import (  # noqa: E402
     Concept,
     Ontology,
+    Relation,
     ontology_from_dict,
     ontology_to_dict,
     validate_ontology,
@@ -50,23 +53,27 @@ CONCEPT_TYPES = (
     "qos, architecture, security"
 )
 
-# NOTE: the local ollama models return EMPTY when given an exclusion list
-# ("do NOT re-add these"). The reliable format is a plain "extract concepts"
-# prompt. So we use that, and filter out already-known concepts
-# DETERMINISTICALLY in apply_result (which skips existing canonicals). This
-# gives the "AI fills gaps" behavior without relying on the flaky model to
-# respect an exclusion list.
-#
-# We DO feed the deterministic candidates and the known terms (from the
-# current dict/ontology) into the prompt as POSITIVE reference context, so the
-# AI can see what the deterministic extractor found and what is already known.
-# The model is asked to identify NEW concepts the deterministic extractor
-# missed. Already-known concepts are still filtered deterministically in
-# apply_result as a safety net.
-PROMPT_TEMPLATE = """You are a knowledge engineer building a 3GPP ontology. Given the specification text below, identify NEW technical concepts (terms) that are NOT already covered by the deterministic extractor or the existing knowledge base.
+# The flaky local model fails to produce verdicts when the candidate list is
+# too long. Cap how many candidates are shown to the verify prompt; candidates
+# beyond the cap (and any without a verdict) are kept deterministically.
+VERIFY_CANDIDATE_CAP = 10
 
-The deterministic extractor already found these candidate terms:
-{candidates}
+# NOTE: the local ollama models are flaky and return EMPTY when given an
+# exclusion list ("do NOT re-add these") or when asked to produce several
+# distinct JSON fields in one prompt. The reliable format is a plain "extract
+# concepts" prompt. So we split the work into THREE separate LLM calls per
+# chunk, each best-effort with a deterministic fallback:
+#
+#   1) EXTRACT_PROMPT_TEMPLATE (reliable): identify NEW concepts. Already-known
+#      concepts are filtered out deterministically in apply_result.
+#   2) VERIFY_PROMPT_TEMPLATE (best-effort): judge each deterministic candidate
+#      (Q2). If it fails, candidates are kept deterministically.
+#   3) RELATIONS_PROMPT_TEMPLATE (best-effort): propose relations to add/update
+#      (Q3). If it fails, relations are re-extracted deterministically.
+#
+# This satisfies the user's design requirements (verify deterministic output,
+# feed relation info) while keeping the reliable extract path intact.
+EXTRACT_PROMPT_TEMPLATE = """You are a knowledge engineer building a 3GPP ontology. Given the specification text below, identify NEW technical concepts (terms) that are NOT already covered by the existing knowledge base.
 
 The existing knowledge base already contains these terms:
 {known}
@@ -74,8 +81,35 @@ The existing knowledge base already contains these terms:
 Text:
 {text}
 
-List each NEW concept with its type (choose from: {types}) and a confidence 0-1. Focus on concepts the deterministic extractor missed. Return ONLY a JSON object of the form:
+List each NEW concept with its type (choose from: {types}) and a confidence 0-1. Return ONLY a JSON object of the form:
 {{"concepts": [{{"canonical": "term", "type": "type", "confidence": 0.9}}]}}"""
+
+VERIFY_PROMPT_TEMPLATE = """You are a knowledge engineer building a 3GPP ontology. Judge whether each deterministic candidate term below is a real, discriminative 3GPP concept worth adding to the ontology.
+
+The deterministic extractor found these candidate terms (each has an id):
+{candidates}
+
+Text:
+{text}
+
+For EACH candidate id, return keep true or false. Return ONLY a JSON object of the form:
+{{"verdicts": [{{"id": 0, "keep": true, "type": "interface", "confidence": 0.9}}]}}"""
+
+RELATIONS_PROMPT_TEMPLATE = """You are a knowledge engineer building a 3GPP ontology. Given the text below, propose relations between technical concepts to add or update.
+
+The existing knowledge base already contains these relations:
+{known_relations}
+
+The deterministic extractor found these candidate relations:
+{candidate_relations}
+
+Text:
+{text}
+
+Return ONLY a JSON object of the form:
+{{"relations": [{{"source": "term", "rel": "uses", "target": "term", "confidence": 0.9}}]}}
+
+Use relation types like: uses, connects, carries, handles, establishes, forwards, selects, maps, applies, initiates, moves, updates, is_a. Only include relations you are confident about."""
 
 
 def load_sections(parsed: Path) -> list[Section]:
@@ -116,10 +150,15 @@ def save_ontology(o: Ontology, path: Path) -> None:
     path.write_text(json.dumps(ontology_to_dict(o), indent=2), encoding="utf-8")
 
 
-def _fmt_candidates(candidates) -> str:
+def _fmt_candidates(candidates, cap: int = 0) -> str:
+    """Format candidates with ids for the prompt. `cap` limits how many are
+    shown (the flaky model fails on very long candidate lists); 0 = no cap."""
     if not candidates:
         return "(none)"
-    return "\n".join(f"- {c.canonical} [{c.type}]" for c in candidates)
+    shown = candidates if cap <= 0 else candidates[:cap]
+    return "\n".join(
+        f"- [{i}] {c.canonical} [{c.type}]" for i, c in enumerate(shown)
+    )
 
 
 def _fmt_known(known: list[str]) -> str:
@@ -128,12 +167,86 @@ def _fmt_known(known: list[str]) -> str:
     return "\n".join(f"- {k}" for k in known)
 
 
+def _fmt_relations(relations) -> str:
+    if not relations:
+        return "(none)"
+    return "\n".join(
+        f"- {r.source} --{r.rel}--> {r.target}" for r in relations
+    )
+
+
+def compute_snapshot(section, d, onto, max_chars=800) -> dict:
+    """Compute the per-chunk inputs shared by all three pipeline stages."""
+    candidates = extract_candidates([section])
+    known = d.find(section.text)
+    known_rels = [r for r in onto.relations
+                  if r.source in known or r.target in known]
+    candidate_rels = extract_relations([section], onto)
+    return {
+        "candidates": candidates,
+        "known": known,
+        "known_rels": known_rels,
+        "candidate_rels": candidate_rels,
+        "text": section.text[:max_chars],
+    }
+
+
+def stage_extract(section, snapshot, model, configs) -> tuple:
+    """Stage 1: AI extracts NEW concepts. Returns (result, fallback, retries)."""
+    retries: list = []
+    prompt = EXTRACT_PROMPT_TEMPLATE.format(
+        text=snapshot["text"], types=CONCEPT_TYPES,
+        known=_fmt_known(snapshot["known"]),
+    )
+    try:
+        result = complete_json(prompt, model, max_tokens=2048, attempts=10,
+                               config=configs.get("extract"), retries=retries)
+        return result, False, retries
+    except Exception:  # noqa: BLE001
+        return {}, True, retries
+
+
+def stage_verify(section, snapshot, model, configs) -> dict:
+    """Run the verify stage (Q2). Returns (result, fallback, retries)."""
+    retries: list = []
+    candidates = snapshot["candidates"]
+    if not candidates:
+        return {}, False, retries
+    prompt = VERIFY_PROMPT_TEMPLATE.format(
+        text=snapshot["text"],
+        candidates=_fmt_candidates(candidates, cap=VERIFY_CANDIDATE_CAP),
+    )
+    try:
+        result = complete_json(prompt, model, max_tokens=2048, attempts=5,
+                               config=configs.get("verify"), retries=retries)
+        return result, False, retries
+    except Exception:  # noqa: BLE001
+        return {}, True, retries
+
+
+def stage_relations(section, snapshot, model, configs) -> dict:
+    """Run the relations stage (Q3). Returns (result, fallback, retries)."""
+    retries: list = []
+    prompt = RELATIONS_PROMPT_TEMPLATE.format(
+        text=snapshot["text"],
+        known_relations=_fmt_relations(snapshot["known_rels"]),
+        candidate_relations=_fmt_relations(snapshot["candidate_rels"]),
+    )
+    try:
+        result = complete_json(prompt, model, max_tokens=2048, attempts=5,
+                               config=configs.get("relations"), retries=retries)
+        return result, False, retries
+    except Exception:  # noqa: BLE001
+        return {}, True, retries
+
+
 def process_chunk(
     section: Section,
     d: Dictionary,
     onto: Ontology,
     model: str,
     max_chars: int = 800,
+    configs: dict[str, LLMConfig] | None = None,
 ) -> dict:
     """Run the a/b/c/d progressive step for one chunk. Returns the AI result.
 
@@ -142,36 +255,37 @@ def process_chunk(
     (c) AI extracts concepts from the chunk (reliable format); already-known
         concepts are filtered out deterministically in apply_result.
 
+    ``model`` is the fallback model name; ``configs`` (optional) maps task
+    name -> LLMConfig for per-task routing (extract/verify/relations). When a
+    task has a config, it overrides ``model`` and the hard-coded max_tokens.
+
     The returned dict includes `_match` metadata: the number of known terms
     matched in this chunk (from the current dict) and the number of known
     relations matched (from the current ontology). These grow as the dict and
     ontology expand, so we monitor them to detect context/performance growth.
     """
-    # (a) deterministic extraction
-    candidates = extract_candidates([section])
-    # (b) known terms in this chunk (from the current dict)
-    known = d.find(section.text)
-    # (b2) known relations in this chunk (from the current ontology)
-    known_rels = [
-        r
-        for r in onto.relations
-        if r.source in known or r.target in known
-    ]
-    # (c) AI decides what to add, given the chunk + deterministic candidates +
-    #     known terms as context. Already-known concepts are filtered out
-    #     deterministically in apply_result as a safety net.
-    prompt = PROMPT_TEMPLATE.format(
-        text=section.text[:max_chars],
-        types=CONCEPT_TYPES,
-        candidates=_fmt_candidates(candidates),
-        known=_fmt_known(known),
-    )
-    result = complete_json(prompt, model, max_tokens=1024, attempts=10)
+    configs = configs or {}
+    snapshot = compute_snapshot(section, d, onto, max_chars)
+    fallback = {"extract": False, "verify": False, "relations": False}
+    retries = {"extract": [], "verify": [], "relations": []}
+
+    result, fallback["extract"], retries["extract"] = stage_extract(
+        section, snapshot, model, configs)
+    verify_result, fallback["verify"], retries["verify"] = stage_verify(
+        section, snapshot, model, configs)
+    relations_result, fallback["relations"], retries["relations"] = \
+        stage_relations(section, snapshot, model, configs)
+
+    result["_verify"] = verify_result
+    result["_relations"] = relations_result
+    result["_fallback"] = fallback
+    result["_retries"] = {k: v[0] if v else 0 for k, v in retries.items()}
     result["_match"] = {
-        "known_terms": len(known),
-        "known_relations": len(known_rels),
-        "candidates": len(candidates),
+        "known_terms": len(snapshot["known"]),
+        "known_relations": len(snapshot["known_rels"]),
+        "candidates": len(snapshot["candidates"]),
     }
+    result["_candidates"] = snapshot["candidates"]
     return result
 
 
@@ -180,16 +294,26 @@ def apply_result(
     dictionary: Dictionary,
     onto: Ontology,
     section: Section,
+    candidates=None,
 ) -> tuple[Dictionary, Ontology, dict]:
-    """Apply the AI's extracted concepts to the dict + ontology.
+    """Apply the AI's decisions to the dict + ontology.
 
-    Only NEW concepts (not already in the dict/ontology) are added — this is
-    the deterministic "AI fills gaps" filter. Relations are re-extracted
-    deterministically over the updated ontology (the reliable path).
+    Three kinds of AI output are applied:
+      - "concepts": NEW concepts to add (deterministic "AI fills gaps" filter
+        skips anything already known).
+      - "candidate_verdicts": for each deterministic candidate, whether to
+        keep it (Q2: AI verifies the deterministic extractor's output).
+      - "relations": relations to add/update between known concepts (Q3).
 
     Returns (new_dict, new_ontology, summary).
     """
-    summary = {"terms_added": 0, "relations_added": 0, "terms_updated": 0}
+    summary = {
+        "terms_added": 0,
+        "relations_added": 0,
+        "terms_updated": 0,
+        "candidates_kept": 0,
+        "candidates_dropped": 0,
+    }
 
     # --- add terms (only NEW ones) ---
     existing_surfaces = {e.surface.lower() for e in dictionary.entries.values()}
@@ -199,13 +323,13 @@ def apply_result(
     new_entries: dict[str, DictionaryEntry] = dict(dictionary.entries)
     new_concepts: dict[str, Concept] = {c.id: c for c in onto.concepts}
 
-    for t in result.get("concepts", []):
-        canonical = (t.get("canonical") or "").strip()
+    def _add_concept(canonical: str, ctype: str) -> None:
+        nonlocal summary
+        canonical = canonical.strip()
         if not canonical:
-            continue
-        ctype = t.get("type", "concept")
+            return
         if canonical.lower() in existing_canonical_lower:
-            continue  # already known — skip (AI fills gaps only)
+            return  # already known — skip (AI fills gaps only)
         # add to dict
         if canonical.lower() not in existing_surfaces:
             new_entries[canonical] = DictionaryEntry(
@@ -218,19 +342,73 @@ def apply_result(
             new_concepts[cid] = Concept(id=cid, canonical=canonical, type=ctype)
             summary["terms_added"] += 1
 
-    # --- relations: re-extract deterministically over the updated ontology ---
+    # 1) NEW concepts from the AI
+    for t in result.get("concepts", []):
+        canonical = (t.get("canonical") or "").strip()
+        if not canonical:
+            continue
+        ctype = t.get("type", "concept")
+        _add_concept(canonical, ctype)
+
+    # 2) candidate verdicts (Q2): keep the deterministic candidates the AI
+    #    judged worth adding. `candidates` is the same list the prompt saw.
+    #    Only candidates explicitly marked keep:false are dropped; everything
+    #    else (no verdict, or beyond the cap) is kept deterministically so a
+    #    flaky verdict call never loses concepts.
+    verify = result.get("_verify", {})
+    if candidates:
+        verdicts = verify.get("verdicts", [])
+        dropped: set[int] = set()
+        for v in verdicts:
+            idx = v.get("id")
+            if idx is None or not (0 <= idx < len(candidates)):
+                continue
+            if v.get("keep"):
+                _add_concept(candidates[idx].canonical, v.get("type") or candidates[idx].type)
+                summary["candidates_kept"] += 1
+            else:
+                dropped.add(idx)
+                summary["candidates_dropped"] += 1
+        # keep any candidate that did not get an explicit keep:false verdict
+        for idx, cand in enumerate(candidates):
+            if idx not in dropped:
+                _add_concept(cand.canonical, cand.type)
+                summary["candidates_kept"] += 1
+
+    # --- relations ---
     # Preserve previously accumulated relations, add this chunk's new ones.
     new_onto = Ontology(concepts=list(new_concepts.values()))
-    chunk_relations = extract_relations([section], new_onto)
     existing_rels = {(r.source, r.rel, r.target) for r in onto.relations}
     new_relations = list(onto.relations)
-    added_rels = 0
+
+    def add_relation(source: str, rel: str, target: str) -> None:
+        nonlocal new_relations, existing_rels
+        if (source, rel, target) in existing_rels:
+            return
+        new_relations.append(Relation(source=source, rel=rel, target=target))
+        existing_rels.add((source, rel, target))
+        summary["relations_added"] += 1
+
+    # 3) AI-proposed relations (Q3): only keep those whose endpoints are known
+    #    concepts in the ontology (deterministic safety net).
+    concept_ids = {c.id for c in new_concepts.values()}
+    for r in result.get("_relations", {}).get("relations", []):
+        source = (r.get("source") or "").strip()
+        target = (r.get("target") or "").strip()
+        rel = (r.get("rel") or "").strip()
+        if not source or not target or not rel:
+            continue
+        sid = source.lower().replace(" ", "_")
+        tid = target.lower().replace(" ", "_")
+        if sid not in concept_ids or tid not in concept_ids:
+            continue
+        add_relation(sid, rel, tid)
+
+    # 4) deterministic re-extraction over the updated ontology (reliable path)
+    chunk_relations = extract_relations([section], new_onto)
     for r in chunk_relations:
-        if (r.source, r.rel, r.target) not in existing_rels:
-            new_relations.append(r)
-            existing_rels.add((r.source, r.rel, r.target))
-            added_rels += 1
-    summary["relations_added"] = added_rels
+        add_relation(r.source, r.rel, r.target)
+
     new_onto.relations = new_relations
 
     # rebuild dict + ontology
@@ -245,21 +423,86 @@ def main() -> None:
     ap.add_argument("--base-ontology", required=True, help="Bootstrap ontology.json")
     ap.add_argument("--dict", required=True, help="Output dict.json (checkpoint)")
     ap.add_argument("--ontology", required=True, help="Output ontology.json (checkpoint)")
-    ap.add_argument("--model", default="deepseek-v4-flash:0731-cloud")
+    ap.add_argument("--config", default="docs/domain/3gpp/config.yaml",
+                    help="Domain config.yaml (per-task model routing)")
+    ap.add_argument("--model", default=None,
+                    help="Fallback model name (overrides config default for all tasks)")
+    ap.add_argument("--extract-model", default=None, help="Override extract task model")
+    ap.add_argument("--verify-model", default=None, help="Override verify task model")
+    ap.add_argument("--relations-model", default=None, help="Override relations task model")
+    ap.add_argument("--max-tokens", type=int, default=None,
+                    help="Override max_tokens for all tasks (default: from config)")
     ap.add_argument("--max-chars", type=int, default=800)
     ap.add_argument("--limit", type=int, default=0, help="0 = all sections")
     ap.add_argument("--sleep", type=float, default=0.0)
+    ap.add_argument("--empty", action="store_true",
+                    help="Bootstrap from an EMPTY dict/ontology (ignore --base-dict/--base-ontology)")
+    ap.add_argument("--resume", action="store_true",
+                    help="Resume from the checkpoint files (--dict/--ontology + .progress.jsonl). "
+                         "Without this, a fresh bootstrap is done (base or empty).")
     args = ap.parse_args()
 
     parsed = Path(args.parsed)
     dict_path = Path(args.dict)
     onto_path = Path(args.ontology)
 
-    # Bootstrap: start from base dict/ontology, or resume from checkpoint.
-    if dict_path.exists() and onto_path.exists():
+    # Load per-task model routing from the domain pack's config.yaml. Each of
+    # the three LLM calls (extract/verify/relations) resolves to its own model
+    # config; CLI --*-model / --max-tokens override the config.
+    domain_cfg = load_domain(Path(args.config).parent)
+    llm_cfg = domain_cfg.llm
+    task_configs: dict[str, LLMConfig] = {}
+    for task in ("extract", "verify", "relations"):
+        cfg = llm_cfg.models.get(task, llm_cfg.default)
+        # CLI overrides (model name / max_tokens) win over config.
+        override_model = {
+            "extract": args.extract_model,
+            "verify": args.verify_model,
+            "relations": args.relations_model,
+        }[task] or args.model
+        if override_model:
+            cfg = LLMConfig(
+                enabled=cfg.enabled,
+                model=override_model,
+                provider=cfg.provider,
+                api_base=cfg.api_base,
+                api_key=cfg.api_key,
+                temperature=cfg.temperature,
+                max_tokens=cfg.max_tokens,
+                extra=dict(cfg.extra),
+            )
+        if args.max_tokens:
+            cfg = LLMConfig(
+                enabled=cfg.enabled,
+                model=cfg.model,
+                provider=cfg.provider,
+                api_base=cfg.api_base,
+                api_key=cfg.api_key,
+                temperature=cfg.temperature,
+                max_tokens=args.max_tokens,
+                extra=dict(cfg.extra),
+            )
+        task_configs[task] = cfg
+    fallback_model = args.model or llm_cfg.default.model
+    print(
+        "Task routing: "
+        + ", ".join(f"{t}={c.model}(mt={c.max_tokens})" for t, c in task_configs.items())
+    )
+
+    # Bootstrap: resume from checkpoint (--resume), or start fresh from the
+    # base dict/ontology, or from an empty dict/ontology (--empty).
+    if args.resume:
+        if not (dict_path.exists() and onto_path.exists()):
+            raise SystemExit(
+                f"Resume requested but checkpoint missing: {dict_path} / {onto_path}"
+            )
         dictionary = load_dict(dict_path)
         onto = load_ontology(onto_path)
         print(f"Resumed from checkpoint: {len(dictionary.entries)} dict entries, {len(onto.concepts)} concepts")
+    elif args.empty:
+        dictionary = build_automaton({})
+        onto = Ontology()
+        print(f"Bootstrap (EMPTY): {len(dictionary.entries)} dict entries, {len(onto.concepts)} concepts")
     else:
         dictionary = load_dict(Path(args.base_dict))
         onto = load_ontology(Path(args.base_ontology))
@@ -288,18 +531,46 @@ def main() -> None:
     match_terms_total = 0
     match_rels_total = 0
     match_cands_total = 0
+    # Total content chars actually fed to the LLM (bounded by max_chars per
+    # chunk). Sections vary in size, so sec/section is misleading; chars/sec
+    # is the fair throughput metric when comparing chunk sizes.
+    chars_total = 0
+    # Fallback counters: how often each call fell back to deterministic
+    # because the model failed (returned empty / malformed after retries).
+    fb_extract = 0
+    fb_verify = 0
+    fb_relations = 0
+    # Retry counters: total attempts across all calls (1 = first try, >1 = retry).
+    rt_extract = 0
+    rt_verify = 0
+    rt_relations = 0
 
     with log_path.open("a", encoding="utf-8") as log:
         for i, section in enumerate(sections):
             if section.clause in done:
                 continue
             try:
-                result = process_chunk(section, dictionary, onto, args.model, args.max_chars)
+                result = process_chunk(
+                    section, dictionary, onto, fallback_model, args.max_chars,
+                    configs=task_configs,
+                )
                 match = result.pop("_match", {})
+                candidates = result.pop("_candidates", None)
                 match_terms_total += match.get("known_terms", 0)
                 match_rels_total += match.get("known_relations", 0)
                 match_cands_total += match.get("candidates", 0)
-                dictionary, onto, summary = apply_result(result, dictionary, onto, section)
+                chars_total += min(len(section.text), args.max_chars)
+                fb = result.get("_fallback", {})
+                fb_extract += 1 if fb.get("extract") else 0
+                fb_verify += 1 if fb.get("verify") else 0
+                fb_relations += 1 if fb.get("relations") else 0
+                rt = result.get("_retries", {})
+                rt_extract += rt.get("extract", 0)
+                rt_verify += rt.get("verify", 0)
+                rt_relations += rt.get("relations", 0)
+                dictionary, onto, summary = apply_result(
+                    result, dictionary, onto, section, candidates
+                )
                 terms_total += summary["terms_added"]
                 rels_total += summary["relations_added"]
                 ok += 1
@@ -331,12 +602,18 @@ def main() -> None:
             if (i + 1) % 10 == 0 or i == total - 1:
                 el = time.time() - t_start
                 rate = (ok + fail) / el if el else 0
+                chars_rate = chars_total / el if el else 0
                 print(
                     f"[{i+1}/{total}] ok={ok} fail={fail} terms={terms_total} "
-                    f"rels={rels_total} rate={rate:.2f}/s elapsed={el:.0f}s "
+                    f"rels={rels_total} rate={rate:.2f}/s chars={chars_rate:.0f}/s "
+                    f"elapsed={el:.0f}s "
                     f"dict={len(dictionary.entries)} concepts={len(onto.concepts)} "
                     f"match_terms={match_terms_total} match_rels={match_rels_total} "
-                    f"match_cands={match_cands_total}",
+                    f"match_cands={match_cands_total} "
+                    f"fb_extract={fb_extract} fb_verify={fb_verify} "
+                    f"fb_relations={fb_relations} "
+                    f"rt_extract={rt_extract} rt_verify={rt_verify} "
+                    f"rt_relations={rt_relations}",
                     flush=True,
                 )
             if args.sleep:
