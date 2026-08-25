@@ -80,11 +80,11 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
              "fb_relations": 0, "rt_extract": 0, "rt_verify": 0,
              "rt_relations": 0, "match_terms_total": 0,
              "match_rels_total": 0, "match_cands_total": 0}
-    pending = {}  # clause -> (section, snapshot, futures, retries)
-    order = []    # clauses in submission order
+    pending = {}  # index -> (section, snapshot, futures, retries)
+    order = []    # indices in submission order
     applied = set()
 
-    def _submit(section):
+    def _submit(index, section):
         snapshot = compute_snapshot(section, dictionary, onto, max_chars)
         retries = {"extract": [], "verify": [], "relations": []}
         f_extract = queues["extract"].submit(
@@ -108,9 +108,9 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
                                                  snapshot["candidate_rels"])),
             max_tokens=2048, temperature=0.1, attempts=5,
             retries=retries["relations"])
-        pending[section.clause] = (section, snapshot, f_extract, f_verify,
-                                   f_relations, retries)
-        order.append(section.clause)
+        pending[index] = (section, snapshot, f_extract, f_verify,
+                          f_relations, retries)
+        order.append(index)
 
     def _apply_next():
         nonlocal dictionary, onto
@@ -118,9 +118,9 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
             order.pop(0)
         if not order:
             return
-        clause = order[0]
+        index = order[0]
         section, snapshot, f_extract, f_verify, f_relations, retries = \
-            pending[clause]
+            pending[index]
         if not (f_extract.done() and f_verify.done() and f_relations.done()):
             return
         try:
@@ -152,24 +152,27 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
             stats["ok"] += 1
             save_dict(dictionary, dict_path)
             save_ontology(onto, onto_path)
+            # `_candidates` holds CandidateTerm objects (not JSON-serializable);
+            # pop it before logging, mirroring the sequential path.
+            result.pop("_candidates", None)
             with log_path.open("a", encoding="utf-8") as log:
-                log.write(json.dumps({"clause": clause,
+                log.write(json.dumps({"index": index, "clause": section.clause,
                                       "terms_added": summary["terms_added"],
                                       "relations_added": summary["relations_added"],
                                       "match": match, "result": result}) + "\n")
         except Exception as e:  # noqa: BLE001
             stats["fail"] += 1
             with log_path.open("a", encoding="utf-8") as log:
-                log.write(json.dumps({"clause": clause, "error": str(e),
-                                      "result": {}}) + "\n")
-        applied.add(clause)
-        pending.pop(clause, None)
+                log.write(json.dumps({"index": index, "clause": section.clause,
+                                      "error": str(e), "result": {}}) + "\n")
+        applied.add(index)
+        pending.pop(index, None)
         order.pop(0)
 
-    for section in sections:
-        if section.clause in done:
+    for index, section in enumerate(sections):
+        if index in done:
             continue
-        _submit(section)
+        _submit(index, section)
         _apply_next()
     # drain remaining
     while order:

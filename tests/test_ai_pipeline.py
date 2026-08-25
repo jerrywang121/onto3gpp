@@ -147,6 +147,7 @@ def test_run_pipeline_applies_in_order_and_checkpoints(tmp_path):
     assert onto_path.exists()
     lines = log_path.read_text().strip().splitlines()
     assert len(lines) == 3
+    assert [json.loads(l)["index"] for l in lines] == [0, 1, 2]
     assert [json.loads(l)["clause"] for l in lines] == ["c0", "c1", "c2"]
 
 
@@ -172,13 +173,14 @@ def test_run_pipeline_skips_done_clauses(tmp_path):
     stats = run_pipeline(sections, d, onto, queues, max_chars=800,
                          fallback_model="m", configs={},
                          dict_path=dict_path, onto_path=onto_path,
-                         log_path=log_path, done={"c0"},
+                         log_path=log_path, done={0},
                          on_progress=lambda i, t, s: None)
 
     assert stats["ok"] == 2
     assert stats["fail"] == 0
     lines = log_path.read_text().strip().splitlines()
     assert len(lines) == 2
+    assert [json.loads(l)["index"] for l in lines] == [1, 2]
     assert [json.loads(l)["clause"] for l in lines] == ["c1", "c2"]
 
 

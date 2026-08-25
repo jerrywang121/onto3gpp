@@ -518,13 +518,15 @@ def main() -> None:
     if args.limit:
         sections = sections[: args.limit]
 
-    # Track which clauses are done (resume support).
-    done: set[str] = set()
+    # Track which sections are done (resume support). Keyed by section INDEX,
+    # not clause: clause strings repeat across a spec (e.g. "1", "2", "3"
+    # appear in both front matter and body), so clause alone is ambiguous.
+    done: set[int] = set()
     log_path = dict_path.with_suffix(".progress.jsonl")
     if log_path.exists():
         for line in log_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
-                done.add(json.loads(line)["clause"])
+                done.add(json.loads(line)["index"])
 
     if args.parallel:
         from ai_pipeline import ModelQueue, run_pipeline
@@ -575,7 +577,7 @@ def main() -> None:
 
     with log_path.open("a", encoding="utf-8") as log:
         for i, section in enumerate(sections):
-            if section.clause in done:
+            if i in done:
                 continue
             try:
                 result = process_chunk(
@@ -608,6 +610,7 @@ def main() -> None:
                 log.write(
                     json.dumps(
                         {
+                            "index": i,
                             "clause": section.clause,
                             "terms_added": summary["terms_added"],
                             "relations_added": summary["relations_added"],
@@ -622,7 +625,7 @@ def main() -> None:
                 fail += 1
                 log.write(
                     json.dumps(
-                        {"clause": section.clause, "error": str(e), "result": {}}
+                        {"index": i, "clause": section.clause, "error": str(e), "result": {}}
                     )
                     + "\n"
                 )
