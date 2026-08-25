@@ -526,7 +526,14 @@ def main() -> None:
     if log_path.exists():
         for line in log_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
-                done.add(json.loads(line)["index"])
+                rec = json.loads(line)
+                # Pre-index logs (written before the index-keyed resume fix)
+                # have no "index" field; fall back to clause for those.
+                idx = rec.get("index")
+                if idx is None:
+                    idx = rec.get("clause")
+                if idx is not None:
+                    done.add(idx)
 
     if args.parallel:
         from ai_pipeline import ModelQueue, run_pipeline
