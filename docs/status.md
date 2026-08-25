@@ -505,6 +505,29 @@ types into curated TBox types.
   the AI-as-judge), not re-extract everything. **Do not promote** the
   AI-extracted dict/ontology to `main`.
 
+**Progressive AI-assisted extraction (2026-08-25) — see `docs/ai_ingestion_report.md` §8:**
+- Reframed strategy (ADR-0011): AI **fills gaps** the deterministic extractor
+  misses, fed the current dict/ontology as context — not re-extract everything.
+- `prototypes/ai_ingest/ai_progressive.py`: per chunk (a) deterministic
+  candidates, (b) known terms/relations from the current dict/ontology, (c) AI
+  lists NEW concepts (positive-context prompt; already-known filtered
+  deterministically in `apply_result`), (d) relations re-extracted
+  deterministically. Dict/ontology updated incrementally (progressive
+  bootstrapping); checkpointed + resumable.
+- **Prompt reliability lesson:** local models return **empty** on exclusion
+  lists ("do NOT re-add these"); the reliable format is a plain "extract
+  concepts" prompt with candidates + known terms as **positive reference
+  context**, plus a deterministic filter as safety net.
+- **Monitoring added:** each chunk's result records `_match` metadata
+  (`known_terms`, `known_relations`, `candidates`) + `terms_added` /
+  `relations_added`; the CLI prints running totals every 10 chunks. This
+  tracks whether the context size (dict/ontology growth) and per-query
+  addition rate grow over the run.
+- **Status:** 20-section smoke test confirmed the monitoring works (15/20 ok,
+  22 terms + 3 relations added; 25% failure rate from local-model flakiness —
+  failed sections skipped, run checkpointed). Full 532-section run in progress;
+  eval vs. baseline (MRR 0.6369) pending.
+
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 
 **Design:** Use AI as judge during inference to build a weighted path search

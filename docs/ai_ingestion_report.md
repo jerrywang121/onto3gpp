@@ -112,3 +112,90 @@ deterministic extractor misses**, not re-extract everything.
 | Extraction script | `prototypes/ai_ingest/ai_extract.py` |
 | Hybrid builder | `prototypes/ai_ingest/ai_hybrid.py` |
 | AI-only builder | `prototypes/ai_ingest/ai_build.py` |
+
+---
+
+## 8. Follow-up: Progressive AI-assisted extraction (2026-08-25)
+
+The negative result above led to a **reframed strategy** (ADR-0011): instead of
+asking the AI to re-extract everything from scratch, use it to **fill gaps the
+deterministic extractor misses**, feeding the current dict/ontology as context.
+
+### 8.1 Design (`prototypes/ai_ingest/ai_progressive.py`)
+
+For each input chunk (section), the pipeline runs a/b/c/d:
+
+- **(a) Deterministic extraction** → candidate terms + relations
+  (`extract_candidates`, `extract_relations`).
+- **(b) Match the chunk against the CURRENT dict + ontology** → known terms
+  (`d.find`) and known relations (those touching a known term).
+- **(c) AI decides what to ADD** — given the chunk + the deterministic
+  candidates + the known terms as **positive reference context**, the model
+  lists NEW concepts the deterministic extractor missed.
+- **(d) Deterministic filter + apply** — only concepts **not already in** the
+  dict/ontology are added (`apply_result`); relations are re-extracted
+  deterministically over the updated ontology (the reliable path).
+
+The dict + ontology are updated **incrementally**, so later chunks see the
+accumulated knowledge (**progressive bootstrapping**). The run is
+**checkpointed + resumable**: dict/ontology are written to disk after each
+chunk, and a `.progress.jsonl` log records per-chunk additions.
+
+### 8.2 Prompt design (reliability lesson)
+
+The local Ollama models return **empty** when given an exclusion list
+("do NOT re-add these"). The reliable format is a **plain "extract concepts"**
+prompt. So the prompt feeds the deterministic candidates + known terms as
+**positive reference context** and asks for NEW concepts; already-known
+concepts are still filtered out **deterministically** in `apply_result` as a
+safety net. This gives the "AI fills gaps" behavior without relying on the
+flaky model to respect an exclusion list.
+
+### 8.3 Monitoring (match-size + per-query additions)
+
+Because the dict/ontology grow as the run progresses, the context fed to the AI
+grows too. To detect this, each chunk's result records a `_match` metadata
+block:
+
+```json
+{"clause": "4.3.1.1", "terms_added": 8, "relations_added": 1,
+ "match": {"known_terms": 17, "known_relations": 0, "candidates": 9},
+ "result": {"concepts": [...]}}
+```
+
+- `match.known_terms` / `match.known_relations` — how many terms/relations the
+  **current** dict/ontology matched in this chunk (grows as the KB expands).
+- `match.candidates` — deterministic candidates found in this chunk.
+- `terms_added` / `relations_added` — new entries added by this chunk.
+
+The CLI also prints running totals (`match_terms`, `match_rels`,
+`match_cands`) every 10 chunks, so we can see whether the context size and the
+per-query addition rate grow over the run.
+
+### 8.4 Status
+
+A 20-section smoke test confirmed the monitoring works (progress log shows
+`match` metadata + per-chunk additions). The full 532-section run is in
+progress; eval results vs. the verb-based baseline (MRR 0.6369) will be
+appended here when complete.
+
+**20-section smoke test (2026-08-25):**
+
+| Metric | Value |
+|---|---|
+| Sections processed | 20 |
+| OK / failed | 15 / 5 |
+| Terms added | 22 |
+| Relations added | 3 |
+| Final dict / concepts | 5,826 / 5,789 |
+| Rate | ~0.04 sections/s (~25s/section) |
+
+- **Monitoring confirmed working:** each chunk logged `match.known_terms`,
+  `match.known_relations`, `match.candidates` plus `terms_added` /
+  `relations_added`. Running totals printed every 10 chunks.
+- **25% failure rate (5/20):** the model returned empty across all 10 retries
+  on 5 sections (`all 10 attempts failed: None`). This is the known local-model
+  flakiness; failed sections are skipped and the run continues (checkpointed).
+- **Match sizes grow with the KB:** `known_terms` ranged 0→53 across chunks,
+  confirming the context fed to the AI grows as the dict/ontology expand — the
+  exact growth the monitoring was designed to track.

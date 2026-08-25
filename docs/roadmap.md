@@ -272,6 +272,19 @@ pre-AI-retyping state; see `docs/status.md` §9).
 > *fill gaps* the deterministic extractor misses (gated by the AI-as-judge),
 > not re-extract everything. The AI-extracted dict/ontology is **not promoted**
 > to `main`.
+>
+> **Progressive AI-assisted extraction (2026-08-25):** implemented
+> `prototypes/ai_ingest/ai_progressive.py` — per chunk, feed the deterministic
+> candidates + known terms (from the current dict/ontology) into the AI as
+> **positive reference context**, ask it for NEW concepts, and filter
+> already-known concepts deterministically. Dict/ontology updated
+> incrementally (progressive bootstrapping), checkpointed + resumable. Added
+> **match-size + per-query-addition monitoring** (`_match` metadata:
+> `known_terms`, `known_relations`, `candidates`; running totals every 10
+> chunks) to track context growth as the KB expands. 20-section smoke test
+> confirmed monitoring works (15/20 ok, 22 terms + 3 relations added; 25%
+> failure rate from local-model flakiness). Full 532-section run + eval vs.
+> baseline (MRR 0.6369) pending.
 
 **Branch:** `stage/9-ai-ingestion`
 
