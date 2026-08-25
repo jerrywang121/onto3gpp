@@ -21,7 +21,7 @@
 | 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
 | 7 Two-level graph | 🟢 done | `stage/7-two-level-graph` | — | TBox + ABox + align + storage; conformance 0.0 on current ABox (see §7) |
 | 8 AI provider config | 🟢 done | `stage/8-ai-provider-config` | — | Multi-model routing + CLI/env override (ADR-0012) |
-| 9 AI ingestion | 🟢 done | `stage/9-ai-ingestion` | — | Detect → extract → align → evolve → merge; CLI `ingest` (ADR-0011) |
+| 9 AI ingestion | 🟢 done | `stage/9-ai-ingestion` | — | Detect → extract → align → evolve → merge; CLI `ingest` (ADR-0011). **Eval: AI-assisted extraction REGRESSES MRR vs verb-based (see §9)** |
 | 10 AI path search | ⚪ deferred | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
@@ -481,6 +481,29 @@ offline AI config surface). Gate met.
 **Open questions:** evidence threshold for TBox evolution; merge-precision
 metric for the ingestion eval gate; AI-as-judge retyping of generic extraction
 types into curated TBox types.
+
+**AI-assisted extraction eval (2026-08-25) — see `docs/ai_ingestion_report.md`:**
+- Ran AI-assisted ingestion on real TS 38.300 (329/532 sections, local Ollama
+  `deepseek-v4-flash:0731-cloud` extract / `minimax-m3:cloud` judge).
+- Built three variants and evaluated against `data/gold_queries_38300.jsonl`:
+
+| Variant | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|---------|-----|---------|----------|-----------|
+| **Baseline (verb-based)** | **0.6369** | **0.6699** | **1.5833** | **2.3333** |
+| Hybrid (base + AI) | 0.5813 | 0.6022 | 1.5000 | 2.0000 |
+| AI-only | 0.5382 | 0.5594 | 1.3333 | 1.7500 |
+
+- **Finding: AI-assisted extraction REGRESSES retrieval** on this local-model
+  setup. Hybrid loses 0.056 MRR, AI-only loses 0.099 MRR vs. baseline.
+- **Root cause:** local models return generic, non-discriminative concepts
+  (`NR`, `5GC`, `NG-RAN`, "Artificial Intelligence", "Augmented Reality") that
+  expand queries with irrelevant terms, diluting precision. Models are also
+  slow (~0.08 sections/s) and nondeterministic (empty/malformed JSON; a
+  "retype terms" prompt failed 100%).
+- **Conclusion:** the deterministic verb-based pipeline is the right runtime
+  default. AI should *fill gaps* the deterministic extractor misses (gated by
+  the AI-as-judge), not re-extract everything. **Do not promote** the
+  AI-extracted dict/ontology to `main`.
 
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 

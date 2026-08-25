@@ -156,43 +156,43 @@ judge_threshold: 0.8
 # `api_base:`/`api_key:` block (the old single-model form) is treated as
 # `default` for backward compatibility.
 llm:
-  enabled: false
+  enabled: true
   default:
-    provider: openai
-    model: gpt-4o-mini
-    api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
-    api_key: null         # set via env (OPENAI_API_KEY) or here
-    temperature: 0.0
+    provider: ollama
+    model: deepseek-v4-flash:0731-cloud
+    api_base: http://localhost:11434        # e.g. http://localhost:8000/v1 for a local vLLM
+    api_key: null                           # set via env (OPENAI_API_KEY) or here
+    temperature: 0.1
     max_tokens: 1024
   models:
     extract:
-      provider: openai
-      model: gpt-4o-mini
-      temperature: 0.0
+      provider: ollama
+      model: deepseek-v4-flash:0731-cloud
+      temperature: 0.1
       max_tokens: 1024
     judge:
-      provider: openai
-      model: gpt-4o
-      temperature: 0.0
+      provider: ollama
+      model: minimax-m3:cloud
+      temperature: 0.5
       max_tokens: 1024
     align:
-      provider: openai
-      model: gpt-4o-mini
-      temperature: 0.0
+      provider: ollama
+      model: deepseek-v4-flash:0731-cloud
+      temperature: 0.1
       max_tokens: 1024
     merge:
       provider: ollama
-      model: llama3
+      model: deepseek-v4-flash:0731-cloud
       api_base: http://localhost:11434
-      temperature: 0.0
+      temperature: 0.1
       max_tokens: 1024
     domain_detect:
-      provider: openai
-      model: gpt-4o-mini
-      temperature: 0.0
+      provider: ollama
+      model: deepseek-v4-flash:0731-cloud
+      temperature: 0.1
       max_tokens: 256
     improve:
-      provider: openai
-      model: gpt-4o-mini
-      temperature: 0.0
+      provider: ollama
+      model: deepseek-v4-flash:0731-cloud
+      temperature: 0.1
       max_tokens: 1024

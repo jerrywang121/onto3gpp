@@ -265,6 +265,14 @@ precision + TBox conformance measured; no regression on the deterministic
 runtime. **Met** (conformance 0.0 on deterministic-first output is the expected
 pre-AI-retyping state; see `docs/status.md` §9).
 
+> **AI-assisted extraction eval (2026-08-25):** AI-assisted extraction on real
+> TS 38.300 **regresses** retrieval vs. the deterministic verb-based baseline
+> (hybrid MRR 0.5813, AI-only 0.5382 vs. baseline 0.6369) on local Ollama
+> models. See `docs/ai_ingestion_report.md`. **Reframed AI role:** AI should
+> *fill gaps* the deterministic extractor misses (gated by the AI-as-judge),
+> not re-extract everything. The AI-extracted dict/ontology is **not promoted**
+> to `main`.
+
 **Branch:** `stage/9-ai-ingestion`
 
 ---
