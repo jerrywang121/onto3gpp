@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import queue
 import threading
+import time
 from concurrent.futures import Future
 
 from ai_helpers import complete_json
@@ -117,19 +118,37 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
         while order and order[0] in applied:
             order.pop(0)
         if not order:
-            return
+            return True
         index = order[0]
         section, snapshot, f_extract, f_verify, f_relations, retries = \
             pending[index]
         if not (f_extract.done() and f_verify.done() and f_relations.done()):
-            return
+            return False
         try:
             result = {}
-            result.update(f_extract.result())
-            result["_verify"] = f_verify.result()
-            result["_relations"] = f_relations.result()
-            result["_fallback"] = {"extract": False, "verify": False,
-                                   "relations": False}
+            fallback = {"extract": False, "verify": False, "relations": False}
+            # Per-stage fallback: if a stage's future raised (flaky model
+            # exhausting attempts), fall back to an empty result for that
+            # stage and mark it, mirroring the sequential stage_* behavior.
+            # A failed stage must not lose the other stages' reliable output.
+            try:
+                result.update(f_extract.result())
+            except Exception:  # noqa: BLE001
+                fallback["extract"] = True
+            try:
+                result["_verify"] = f_verify.result()
+            except Exception:  # noqa: BLE001
+                fallback["verify"] = True
+                result["_verify"] = {}
+            try:
+                result["_relations"] = f_relations.result()
+            except Exception:  # noqa: BLE001
+                fallback["relations"] = True
+                result["_relations"] = {}
+            result["_fallback"] = fallback
+            stats["fb_extract"] += 1 if fallback["extract"] else 0
+            stats["fb_verify"] += 1 if fallback["verify"] else 0
+            stats["fb_relations"] += 1 if fallback["relations"] else 0
             result["_retries"] = {k: v[0] if v else 0
                                   for k, v in retries.items()}
             rt = result["_retries"]
@@ -168,13 +187,16 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
         applied.add(index)
         pending.pop(index, None)
         order.pop(0)
+        return True
 
     for index, section in enumerate(sections):
         if index in done:
             continue
         _submit(index, section)
         _apply_next()
-    # drain remaining
+    # drain remaining: wait for the head chunk's futures to complete, then
+    # apply. Sleep briefly when the head is still pending to avoid a busy-spin.
     while order:
-        _apply_next()
+        if not _apply_next():
+            time.sleep(0.05)
     return stats

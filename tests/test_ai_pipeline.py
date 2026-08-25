@@ -113,6 +113,26 @@ class _FakeQueue:
         pass
 
 
+class _FakeQueueRaising:
+    """Deterministic queue whose futures raise (simulates a flaky model)."""
+    def __init__(self, results):
+        self.results = results
+        self.calls = 0
+    def submit(self, prompt, *, max_tokens, temperature, attempts, retries):
+        self.calls += 1
+        if retries is not None:
+            retries.append(1)
+        fut = Future()
+        item = self.results.pop(0)
+        if isinstance(item, Exception):
+            fut.set_exception(item)
+        else:
+            fut.set_result(item)
+        return fut
+    def shutdown(self):
+        pass
+
+
 def test_run_pipeline_applies_in_order_and_checkpoints(tmp_path):
     from ai_progressive import apply_result
     from onto3gpp.compile.dictionary import build_automaton
@@ -194,3 +214,75 @@ def test_parallel_flag_parses():
          "--dict", "out.json", "--ontology", "out_onto.json", "--parallel"]
     )
     assert args.parallel is True
+
+
+# --- Final review: per-stage fallback + drain path ---
+
+def test_run_pipeline_per_stage_fallback(tmp_path):
+    """A failing stage must fall back (empty result + fb flag) without losing
+    the other stages' output or marking the chunk as failed."""
+    from onto3gpp.compile.dictionary import build_automaton
+    from onto3gpp.ontology.schema import Ontology
+    from onto3gpp.parser import Section
+
+    sections = [Section(spec="38.300", release="i30", clause="c0", title="t",
+                        text="text", parent_clause="", metadata={})]
+    d = build_automaton({})
+    onto = Ontology()
+    # extract succeeds, verify raises, relations succeeds
+    queues = {
+        "extract": _FakeQueue([{"concepts": []}]),
+        "verify": _FakeQueueRaising([RuntimeError("flaky")]),
+        "relations": _FakeQueue([{}]),
+    }
+    dict_path = tmp_path / "dict.json"
+    onto_path = tmp_path / "ontology.json"
+    log_path = tmp_path / "dict.progress.jsonl"
+
+    stats = run_pipeline(sections, d, onto, queues, max_chars=800,
+                         fallback_model="m", configs={},
+                         dict_path=dict_path, onto_path=onto_path,
+                         log_path=log_path, done=set())
+
+    assert stats["ok"] == 1
+    assert stats["fail"] == 0
+    assert stats["fb_extract"] == 0
+    assert stats["fb_verify"] == 1
+    assert stats["fb_relations"] == 0
+    lines = log_path.read_text().strip().splitlines()
+    assert len(lines) == 1
+    rec = json.loads(lines[0])
+    assert rec["result"]["_fallback"] == {"extract": False, "verify": True,
+                                          "relations": False}
+
+
+def test_run_pipeline_drain_with_pending_futures(tmp_path):
+    """The drain loop must wait for the head chunk's futures to complete
+    (not busy-spin) and still apply all chunks in order."""
+    from onto3gpp.compile.dictionary import build_automaton
+    from onto3gpp.ontology.schema import Ontology
+    from onto3gpp.parser import Section
+
+    sections = [Section(spec="38.300", release="i30", clause=f"c{i}", title="t",
+                        text="text", parent_clause="", metadata={})
+                for i in range(3)]
+    d = build_automaton({})
+    onto = Ontology()
+    queues = {
+        "extract": _FakeQueue([{"concepts": []}] * 3),
+        "verify": _FakeQueue([{}] * 3),
+        "relations": _FakeQueue([{}] * 3),
+    }
+    dict_path = tmp_path / "dict.json"
+    onto_path = tmp_path / "ontology.json"
+    log_path = tmp_path / "dict.progress.jsonl"
+
+    stats = run_pipeline(sections, d, onto, queues, max_chars=800,
+                         fallback_model="m", configs={},
+                         dict_path=dict_path, onto_path=onto_path,
+                         log_path=log_path, done=set())
+
+    assert stats["ok"] == 3
+    assert stats["fail"] == 0
+    lines = log_path.read_text().strip().splitlines()
+    assert [json.loads(l)["index"] for l in lines] == [0, 1, 2]
