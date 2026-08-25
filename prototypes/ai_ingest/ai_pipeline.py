@@ -8,6 +8,7 @@ concurrently, one per stage.
 """
 from __future__ import annotations
 
+import json
 import queue
 import threading
 from concurrent.futures import Future
@@ -62,3 +63,111 @@ class ModelQueue:
     def shutdown(self) -> None:
         self._queue.put(None)
         self._thread.join(timeout=5)
+
+
+def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
+                 fallback_model, configs, dict_path, onto_path, log_path,
+                 done, on_progress=None) -> dict:
+    """Run the 3-stage pipeline with ordered apply. Returns aggregate stats."""
+    from ai_progressive import (compute_snapshot, apply_result, save_dict,
+                                save_ontology, EXTRACT_PROMPT_TEMPLATE,
+                                VERIFY_PROMPT_TEMPLATE, RELATIONS_PROMPT_TEMPLATE,
+                                CONCEPT_TYPES, VERIFY_CANDIDATE_CAP,
+                                _fmt_known, _fmt_candidates, _fmt_relations)
+
+    stats = {"ok": 0, "fail": 0, "terms_total": 0, "rels_total": 0,
+             "chars_total": 0, "fb_extract": 0, "fb_verify": 0,
+             "fb_relations": 0, "rt_extract": 0, "rt_verify": 0,
+             "rt_relations": 0, "match_terms_total": 0,
+             "match_rels_total": 0, "match_cands_total": 0}
+    pending = {}  # clause -> (section, snapshot, futures, retries)
+    order = []    # clauses in submission order
+    applied = set()
+
+    def _submit(section):
+        snapshot = compute_snapshot(section, dictionary, onto, max_chars)
+        retries = {"extract": [], "verify": [], "relations": []}
+        f_extract = queues["extract"].submit(
+            EXTRACT_PROMPT_TEMPLATE.format(text=snapshot["text"],
+                                           types=CONCEPT_TYPES,
+                                           known=_fmt_known(snapshot["known"])),
+            max_tokens=2048, temperature=0.1, attempts=10,
+            retries=retries["extract"])
+        f_verify = queues["verify"].submit(
+            VERIFY_PROMPT_TEMPLATE.format(text=snapshot["text"],
+                                          candidates=_fmt_candidates(
+                                              snapshot["candidates"],
+                                              cap=VERIFY_CANDIDATE_CAP)),
+            max_tokens=2048, temperature=0.1, attempts=5,
+            retries=retries["verify"])
+        f_relations = queues["relations"].submit(
+            RELATIONS_PROMPT_TEMPLATE.format(text=snapshot["text"],
+                                             known_relations=_fmt_relations(
+                                                 snapshot["known_rels"]),
+                                             candidate_relations=_fmt_relations(
+                                                 snapshot["candidate_rels"])),
+            max_tokens=2048, temperature=0.1, attempts=5,
+            retries=retries["relations"])
+        pending[section.clause] = (section, snapshot, f_extract, f_verify,
+                                   f_relations, retries)
+        order.append(section.clause)
+
+    def _apply_next():
+        nonlocal dictionary, onto
+        while order and order[0] in applied:
+            order.pop(0)
+        if not order:
+            return
+        clause = order[0]
+        section, snapshot, f_extract, f_verify, f_relations, retries = \
+            pending[clause]
+        if not (f_extract.done() and f_verify.done() and f_relations.done()):
+            return
+        try:
+            result = {}
+            result.update(f_extract.result())
+            result["_verify"] = f_verify.result()
+            result["_relations"] = f_relations.result()
+            result["_fallback"] = {"extract": False, "verify": False,
+                                   "relations": False}
+            result["_retries"] = {k: v[0] if v else 0
+                                  for k, v in retries.items()}
+            result["_match"] = {"known_terms": len(snapshot["known"]),
+                                "known_relations": len(snapshot["known_rels"]),
+                                "candidates": len(snapshot["candidates"])}
+            result["_candidates"] = snapshot["candidates"]
+            match = result["_match"]
+            stats["match_terms_total"] += match["known_terms"]
+            stats["match_rels_total"] += match["known_relations"]
+            stats["match_cands_total"] += match["candidates"]
+            stats["chars_total"] += min(len(section.text), max_chars)
+            dictionary, onto, summary = apply_result(
+                result, dictionary, onto, section, snapshot["candidates"])
+            stats["terms_total"] += summary["terms_added"]
+            stats["rels_total"] += summary["relations_added"]
+            stats["ok"] += 1
+            save_dict(dictionary, dict_path)
+            save_ontology(onto, onto_path)
+            with log_path.open("a", encoding="utf-8") as log:
+                log.write(json.dumps({"clause": clause,
+                                      "terms_added": summary["terms_added"],
+                                      "relations_added": summary["relations_added"],
+                                      "match": match, "result": result}) + "\n")
+        except Exception as e:  # noqa: BLE001
+            stats["fail"] += 1
+            with log_path.open("a", encoding="utf-8") as log:
+                log.write(json.dumps({"clause": clause, "error": str(e),
+                                      "result": {}}) + "\n")
+        applied.add(clause)
+        pending.pop(clause, None)
+        order.pop(0)
+
+    for section in sections:
+        if section.clause in done:
+            continue
+        _submit(section)
+        _apply_next()
+    # drain remaining
+    while order:
+        _apply_next()
+    return stats
