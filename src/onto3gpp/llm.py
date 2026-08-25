@@ -33,7 +33,13 @@ class LLMDisabledError(RuntimeError):
 
 @dataclass
 class LLMConfig:
-    """Configuration for an external AI model."""
+    """Configuration for external AI models (multi-model routing, ADR-0012).
+
+    Supports a ``default`` model plus a ``models`` map of named task→model
+    configs. A task with no explicit entry falls back to ``default``. The
+    flat single-model form (``model``/``provider``/``api_base``/``api_key``)
+    is treated as ``default`` for backward compatibility.
+    """
 
     enabled: bool = False
     model: str = "gpt-4o-mini"
@@ -43,10 +49,29 @@ class LLMConfig:
     temperature: float = 0.0
     max_tokens: int = 1024
     extra: dict[str, Any] = field(default_factory=dict)
+    models: dict[str, LLMConfig] = field(default_factory=dict)
+
+    @property
+    def default(self) -> LLMConfig:
+        """The default model config (this config, minus the models map)."""
+        return LLMConfig(
+            enabled=self.enabled,
+            model=self.model,
+            provider=self.provider,
+            api_base=self.api_base,
+            api_key=self.api_key,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            extra=dict(self.extra),
+        )
 
     @classmethod
     def from_dict(cls, data: dict | None) -> LLMConfig:
-        """Build an LLMConfig from a dict, ignoring unknown keys."""
+        """Build an LLMConfig from a dict, ignoring unknown keys.
+
+        Supports both the flat single-model form and the multi-model form
+        (``default`` + ``models`` map).
+        """
         if not data:
             return cls()
         known = {
@@ -58,6 +83,19 @@ class LLMConfig:
             "temperature",
             "max_tokens",
         }
+        # Multi-model form: a `default` dict and/or a `models` map.
+        if "default" in data or "models" in data:
+            enabled = data.get("enabled", False)
+            default = cls.from_dict(data.get("default"))
+            default.enabled = enabled
+            models = {
+                name: cls.from_dict(cfg) for name, cfg in data.get("models", {}).items()
+            }
+            for cfg in models.values():
+                cfg.enabled = enabled
+            default.models = models
+            return default
+        # Flat single-model form.
         kwargs = {k: v for k, v in data.items() if k in known}
         extra = {k: v for k, v in data.items() if k not in known}
         return cls(**kwargs, extra=extra)
@@ -112,3 +150,14 @@ class LLMClient:
     def complete_json(self, prompt: str) -> dict:
         """Complete a prompt and parse the response as a JSON object."""
         return _extract_json(self.complete(prompt))
+
+    def for_task(self, task: str) -> LLMClient:
+        """Return a client bound to the model config for ``task``.
+
+        Resolves the task's model from ``config.models``; falls back to the
+        ``default`` model if the task has no explicit entry. The returned
+        client shares the same backend class (``type(self)``) so subclasses
+        keep their custom ``_call``.
+        """
+        cfg = self.config.models.get(task, self.config.default)
+        return type(self)(cfg)

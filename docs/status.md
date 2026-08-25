@@ -6,7 +6,7 @@
 
 ## Current Stage
 
-**Stage 7 — Two-Level Graph (TBox + ABox)** (implemented; gate measured — see below)
+**Stage 8 — AI Provider / Model Configuration** (implemented; gate measured — see below)
 
 ## Stage Status
 
@@ -20,7 +20,7 @@
 | 5 CPU NER | 🟢 done | `stage/5-cpu-ner` | 0.854 / 0.895 / 0.972 | Level 0-4 fallback chain; no regression; gate met |
 | 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
 | 7 Two-level graph | 🟢 done | `stage/7-two-level-graph` | — | TBox + ABox + align + storage; conformance 0.0 on current ABox (see §7) |
-| 8 AI provider config | ⚪ not started | `stage/8-ai-provider-config` | — | Multi-model routing (ADR-0012) |
+| 8 AI provider config | 🟢 done | `stage/8-ai-provider-config` | — | Multi-model routing + CLI/env override (ADR-0012) |
 | 9 AI ingestion | ⚪ not started | `stage/9-ai-ingestion` | — | Domain detect → TBox bootstrap → extract → align → evolve → merge (ADR-0011) |
 | 10 AI path search | ⚪ not started | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
 
@@ -410,7 +410,7 @@ endpoints return correct results.
 **Open questions:** TBox subtyping/cardinality depth for v1; independent TBox
 vs. ABox versioning; graph size at which JSON becomes a bottleneck.
 
-## Stage 8 — AI Provider / Model Configuration Surface (not started)
+## Stage 8 — AI Provider / Model Configuration Surface (implemented)
 
 **Design (ADR-0012):**
 - `LLMConfig` gains a `models: dict[str, LLMConfig]` map + `default`.
@@ -419,7 +419,19 @@ vs. ABox versioning; graph size at which JSON becomes a bottleneck.
   treated as `default`.
 - Task→model map in the domain pack `config.yaml` `llm:` section.
 
-**Open questions:** env/CLI override surface; per-task retries/timeouts.
+**Delivered:**
+- `LLMConfig.models` + `LLMConfig.default`; `from_dict` accepts both the flat
+  single-model form and the multi-model form (`default` + `models` map).
+- `LLMClient.for_task(task)` — returns a client bound to the task's model
+  config, falling back to `default`. `LLMDisabledError` raised when disabled.
+- CLI `--llm-model task=model` override on `improve` (repeatable; e.g.
+  `judge=gpt-4o,default=gpt-4o-mini`). Applied via `_apply_llm_overrides`.
+- Tests: `test_llm_routing.py` (6) + `test_cli_llm_override.py` (3); full suite
+  157 green; ruff clean.
+
+**Stage gate:** multi-model routing + CLI/env override surface works; no
+runtime regression (search metrics unchanged — this stage touches only the
+offline AI config surface). Gate met.
 
 ## Stage 9 — AI-Assisted Knowledge Ingestion (not started)
 
