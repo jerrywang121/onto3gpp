@@ -359,6 +359,7 @@ def apply_result(
     if candidates:
         verdicts = verify.get("verdicts", [])
         dropped: set[int] = set()
+        kept: set[int] = set()
         for v in verdicts:
             idx = v.get("id")
             if idx is None or not (0 <= idx < len(candidates)):
@@ -366,12 +367,14 @@ def apply_result(
             if v.get("keep"):
                 _add_concept(candidates[idx].canonical, v.get("type") or candidates[idx].type)
                 summary["candidates_kept"] += 1
+                kept.add(idx)
             else:
                 dropped.add(idx)
                 summary["candidates_dropped"] += 1
         # keep any candidate that did not get an explicit keep:false verdict
+        # (and was not already kept by an explicit keep:true verdict)
         for idx, cand in enumerate(candidates):
-            if idx not in dropped:
+            if idx not in dropped and idx not in kept:
                 _add_concept(cand.canonical, cand.type)
                 summary["candidates_kept"] += 1
 

@@ -286,3 +286,29 @@ def test_run_pipeline_drain_with_pending_futures(tmp_path):
     assert stats["fail"] == 0
     lines = log_path.read_text().strip().splitlines()
     assert [json.loads(l)["index"] for l in lines] == [0, 1, 2]
+
+
+def test_apply_result_candidates_kept_not_double_counted():
+    """A candidate with an explicit keep:true verdict must not be counted
+    twice (once in the verdict loop, once in the keep-unverdict loop)."""
+    from ai_progressive import apply_result
+    from onto3gpp.compile.dictionary import build_automaton
+    from onto3gpp.ontology.schema import Ontology
+    from onto3gpp.parser import Section
+    from onto3gpp.extract.terms import CandidateTerm
+
+    section = Section(spec="38.300", release="i30", clause="c0", title="t",
+                      text="text", parent_clause="", metadata={})
+    d = build_automaton({})
+    onto = Ontology()
+    candidates = [CandidateTerm(canonical="AMF", type="abbreviation")]
+    result = {
+        "concepts": [],
+        "_verify": {"verdicts": [{"id": 0, "keep": True, "type": "network_function"}]},
+        "_relations": {"relations": []},
+    }
+    _, _, summary = apply_result(result, d, onto, section, candidates)
+    assert summary["candidates_kept"] == 1
+    # terms_added counts both the dict entry and the ontology concept (2),
+    # but the candidate must not be double-counted in candidates_kept.
+    assert summary["candidates_dropped"] == 0
