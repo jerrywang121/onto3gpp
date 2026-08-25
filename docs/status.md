@@ -2,11 +2,11 @@
 
 > **Purpose:** Live record of where we are, what's measured, and what's next.
 > This is the persistent memory of project progress. Keep it concise.
-> **Last updated:** 2026-08-24
+> **Last updated:** 2026-08-25
 
 ## Current Stage
 
-**Stage 6 — Web Explorer** (gate met, ready to promote)
+**Stage 7 — Two-Level Graph (TBox + ABox)** (implemented; gate measured — see below)
 
 ## Stage Status
 
@@ -19,6 +19,10 @@
 | 4 Improve loop | 🟢 done | `stage/4-improve-loop` | — | LLM hooks + improve loop + hold-out auto-judge; gate met |
 | 5 CPU NER | 🟢 done | `stage/5-cpu-ner` | 0.854 / 0.895 / 0.972 | Level 0-4 fallback chain; no regression; gate met |
 | 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
+| 7 Two-level graph | 🟢 done | `stage/7-two-level-graph` | — | TBox + ABox + align + storage; conformance 0.0 on current ABox (see §7) |
+| 8 AI provider config | ⚪ not started | `stage/8-ai-provider-config` | — | Multi-model routing (ADR-0012) |
+| 9 AI ingestion | ⚪ not started | `stage/9-ai-ingestion` | — | Domain detect → TBox bootstrap → extract → align → evolve → merge (ADR-0011) |
+| 10 AI path search | ⚪ not started | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 
@@ -84,6 +88,10 @@ Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 - ADR-0007: Hold-out auto-judge for the improvement loop.
 - ADR-0008: Level 0-4 NER fallback chain (small CPU model).
 - ADR-0009: Web interface for runtime exploration.
+- ADR-0010: Two-level graph architecture (TBox + ABox).
+- ADR-0011: AI-assisted knowledge ingestion (TBox + ABox build/refine).
+- ADR-0012: AI provider / model configuration surface (multi-model routing).
+- ADR-0013: Graph storage format (TBox + ABox).
 
 ## Stage 2 — Ontology + Relations (in progress)
 
@@ -357,6 +365,83 @@ endpoints return correct results.
 > The web layer is a thin stateless HTTP/UI wrapper over the existing runtime
 > modules — it adds no query logic, so the deterministic eval metrics are
 > unaffected. **Stage 6 gate MET.**
+
+## Stage 7 — Two-Level Graph (TBox + ABox) + Storage (implemented)
+
+**Design (ADR-0010, ADR-0013):**
+- **TBox** (top-level ontology graph): concept types (nodes) + relation-type
+  constraints (edges). The blueprint/constraint for the ABox. Curated in the
+  domain pack; evolved by AI only when evidence demands (ADR-0011).
+- **ABox** (low-level knowledge graph): concrete concept objects + typed
+  relations + metadata + provenance. This is what the runtime consumes.
+- **Constraint checker** (`align.py`): validates ABox entries against the TBox.
+- **Storage:** JSON for v1; NetworkX / RDF / graph-DB as prototype
+  alternatives (ADR-0013).
+
+**Delivered:**
+- `src/onto3gpp/ontology/tbox.py` — TBox schema (`concept_types`,
+  `relation_types`, `relation_type_constraints`) + `tbox_to_dict` /
+  `tbox_from_dict`.
+- `src/onto3gpp/ontology/abox.py` — ABox schema (`ABoxConcept`,
+  `ABoxRelation`, `ABox`) with metadata + provenance + serialization.
+- `src/onto3gpp/ontology/align.py` — `align_abox` + `conformance_ratio`.
+- `DomainConfig.relation_type_constraints` + `DomainConfig.tbox()` — builds the
+  TBox from the domain pack `config.yaml`.
+- CLI `onto3gpp align --ontology <abox.json> [--domain <pack>]` — measures
+  TBox conformance.
+- Tests: `test_tbox.py`, `test_abox.py`, `test_align.py` (14 new; full suite
+  148 green).
+
+**Stage gate — TBox conformance measured:**
+- On the real 3GPP ABox (`data/ontology.json`, 5778 concepts / 22719
+  relations): **conformance ratio 0.0000**.
+- **Root cause:** the existing ontology uses a *generic extraction taxonomy*
+  (`abbreviation` 5351, `phrase` 427) and relation labels (`establishes`,
+  `maps`, `applies`, `initiates`, `updates`, `handles`, `moves`, `forwards`,
+  `carries`) that do **not** match the curated TBox domain types
+  (`network_function`, `procedure`, …) and constraints.
+- **Interpretation:** the align step correctly surfaces that the current ABox
+  does not yet conform to the new TBox blueprint. This is the expected
+  pre-ingestion state and is the concrete motivation for **Stage 9**
+  (AI-assisted ingestion re-typing concepts and re-labeling relations against
+  the TBox). The checker is verified correct on a conforming synthetic ABox
+  (ratio 1.0000).
+
+**Open questions:** TBox subtyping/cardinality depth for v1; independent TBox
+vs. ABox versioning; graph size at which JSON becomes a bottleneck.
+
+## Stage 8 — AI Provider / Model Configuration Surface (not started)
+
+**Design (ADR-0012):**
+- `LLMConfig` gains a `models: dict[str, LLMConfig]` map + `default`.
+- `LLMClient` becomes a router (`client.for_task("judge")`).
+- Backward-compatible flat `model:`/`provider:`/`api_base:`/`api_key:` block
+  treated as `default`.
+- Task→model map in the domain pack `config.yaml` `llm:` section.
+
+**Open questions:** env/CLI override surface; per-task retries/timeouts.
+
+## Stage 9 — AI-Assisted Knowledge Ingestion (not started)
+
+**Design (ADR-0011):**
+- Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
+- TBox bootstrap (create top-level ontology if absent; curated by default).
+- Extract terms + relations (rules + AI; reuse `extract/terms.py`,
+  `extract/relations.py`).
+- TBox alignment (check against TBox; flag new types/relations/connections).
+- TBox evolution (gated, auditable — ADR-0005, ADR-0011).
+- ABox merge / conflict resolution (deterministic similarity first, AI-judge
+  for ambiguous cases).
+- AI-as-judge gate (against gold set + provenance).
+- CLI: `onto3gpp ingest`.
+
+**Open questions:** evidence threshold for TBox evolution; merge-precision
+metric for the ingestion eval gate.
+
+## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
+
+**Design:** Use AI as judge during inference to build a weighted path search
+based on intent. **Deferred to a later phase** per the project's phased plan.
 
 ## Roll-back / Trial History
 

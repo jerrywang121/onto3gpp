@@ -345,6 +345,76 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
 
 
 @main.command()
+@click.option(
+    "--ontology",
+    type=click.Path(exists=True, path_type=Path),
+    required=True,
+    help="Path to an ABox ontology (JSON) to validate against the TBox.",
+)
+@click.option(
+    "--domain",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to a domain pack directory (default: docs/domain/3gpp).",
+)
+def align(ontology: Path, domain: Path | None) -> None:
+    """Validate an ABox ontology against the domain pack's TBox (Stage 7).
+
+    Reports the TBox conformance ratio: the share of ABox relations that
+    satisfy the TBox (known concept types, known relation types, and allowed
+    (source_type, rel, target_type) edges).
+    """
+    import json
+
+    from onto3gpp.config import load_domain
+    from onto3gpp.ontology.align import align_abox, conformance_ratio
+    from onto3gpp.ontology.schema import ontology_from_dict
+
+    if domain is None:
+        domain = Path("docs/domain/3gpp")
+    cfg = load_domain(domain)
+    tbox = cfg.tbox()
+
+    onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
+    from onto3gpp.ontology.abox import ABox, ABoxConcept, ABoxRelation
+
+    abox = ABox(
+        concepts=[
+            ABoxConcept(id=c.id, canonical=c.canonical, type=c.type, aliases=c.aliases)
+            for c in onto.concepts
+        ],
+        relations=[
+            ABoxRelation(
+                source=r.source,
+                rel=r.rel,
+                target=r.target,
+                weight=r.weight,
+                confidence=r.confidence,
+                provenance=r.provenance,
+            )
+            for r in onto.relations
+        ],
+    )
+
+    result = align_abox(abox, tbox)
+    ratio = conformance_ratio(result)
+    click.echo(f"Domain: {cfg.domain}")
+    click.echo(f"TBox concept types: {len(tbox.concept_types)}")
+    click.echo(f"TBox relation types: {len(tbox.relation_types)}")
+    click.echo(f"TBox constraints: {len(tbox.relation_type_constraints)}")
+    click.echo(f"ABox concepts: {len(abox.concepts)}")
+    click.echo(f"ABox relations: {result.total_relations}")
+    click.echo(f"Conforming relations: {result.conforming_relations}")
+    click.echo(f"Conformance ratio: {ratio:.4f}")
+    if result.errors:
+        click.echo(f"Errors ({len(result.errors)}):")
+        for e in result.errors[:20]:
+            click.echo(f"  - {e}")
+        if len(result.errors) > 20:
+            click.echo(f"  ... and {len(result.errors) - 20} more")
+
+
+@main.command()
 @click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option(
     "--dict",

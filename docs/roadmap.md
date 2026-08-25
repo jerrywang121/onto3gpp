@@ -1,7 +1,7 @@
 # onto3gpp — Staged Roadmap
 
 > **Status:** Living document. Update as stages complete.
-> **Last updated:** 2026-08-24
+> **Last updated:** 2026-08-25
 
 This is the staged feature plan. Each stage is a vertical slice that ends with
 a measurable evaluation (see `docs/status.md` for live metrics). A stage is
@@ -196,6 +196,91 @@ results; no regression on the deterministic runtime.
 > MET** (web tests green; full suite 134 tests green).
 
 **Branch:** `stage/6-web-explorer`
+
+---
+
+## Stage 7 — Two-Level Graph (TBox + ABox) + Storage
+
+**Goal:** Introduce the top-level ontology graph (TBox) and the low-level
+knowledge graph (ABox), with a constraint checker and a storage format.
+
+**Tasks:**
+- [ ] TBox schema (`src/onto3gpp/ontology/tbox.py`): concept types (nodes) +
+      relation-type constraints (edges).
+- [ ] ABox schema (`src/onto3gpp/ontology/abox.py`): concrete concept objects +
+      typed relations + metadata + provenance (extends the existing
+      `Concept`/`Relation` model).
+- [ ] Constraint checker (`src/onto3gpp/ontology/align.py`): validate that ABox
+      entries conform to the TBox.
+- [ ] Storage format (JSON for v1; prototype NetworkX / RDF / graph-DB as
+      alternatives — ADR-0013).
+- [ ] Domain pack TBox (curated in `config.yaml` / `tbox.json`).
+
+**Stage gate:** TBox constraint conformance measured (share of ABox entries
+that satisfy the TBox); storage prototype outcome recorded in ADR-0013.
+
+**Branch:** `stage/7-two-level-graph`
+
+---
+
+## Stage 8 — AI Provider / Model Configuration Surface
+
+**Goal:** Expose a configurable AI provider/model surface with multi-model
+routing.
+
+**Tasks:**
+- [ ] Extend `LLMConfig` with a `models: dict[str, LLMConfig]` map + `default`.
+- [ ] `LLMClient` becomes a router (`client.for_task("judge")`).
+- [ ] Backward-compatible flat `model:`/`provider:`/`api_base:`/`api_key:`
+      block treated as `default`.
+- [ ] Domain pack `config.yaml` `llm:` section documents the task→model map.
+- [ ] CLI/env override surface (e.g. `--llm-model judge=gpt-4o`).
+
+**Stage gate:** Multi-model routing works end-to-end; a task resolves to its
+configured model; deterministic default (`enabled: false`) preserved.
+
+**Branch:** `stage/8-ai-provider-config`
+
+---
+
+## Stage 9 — AI-Assisted Knowledge Ingestion
+
+**Goal:** End-to-end AI-assisted ingestion that builds/refines the TBox and
+ABox from documents, with no human-in-the-loop.
+
+**Tasks:**
+- [ ] Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
+- [ ] TBox bootstrap (create top-level ontology if absent; curated by default).
+- [ ] Extract terms + relations (rules + AI; reuse `extract/terms.py`,
+      `extract/relations.py`).
+- [ ] TBox alignment (check against TBox; flag new types/relations/connections).
+- [ ] TBox evolution (gated, auditable — ADR-0005, ADR-0011).
+- [ ] ABox merge / conflict resolution (deterministic similarity first,
+      AI-judge for ambiguous cases).
+- [ ] AI-as-judge gate (against gold set + provenance).
+- [ ] CLI: `onto3gpp ingest`.
+
+**Stage gate:** End-to-end ingest → TBox/ABox build/refine demonstrated; merge
+precision + TBox conformance measured; no regression on the deterministic
+runtime.
+
+**Branch:** `stage/9-ai-ingestion`
+
+---
+
+## Stage 10 — AI-as-Judge Weighted Path Search (later phase)
+
+**Goal:** Use AI as judge during inference to build a weighted path search
+based on intent. **Deferred to a later phase** per the project's phased plan.
+
+**Tasks:**
+- [ ] (Deferred) AI-judged weighted path search over the ABox at inference.
+- [ ] (Deferred) Intent-conditioned path weighting.
+
+**Stage gate:** (Deferred) Inference-time AI gating demonstrated without
+regressing the deterministic baseline.
+
+**Branch:** `stage/10-ai-path-search`
 
 ---
 

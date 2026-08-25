@@ -36,6 +36,15 @@ relation_types:
   - uses
   - related_to
 
+# TBox edges: (source_type, rel, target_type). A relation in the ABox is valid
+# only if its (source.type, rel, target.type) appears here. This is the
+# top-level ontology graph (TBox) that constrains the low-level knowledge
+# graph (ABox). See ADR-0010.
+relation_type_constraints:
+  - {source_type: concept, rel: is_a, target_type: concept}
+  - {source_type: procedure, rel: uses, target_type: entity}
+  - {source_type: entity, rel: part_of, target_type: entity}
+
 # Intent types for query classification
 intents:
   - DEFINITION
@@ -68,6 +77,31 @@ document_metadata:
 
 # Judge confidence threshold (0-1)
 judge_threshold: 0.8
+
+# External AI model hooks (optional). The pipeline is deterministic and
+# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
+# the improvement loop / AI-assisted ingestion. See ADR-0012.
+#
+# Multi-model routing: each pipeline task resolves to a named model. A task
+# with no entry falls back to `default`. A flat `model:`/`provider:`/
+# `api_base:`/`api_key:` block (the old single-model form) is treated as
+# `default` for backward compatibility.
+llm:
+  enabled: false
+  default:
+    provider: openai
+    model: gpt-4o-mini
+    api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
+    api_key: null         # set via env (OPENAI_API_KEY) or here
+    temperature: 0.0
+    max_tokens: 1024
+  models:
+    extract:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    judge:         {provider: openai, model: gpt-4o,      temperature: 0.0, max_tokens: 1024}
+    align:         {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    merge:         {provider: ollama, model: llama3,     api_base: http://localhost:11434, temperature: 0.0, max_tokens: 1024}
+    domain_detect: {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 256}
+    improve:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
 ```
 
 ## Prompts

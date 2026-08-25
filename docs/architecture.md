@@ -1,7 +1,7 @@
 # onto3gpp — High-Level Architecture
 
 > **Status:** Living document. Update as the architecture evolves.
-> **Last updated:** 2026-08-24
+> **Last updated:** 2026-08-25
 
 ## 1. Vision
 
@@ -24,6 +24,36 @@ Two deliberate departures from the original brainstorm:
    and pipeline stage is driven by a **domain pack** (prompt templates + config),
    never hard-coded to 3GPP.
 
+### 1.1 Offline AI vs. CPU-only runtime (clarified)
+
+The app has two distinct execution surfaces:
+
+- **Offline AI (knowledge engineering).** AI is used to *extract* terms and
+  relations and to *construct/refine* the ontology and knowledge graphs. This
+  runs during ingestion and improvement, never on the query path.
+- **CPU-only runtime (query).** For a query, AI is **not** used for the core
+  search operation. Synthesizing search results into a natural-language answer
+  is *post-processing* and may optionally use AI, but the core retrieval
+  (NER → intent → reason → BM25 → rerank) is deterministic and AI-free.
+
+### 1.2 Two-level graph model (TBox + ABox)
+
+Each domain maintains **two levels of graph**:
+
+- **Top-level ontology graph (TBox / schema).** Nodes are **concept types**
+  (e.g. `network_function`, `procedure`); edges are **relation types**
+  (e.g. `uses`, `selects`) connecting concept types. This is the **blueprint /
+  constraint** that guides later extraction and construction of the low-level
+  knowledge graph.
+- **Low-level knowledge graph (ABox / instances).** Nodes are **concrete
+  concept objects** (e.g. `SMF`, `PDU Session`); edges are typed relations
+  between them, with **metadata** and **references to the original documents**
+  (provenance).
+
+Both graphs are **domain-specific** — they cover the domain's concepts and
+relations, not general terms. The TBox constrains what the ABox may contain;
+the ABox grounds the TBox in concrete, retrievable instances.
+
 ---
 
 ## 2. High-Level Architecture
@@ -34,13 +64,22 @@ Two deliberate departures from the original brainstorm:
 │  Domain documents (.docx / .pdf / text)                          │
 │        │                                                         │
 │        ▼                                                         │
+│  Domain Auto-Detection (if not specified)                         │
+│        │                                                         │
+│        ▼                                                         │
+│  TBox Bootstrap (create top-level ontology if absent)            │
+│        │                                                         │
+│        ▼                                                         │
 │  Document Parser & Structure Extractor                           │
 │        │                                                         │
 │        ▼                                                         │
 │  Candidate Term / Relation Extractor (rules + LLM)               │
 │        │                                                         │
 │        ▼                                                         │
-│  Ontology Candidate Store (JSON / graph)                         │
+│  TBox Alignment (check against top-level ontology)              │
+│        │                                                         │
+│        ├─► conforms ──► ABox Merge (dedupe / conflict-resolve)    │
+│        └─► new type/relation/connection ──► TBox Evolution        │
 │        │                                                         │
 │        ▼                                                         │
 │  AI-as-Judge Gate  ◄── ground-truth gold set + provenance        │
@@ -85,6 +124,9 @@ Two deliberate departures from the original brainstorm:
 │        │                                                         │
 │        ▼                                                         │
 │  Ranked Results + Explanation Trace                              │
+│        │                                                         │
+│        ▼  (optional, post-processing — NOT core search)          │
+│  Answer Synthesis (AI, optional)                                 │
 └───────────────────────────┬──────────────────────────────────────┘
                             │
                             ▼
@@ -121,17 +163,36 @@ itself. The judge's decisions are auditable via provenance and eval logs.
   hallucinations as correct)?
 - What is the minimum gold-set size for reliable gating?
 
-### 3.1.1 External AI Hooks (ADR-0004)
+### 3.1.1 External AI Hooks (ADR-0004, ADR-0012)
 
-The AI-as-judge / AI-extraction / improvement-loop paths are **optional** and
-driven by a configurable LLM client (`src/onto3gpp/llm.py`, LiteLLM-backed).
-The app configures the model via the domain pack's `config.yaml` `llm:`
-section (enabled, model, provider, api_base, api_key, temperature,
-max_tokens). Deterministic by default (`enabled: false`); the runtime query
-path is always AI-free. Consumers:
+The AI-as-judge / AI-extraction / ingestion / improvement-loop paths are
+**optional** and driven by a configurable LLM client (`src/onto3gpp/llm.py`,
+LiteLLM-backed). The app configures models via the domain pack's `config.yaml`
+`llm:` section. Deterministic by default (`enabled: false`); the runtime query
+path is always AI-free.
+
+**Multi-model routing (ADR-0012).** Different pipeline tasks have different
+cost/quality needs, so the `llm:` section supports **multiple named models**
+with a **task → model routing map**:
+
+```yaml
+llm:
+  enabled: false
+  models:
+    extract:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    judge:         {provider: openai, model: gpt-4o,      temperature: 0.0, max_tokens: 1024}
+    align:         {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    merge:         {provider: ollama, model: llama3,     api_base: http://localhost:11434}
+    domain_detect: {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 256}
+    improve:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+```
+
+Each task resolves to a model; the `LLMClient` becomes a router. A task with no
+explicit model falls back to a default. Consumers:
 
 - `llm_judge_candidate` — AI-as-judge with deterministic fallback.
 - `propose_improvements` / `apply_proposals` — the improvement loop.
+- `ingest` — domain detect, TBox bootstrap, extract, align, evolve, merge.
 
 ### 3.2 Domain-General Pipeline
 
@@ -155,19 +216,106 @@ prompts + config) — no code changes.
 - How much of the pipeline is truly domain-agnostic vs. domain-specific?
 - What is the minimal domain-pack schema?
 
+### 3.3 AI-Assisted Knowledge Ingestion (TBox + ABox build/refine)
+
+Ingestion is where AI does its primary knowledge-engineering work. The flow
+is deterministic-first with AI filling the gaps, and every AI decision is
+gated by the AI-as-judge (ADR-0001) and evidence-based evolution (ADR-0005).
+
+```
+input doc
+   │
+   ▼
+1. Domain Auto-Detection        (AI if not specified by the user)
+   │
+   ▼
+2. TBox Bootstrap               (create top-level ontology if absent)
+   │
+   ▼
+3. Parse + Structure Extract    (deterministic)
+   │
+   ▼
+4. Extract terms + relations    (rules + AI)
+   │
+   ▼
+5. TBox Alignment               (check against top-level ontology)
+   │
+   ├─► conforms ────────────────► 6a. ABox Merge (dedupe / conflict-resolve)
+   └─► new type/rel/connection ─► 6b. TBox Evolution (gated, auditable)
+   │
+   ▼
+7. AI-as-Judge Gate             (against gold set + provenance)
+   │
+   ▼
+8. Compile → Knowledge Pack      (dictionary, rules, intents, index)
+```
+
+**Where AI is used (offline only):**
+- **Domain auto-detection** — if the user doesn't specify the domain, classify
+  the document's domain (prototype: keyword vs. LLM classifier).
+- **TBox bootstrap** — if no top-level ontology exists, create one. Curated in
+  the domain pack by default; AI may propose extensions (ADR-0011).
+- **Term/relation extraction** — rules first, AI for the residual (existing
+  `extract/terms.py`, `extract/relations.py` + LLM prompts).
+- **TBox alignment** — check extracted entries against the TBox; flag new
+  concept types, relation types, or connections.
+- **TBox evolution** — if new types/connections are discovered with sufficient
+  evidence, update the TBox (gated, auditable).
+- **ABox merge / conflict resolution** — add new terms/relations to the
+  low-level KG; merge similar objects/relations; resolve conflicts
+  (deterministic similarity first, AI-judge for ambiguous cases).
+
+**Where AI is NOT used:**
+- The runtime query path (core search) is always deterministic and AI-free.
+- Answer synthesis is optional post-processing, not core search.
+
 ---
 
-## 4. Data Model (domain-general)
+## 4. Data Model (domain-general, two-level)
 
 The data model is domain-agnostic; the domain pack defines the allowed
-`concept_type`, `relation_type`, and `intent` values.
+`concept_type`, `relation_type`, and `intent` values, and the **TBox** defines
+which relation types may connect which concept types.
+
+### 4.1 Top-level ontology (TBox / schema)
+
+The TBox is the **blueprint / constraint** for the ABox. It is curated in the
+domain pack and evolved by AI only when evidence demands (see §4.4).
 
 ```python
-# Concept
+# ConceptType (TBox node)
+{
+  "id": "network_function",
+  "label": "Network Function",
+  "description": "A 3GPP network function (AMF, SMF, UPF, ...)",
+  "parent": null,                 # optional subtyping
+  "constraints": {"min_relations": 0}
+}
+
+# RelationTypeConstraint (TBox edge)
+{
+  "source_type": "network_function",
+  "rel": "uses",
+  "target_type": "network_function",
+  "description": "A network function uses another network function",
+  "weight": 0.7
+}
+```
+
+The TBox is serialized as `tbox.json` (or embedded in the domain pack). It
+answers: *"is a `network_function` allowed to `select` a `procedure`?"*
+
+### 4.2 Low-level knowledge graph (ABox / instances)
+
+The ABox holds concrete concept objects, typed relations, metadata, and
+provenance back to the source documents. This is what the runtime consumes.
+
+```python
+# Concept (ABox node)
 {
   "id": "concept.pdu_session",
   "canonical": "PDU Session",
-  "type": "procedure|network_function|ie|interface|...",  # from domain pack
+  "type": "procedure|network_function|ie|interface|...",  # from TBox
   "aliases": ["PDU session", "PDU sessions"],
   "abbreviations": ["PDU"],
   "parents": ["concept.session_management"],
@@ -186,7 +334,7 @@ The data model is domain-agnostic; the domain pack defines the allowed
   "term_type": "full_name|abbr|alias|morph"
 }
 
-# Relation
+# Relation (ABox edge)
 {
   "source": "concept.smf",
   "rel": "selects",
@@ -205,6 +353,31 @@ The data model is domain-agnostic; the domain pack defines the allowed
   "conditions": {"intent": ["PROCEDURE", "HOW"]}
 }
 ```
+
+### 4.3 TBox ↔ ABox relationship
+
+- The **TBox constrains the ABox**: every ABox concept's `type` must be a TBox
+  concept type; every ABox relation's `(source.type, rel, target.type)` must be
+  a TBox relation-type constraint.
+- The **ABox grounds the TBox**: concrete instances and their provenance make
+  the schema meaningful and retrievable.
+- **Domain-specific only**: both graphs cover the domain's concepts/relations,
+  not general terms. General-language terms are excluded at extraction time.
+
+### 4.4 TBox evolution
+
+The TBox is **curated by default** (hand-authored in the domain pack) and
+**evolved by AI only when evidence demands**:
+
+- During ingestion, if extraction discovers a **new concept type**, a **new
+  relation type**, or a **new connection** between existing types, the
+  alignment step flags it.
+- The AI-as-judge gate (ADR-0001) decides whether the evidence is strong enough
+  to evolve the TBox. Evolution is **gated and auditable** (ADR-0005,
+  ADR-0011): a TBox change is promoted only if it improves (or doesn't regress)
+  the eval metrics and is grounded in provenance.
+- Humans set policy (which types/relations are allowed, evolution thresholds);
+  AI executes the loop.
 
 ---
 
@@ -235,16 +408,18 @@ def process_query(q: str, pack: KnowledgePack) -> SearchPlan:
 | Language               | Python 3.11+                    | Ecosystem, speed of dev |
 | CLI                    | `click` or `tyro`               | Simple, typed |
 | Multi-pattern match    | `pyahocorasick`                 | Fast, CPU, serializable |
-| Graph                  | NetworkX (small) or pure dict   | Lightweight reasoning |
+| Graph (TBox + ABox)    | JSON (v1); NetworkX / RDF / graph DB as prototype alternatives | Lightweight, reuses serialization |
 | Document parse         | `python-docx` + custom clause walker | 3GPP structure |
-| LLM offline            | LiteLLM (OpenAI / local vLLM)   | Swappable, domain-general |
+| LLM offline            | LiteLLM (OpenAI / local vLLM / ollama) | Swappable, domain-general, multi-model routing |
 | Search                 | `rank_bm25` or Elasticsearch    | Proven baseline |
 | Storage of packs       | pickle / msgpack + JSON sidecar | Fast load |
 | Evaluation             | custom + `ir_measures`          | Standard IR metrics |
 | Versioning             | Git + semantic pack tags        | Traceability |
 
 > These are initial choices, not commitments. Each is a candidate for a
-> prototype/ADR if an open question arises.
+> prototype/ADR if an open question arises. Graph storage is an open question
+> (ADR-0013) — JSON for v1, with NetworkX / RDF / graph-DB as prototype
+> alternatives.
 
 ---
 
@@ -257,6 +432,10 @@ The eval harness is **mandatory** before any pack is promoted:
 - **Hold-out set:** a portion of the gold set reserved for judging improvement
   proposals (prevents overfitting the loop to the training gold set).
 - **Regression:** every stage re-runs the full eval to catch regressions.
+- **TBox/ABox quality:** ingestion stages additionally measure TBox constraint
+  conformance (share of ABox entries that satisfy the TBox) and merge precision
+  (share of merged objects that are true duplicates), so the two-level graph
+  stays coherent as it grows.
 
 ---
 
@@ -278,6 +457,11 @@ while True:
      else keep previous pack and log regression
 ```
 
+The improvement loop operates on the **ABox** (concrete terms/relations). TBox
+evolution is a separate, more conservative path (ADR-0011) that only fires
+when ingestion discovers genuinely new concept types, relation types, or
+connections.
+
 ---
 
 ## 9. Roadmap Summary
@@ -292,6 +476,11 @@ See `docs/roadmap.md` for the full staged plan. High-level:
 | 3 | Intent + structure boosts | Intent-aware results |
 | 4 | AI-as-judge improvement loop | Closed-loop improvement |
 | 5 | Optional small CPU NER model | Residual ambiguity |
+| 6 | Web explorer | Interactive exploration |
+| 7 | Two-level graph (TBox + ABox) + storage | TBox constraint conformance |
+| 8 | AI provider/model configuration surface | Multi-model routing works |
+| 9 | AI-assisted knowledge ingestion | End-to-end ingest → TBox/ABox build/refine |
+| 10 | AI-as-judge weighted path search (later phase) | Inference-time AI gating |
 
 ---
 
@@ -302,3 +491,7 @@ See `docs/roadmap.md` for the full staged plan. High-level:
 - Runtime fallback chain (Level 0–4) design.
 - Storage & packaging format for knowledge packs.
 - Whether/when to add vector search.
+- Graph storage format at scale (ADR-0013).
+- Domain auto-detection method (prototype: keyword vs. LLM).
+- TBox bootstrap method (prototype: curated vs. AI-generated).
+- ABox merge/conflict-resolution method (prototype: deterministic vs. AI-judged).

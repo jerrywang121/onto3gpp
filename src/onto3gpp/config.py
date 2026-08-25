@@ -12,6 +12,7 @@ from pathlib import Path
 import yaml
 
 from onto3gpp.llm import LLMConfig
+from onto3gpp.ontology.tbox import TBox
 
 
 @dataclass
@@ -21,6 +22,7 @@ class DomainConfig:
     domain: str
     concept_types: list[str] = field(default_factory=list)
     relation_types: list[str] = field(default_factory=list)
+    relation_type_constraints: list[dict] = field(default_factory=list)
     intents: list[str] = field(default_factory=list)
     intent_patterns: dict[str, list[str]] = field(default_factory=dict)
     document_metadata: list[str] = field(default_factory=list)
@@ -33,6 +35,24 @@ class DomainConfig:
         data = yaml.safe_load(path.read_text())
         llm = LLMConfig.from_dict(data.pop("llm", None))
         return cls(**data, llm=llm)
+
+    def tbox(self) -> TBox:
+        """Build the TBox (top-level ontology graph) from this config."""
+        from onto3gpp.ontology.tbox import RelationTypeConstraint
+
+        constraints = [
+            RelationTypeConstraint(
+                source_type=c["source_type"],
+                rel=c["rel"],
+                target_type=c["target_type"],
+            )
+            for c in self.relation_type_constraints
+        ]
+        return TBox(
+            concept_types=list(self.concept_types),
+            relation_types=list(self.relation_types),
+            relation_type_constraints=constraints,
+        )
 
 
 def load_domain(domain_dir: Path) -> DomainConfig:
