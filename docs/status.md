@@ -6,7 +6,7 @@
 
 ## Current Stage
 
-**Stage 8 — AI Provider / Model Configuration** (implemented; gate measured — see below)
+**Stage 9 — AI-Assisted Knowledge Ingestion** (implemented; gate measured — see below)
 
 ## Stage Status
 
@@ -21,8 +21,8 @@
 | 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
 | 7 Two-level graph | 🟢 done | `stage/7-two-level-graph` | — | TBox + ABox + align + storage; conformance 0.0 on current ABox (see §7) |
 | 8 AI provider config | 🟢 done | `stage/8-ai-provider-config` | — | Multi-model routing + CLI/env override (ADR-0012) |
-| 9 AI ingestion | ⚪ not started | `stage/9-ai-ingestion` | — | Domain detect → TBox bootstrap → extract → align → evolve → merge (ADR-0011) |
-| 10 AI path search | ⚪ not started | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
+| 9 AI ingestion | 🟢 done | `stage/9-ai-ingestion` | — | Detect → extract → align → evolve → merge; CLI `ingest` (ADR-0011) |
+| 10 AI path search | ⚪ deferred | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 
@@ -433,7 +433,7 @@ vs. ABox versioning; graph size at which JSON becomes a bottleneck.
 runtime regression (search metrics unchanged — this stage touches only the
 offline AI config surface). Gate met.
 
-## Stage 9 — AI-Assisted Knowledge Ingestion (not started)
+## Stage 9 — AI-Assisted Knowledge Ingestion (implemented)
 
 **Design (ADR-0011):**
 - Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
@@ -447,8 +447,40 @@ offline AI config surface). Gate met.
 - AI-as-judge gate (against gold set + provenance).
 - CLI: `onto3gpp ingest`.
 
+**Delivered:**
+- `src/onto3gpp/ingest/detect.py` — keyword-based domain auto-detection
+  (deterministic-first; LLM classifier is a later hook).
+- `src/onto3gpp/ingest/evolve.py` — gated TBox evolution (new concept types,
+  relation types, constraints; schema-drift guard drops constraints referencing
+  unknown relation types).
+- `src/onto3gpp/ingest/merge.py` — ABox merge/conflict resolution
+  (dedupe by canonical case-insensitive; keep higher-confidence relation;
+  first-wins type conflict).
+- `src/onto3gpp/ingest/pipeline.py` — end-to-end `ingest()`: extract → merge →
+  align → evolve.
+- CLI `onto3gpp ingest --parsed <doc.jsonl> [--abox <abox.json>]` — writes
+  merged ABox + evolved TBox.
+- Tests: `test_ingest_detect.py`, `test_ingest_merge.py`,
+  `test_ingest_evolve.py`, `test_ingest_pipeline.py`, `test_cli_ingest.py`
+  (17 new; full suite 174 green; ruff clean).
+
+**Stage gate — end-to-end ingest on real data (`data/parsed/23.501.jsonl`):**
+- 16 sections → 21 concepts + 10 relations added; TBox evolved (added generic
+  extraction types `phrase`/`abbreviation` + verb-derived relation types
+  `connects`/`forwards`/`updates`/`initiates`/`establishes`).
+- **Conformance ratio 0.0000** on the deterministic-first output — the generic
+  extraction taxonomy does not yet match the curated TBox domain types. This
+  is the expected pre-AI-retyping state (same finding as Stage 7) and is the
+  concrete motivation for the **AI-as-judge retyping path** (ADR-0011): map
+  `abbreviation`/`phrase` → curated types (`network_function`, `procedure`, …)
+  and verb relations → curated relation types.
+- **Merge precision:** dedupe verified correct on synthetic tests (canonical
+  case-insensitive, higher-confidence relation wins, type conflict first-wins).
+  A real merge-precision metric against a gold set is an open item.
+
 **Open questions:** evidence threshold for TBox evolution; merge-precision
-metric for the ingestion eval gate.
+metric for the ingestion eval gate; AI-as-judge retyping of generic extraction
+types into curated TBox types.
 
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 
