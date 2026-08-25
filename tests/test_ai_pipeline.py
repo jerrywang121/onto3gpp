@@ -104,6 +104,8 @@ class _FakeQueue:
         self.calls = 0
     def submit(self, prompt, *, max_tokens, temperature, attempts, retries):
         self.calls += 1
+        if retries is not None:
+            retries.append(1)
         fut = Future()
         fut.set_result(self.results.pop(0))
         return fut
@@ -138,6 +140,9 @@ def test_run_pipeline_applies_in_order_and_checkpoints(tmp_path):
 
     assert stats["ok"] == 3
     assert stats["fail"] == 0
+    assert stats["rt_extract"] == 3
+    assert stats["rt_verify"] == 3
+    assert stats["rt_relations"] == 3
     assert dict_path.exists()
     assert onto_path.exists()
     lines = log_path.read_text().strip().splitlines()

@@ -132,6 +132,10 @@ def run_pipeline(sections, dictionary, onto, queues, *, max_chars,
                                    "relations": False}
             result["_retries"] = {k: v[0] if v else 0
                                   for k, v in retries.items()}
+            rt = result["_retries"]
+            stats["rt_extract"] += rt.get("extract", 0)
+            stats["rt_verify"] += rt.get("verify", 0)
+            stats["rt_relations"] += rt.get("relations", 0)
             result["_match"] = {"known_terms": len(snapshot["known"]),
                                 "known_relations": len(snapshot["known_rels"]),
                                 "candidates": len(snapshot["candidates"])}
