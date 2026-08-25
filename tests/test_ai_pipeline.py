@@ -180,3 +180,15 @@ def test_run_pipeline_skips_done_clauses(tmp_path):
     lines = log_path.read_text().strip().splitlines()
     assert len(lines) == 2
     assert [json.loads(l)["clause"] for l in lines] == ["c1", "c2"]
+
+
+# --- Task 4: --parallel CLI flag ---
+
+def test_parallel_flag_parses():
+    from ai_progressive import build_parser
+    p = build_parser()
+    args = p.parse_args(
+        ["--parsed", "x.jsonl", "--base-dict", "d.json", "--base-ontology", "o.json",
+         "--dict", "out.json", "--ontology", "out_onto.json", "--parallel"]
+    )
+    assert args.parallel is True

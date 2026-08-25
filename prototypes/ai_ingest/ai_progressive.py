@@ -416,7 +416,7 @@ def apply_result(
     return new_dict, new_onto, summary
 
 
-def main() -> None:
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--parsed", required=True, help="Parsed JSONL (sections)")
     ap.add_argument("--base-dict", required=True, help="Bootstrap dict.json")
@@ -440,7 +440,13 @@ def main() -> None:
     ap.add_argument("--resume", action="store_true",
                     help="Resume from the checkpoint files (--dict/--ontology + .progress.jsonl). "
                          "Without this, a fresh bootstrap is done (base or empty).")
-    args = ap.parse_args()
+    ap.add_argument("--parallel", action="store_true",
+                    help="Run the 3-stage pipeline concurrently across chunks")
+    return ap
+
+
+def main() -> None:
+    args = build_parser().parse_args()
 
     parsed = Path(args.parsed)
     dict_path = Path(args.dict)
@@ -519,6 +525,28 @@ def main() -> None:
         for line in log_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 done.add(json.loads(line)["clause"])
+
+    if args.parallel:
+        from ai_pipeline import ModelQueue, run_pipeline
+        queues = {}
+        for task in ("extract", "verify", "relations"):
+            cfg = task_configs[task]
+            queues[task] = ModelQueue(
+                f"{cfg.provider or 'ollama'}:{cfg.model}", cfg,
+                max_tokens=cfg.max_tokens, maxsize=4)
+        try:
+            stats = run_pipeline(
+                sections, dictionary, onto, queues,
+                max_chars=args.max_chars, fallback_model=fallback_model,
+                configs=task_configs, dict_path=dict_path,
+                onto_path=onto_path, log_path=log_path, done=done,
+                on_progress=None)
+        finally:
+            for q in queues.values():
+                q.shutdown()
+        print(f"Parallel done: ok={stats['ok']} fail={stats['fail']} "
+              f"terms={stats['terms_total']} rels={stats['rels_total']}")
+        return
 
     total = len(sections)
     ok = 0
