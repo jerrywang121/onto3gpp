@@ -406,6 +406,18 @@ endpoints return correct results.
   the TBox). The checker is verified correct on a conforming synthetic ABox
   (ratio 1.0000).
 
+**TBox expansion (2026-08-25):** the 3GPP TBox was expanded from 8 concept
+types / 7 relation types / 20 constraints to **33 concept types / 27 relation
+types / 348 constraints**, modeling the full 5GS/5GC/NG-RAN domain (network
+functions, SBA services, slices, access/radio, cells, interfaces/reference
+points, protocols, procedures, IEs, QoS, policy/charging, security, states,
+channels/bearers, mobility/location, architecture/system, device, energy).
+All 13 relation types present in the current ABox (`is_a`, `uses`, `connects`,
+`selects`, `establishes`, `maps`, `applies`, `initiates`, `updates`, `handles`,
+`moves`, `forwards`, `carries`) are now declared in the TBox. The ABox still
+uses the generic `abbreviation`/`phrase` concept taxonomy, so conformance
+remains 0.0 until Stage 9 re-types concepts; the relation-type gap is closed.
+
 **Open questions:** TBox subtyping/cardinality depth for v1; independent TBox
 vs. ABox versioning; graph size at which JSON becomes a bottleneck.
 
