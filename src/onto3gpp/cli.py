@@ -8,8 +8,44 @@ from pathlib import Path
 
 import click
 
+from onto3gpp.llm import LLMConfig
 from onto3gpp.parser import parse_docx, parse_file
 from onto3gpp.search.bm25 import BM25Index
+
+
+def _apply_llm_overrides(llm, overrides: str) -> LLMConfig:
+    """Apply 'task=model' overrides to an LLMConfig (Stage 8).
+
+    ``overrides`` is a comma-separated list of ``task=model`` pairs, e.g.
+    ``"judge=gpt-4o,default=gpt-4o-mini"``. Each sets the model for that task
+    in the config's ``models`` map (or the default model for ``default``).
+    """
+    cfg = LLMConfig.from_dict(
+        {
+            "enabled": llm.enabled,
+            "default": {
+                "model": llm.model,
+                "provider": llm.provider,
+                "api_base": llm.api_base,
+                "api_key": llm.api_key,
+                "temperature": llm.temperature,
+                "max_tokens": llm.max_tokens,
+            },
+            "models": {name: {"model": m.model} for name, m in llm.models.items()},
+        }
+    )
+    for pair in overrides.split(","):
+        pair = pair.strip()
+        if not pair or "=" not in pair:
+            continue
+        task, model = pair.split("=", 1)
+        task = task.strip()
+        model = model.strip()
+        if task == "default":
+            cfg.model = model
+        else:
+            cfg.models.setdefault(task, LLMConfig()).model = model
+    return cfg
 
 
 @click.group()
@@ -283,7 +319,14 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
 @click.option("--top-k", default=10, show_default=True)
 @click.option("--max-chars", default=500, show_default=True, help="Max chunk length in characters.")
 @click.option("--overlap", default=80, show_default=True, help="Chunk overlap in characters.")
-def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int, max_chars: int, overlap: int) -> None:
+@click.option(
+    "--llm-model",
+    "llm_model",
+    default=None,
+    help="Override a task's model, e.g. 'judge=gpt-4o' or 'default=gpt-4o-mini' "
+    "(repeatable). Overrides the domain pack's llm.models map.",
+)
+def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int, max_chars: int, overlap: int, llm_model: str | None) -> None:
     """Run one closed-loop improvement iteration (AI-as-judge).
 
     Evaluates the ontology against the gold set, finds gaps, asks the LLM
@@ -309,6 +352,10 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
         click.echo("LLM is disabled in the domain pack config.yaml (llm.enabled: false).")
         click.echo("Enable it to run the AI-as-judge improvement loop.")
         raise SystemExit(1)
+
+    # Apply --llm-model task=model overrides to the LLM config.
+    if llm_model:
+        cfg.llm = _apply_llm_overrides(cfg.llm, llm_model)
 
     # Build the BM25 index from parsed sections.
     chunks = load_chunks(parsed, max_chars=max_chars, overlap=overlap)
