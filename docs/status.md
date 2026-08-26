@@ -6,7 +6,7 @@
 
 ## Current Stage
 
-**Stage 8 — AI Provider / Model Configuration** (implemented; gate measured — see below)
+**Stage 9 — AI-Assisted Knowledge Ingestion** (implemented; gate measured — see below)
 
 ## Stage Status
 
@@ -21,8 +21,8 @@
 | 6 Web Explorer | 🟢 done | `stage/6-web-explorer` | — | FastAPI + vanilla-JS explorer; no runtime change; gate met |
 | 7 Two-level graph | 🟢 done | `stage/7-two-level-graph` | — | TBox + ABox + align + storage; conformance 0.0 on current ABox (see §7) |
 | 8 AI provider config | 🟢 done | `stage/8-ai-provider-config` | — | Multi-model routing + CLI/env override (ADR-0012) |
-| 9 AI ingestion | ⚪ not started | `stage/9-ai-ingestion` | — | Domain detect → TBox bootstrap → extract → align → evolve → merge (ADR-0011) |
-| 10 AI path search | ⚪ not started | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
+| 9 AI ingestion | 🟢 done | `stage/9-ai-ingestion` | — | Detect → extract → align → evolve → merge; CLI `ingest` (ADR-0011). **Eval: AI-assisted extraction REGRESSES MRR vs verb-based (see §9)** |
+| 10 AI path search | ⚪ deferred | `stage/10-ai-path-search` | — | AI-as-judge weighted path search (deferred, later phase) |
 
 Legend: 🟢 done · 🔵 in progress · ⚪ not started · 🔴 blocked
 
@@ -385,8 +385,7 @@ endpoints return correct results.
 - `src/onto3gpp/ontology/abox.py` — ABox schema (`ABoxConcept`,
   `ABoxRelation`, `ABox`) with metadata + provenance + serialization.
 - `src/onto3gpp/ontology/align.py` — `align_abox` + `conformance_ratio`.
-- `DomainConfig.relation_type_constraints` + `DomainConfig.tbox()` — builds the
-  TBox from the domain pack `config.yaml`.
+- `load_tbox(domain_dir)` — loads the TBox from the domain pack `tbox.yaml`.
 - CLI `onto3gpp align --ontology <abox.json> [--domain <pack>]` — measures
   TBox conformance.
 - Tests: `test_tbox.py`, `test_abox.py`, `test_align.py` (14 new; full suite
@@ -433,7 +432,7 @@ vs. ABox versioning; graph size at which JSON becomes a bottleneck.
 runtime regression (search metrics unchanged — this stage touches only the
 offline AI config surface). Gate met.
 
-## Stage 9 — AI-Assisted Knowledge Ingestion (not started)
+## Stage 9 — AI-Assisted Knowledge Ingestion (implemented)
 
 **Design (ADR-0011):**
 - Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
@@ -447,8 +446,101 @@ offline AI config surface). Gate met.
 - AI-as-judge gate (against gold set + provenance).
 - CLI: `onto3gpp ingest`.
 
+**Delivered:**
+- `src/onto3gpp/ingest/detect.py` — keyword-based domain auto-detection
+  (deterministic-first; LLM classifier is a later hook).
+- `src/onto3gpp/ingest/evolve.py` — gated TBox evolution (new concept types,
+  relation types, constraints; schema-drift guard drops constraints referencing
+  unknown relation types).
+- `src/onto3gpp/ingest/merge.py` — ABox merge/conflict resolution
+  (dedupe by canonical case-insensitive; keep higher-confidence relation;
+  first-wins type conflict).
+- `src/onto3gpp/ingest/pipeline.py` — end-to-end `ingest()`: extract → merge →
+  align → evolve.
+- CLI `onto3gpp ingest --parsed <doc.jsonl> [--abox <abox.json>]` — writes
+  merged ABox + evolved TBox.
+- Tests: `test_ingest_detect.py`, `test_ingest_merge.py`,
+  `test_ingest_evolve.py`, `test_ingest_pipeline.py`, `test_cli_ingest.py`
+  (17 new; full suite 174 green; ruff clean).
+
+**Stage gate — end-to-end ingest on real data (`data/parsed/23.501.jsonl`):**
+- 16 sections → 21 concepts + 10 relations added; TBox evolved (added generic
+  extraction types `phrase`/`abbreviation` + verb-derived relation types
+  `connects`/`forwards`/`updates`/`initiates`/`establishes`).
+- **Conformance ratio 0.0000** on the deterministic-first output — the generic
+  extraction taxonomy does not yet match the curated TBox domain types. This
+  is the expected pre-AI-retyping state (same finding as Stage 7) and is the
+  concrete motivation for the **AI-as-judge retyping path** (ADR-0011): map
+  `abbreviation`/`phrase` → curated types (`network_function`, `procedure`, …)
+  and verb relations → curated relation types.
+- **Merge precision:** dedupe verified correct on synthetic tests (canonical
+  case-insensitive, higher-confidence relation wins, type conflict first-wins).
+  A real merge-precision metric against a gold set is an open item.
+
 **Open questions:** evidence threshold for TBox evolution; merge-precision
-metric for the ingestion eval gate.
+metric for the ingestion eval gate; AI-as-judge retyping of generic extraction
+types into curated TBox types.
+
+**AI-assisted extraction eval (2026-08-25) — see `docs/ai_ingestion_report.md`:**
+- Ran AI-assisted ingestion on real TS 38.300 (329/532 sections, local Ollama
+  `deepseek-v4-flash:0731-cloud` extract / `minimax-m3:cloud` judge).
+- Built three variants and evaluated against `data/gold_queries_38300.jsonl`:
+
+| Variant | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|---------|-----|---------|----------|-----------|
+| **Baseline (verb-based)** | **0.6369** | **0.6699** | **1.5833** | **2.3333** |
+| Hybrid (base + AI) | 0.5813 | 0.6022 | 1.5000 | 2.0000 |
+| AI-only | 0.5382 | 0.5594 | 1.3333 | 1.7500 |
+
+- **Finding: AI-assisted extraction REGRESSES retrieval** on this local-model
+  setup. Hybrid loses 0.056 MRR, AI-only loses 0.099 MRR vs. baseline.
+- **Root cause:** local models return generic, non-discriminative concepts
+  (`NR`, `5GC`, `NG-RAN`, "Artificial Intelligence", "Augmented Reality") that
+  expand queries with irrelevant terms, diluting precision. Models are also
+  slow (~0.08 sections/s) and nondeterministic (empty/malformed JSON; a
+  "retype terms" prompt failed 100%).
+- **Conclusion:** the deterministic verb-based pipeline is the right runtime
+  default. AI should *fill gaps* the deterministic extractor misses (gated by
+  the AI-as-judge), not re-extract everything. **Do not promote** the
+  AI-extracted dict/ontology to `main`.
+
+**Progressive AI-assisted extraction (2026-08-25) — see `docs/ai_ingestion_report.md` §8:**
+- Reframed strategy (ADR-0011): AI **fills gaps** the deterministic extractor
+  misses, fed the current dict/ontology as context — not re-extract everything.
+- `prototypes/ai_ingest/ai_progressive.py`: per chunk (a) deterministic
+  candidates, (b) known terms/relations from the current dict/ontology, (c) AI
+  lists NEW concepts (positive-context prompt; already-known filtered
+  deterministically in `apply_result`), (d) relations re-extracted
+  deterministically. Dict/ontology updated incrementally (progressive
+  bootstrapping); checkpointed + resumable.
+- **Prompt reliability lesson:** local models return **empty** on exclusion
+  lists ("do NOT re-add these"); the reliable format is a plain "extract
+  concepts" prompt with candidates + known terms as **positive reference
+  context**, plus a deterministic filter as safety net.
+- **Monitoring added:** each chunk's result records `_match` metadata
+  (`known_terms`, `known_relations`, `candidates`) + `terms_added` /
+  `relations_added`; the CLI prints running totals every 10 chunks. This
+  tracks whether the context size (dict/ontology growth) and per-query
+  addition rate grow over the run.
+- **Status:** 20-section smoke test confirmed the monitoring works (15/20 ok,
+  22 terms + 3 relations added; 25% failure rate from local-model flakiness —
+  failed sections skipped, run checkpointed). Full 532-section run completed
+  (2026-08-26, `ab1500`): 20/20 chunks ok, 0 failures, 206 terms + 92 relations
+  added (final dict 5,897 / 5,884 concepts), 0 fallback triggers, 631s.
+- **Progressive eval vs. baseline (2026-08-26) — `data/gold_queries_38300.jsonl`:**
+
+| Variant | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|---------|-----|---------|----------|-----------|
+| **Baseline (verb-based)** | **0.6369** | **0.6699** | **1.5833** | **2.3333** |
+| Progressive AI-ingestion | 0.6369 | 0.6612 | 1.5000 | 2.2500 |
+
+- **Finding: progressive AI-ingestion is neutral on MRR (0.6369 = 0.6369) but
+  slightly regresses NDCG@10 / Recall@5 / Recall@10** (−0.009 / −0.083 /
+  −0.083). The gap-filling strategy avoids the large regression of the earlier
+  AI-only/hybrid variants (which lost 0.056–0.099 MRR), but the added terms are
+  still not discriminative enough to move MRR and slightly dilute the other
+  metrics. **Do not promote** the AI-ingested dict/ontology to `main`; the
+  deterministic verb-based baseline remains the runtime default.
 
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 

@@ -12,7 +12,6 @@ from pathlib import Path
 import yaml
 
 from onto3gpp.llm import LLMConfig
-from onto3gpp.ontology.tbox import TBox
 
 
 @dataclass
@@ -20,9 +19,6 @@ class DomainConfig:
     """Configuration loaded from a domain pack's config.yaml."""
 
     domain: str
-    concept_types: list[str] = field(default_factory=list)
-    relation_types: list[str] = field(default_factory=list)
-    relation_type_constraints: list[dict] = field(default_factory=list)
     intents: list[str] = field(default_factory=list)
     intent_patterns: dict[str, list[str]] = field(default_factory=dict)
     document_metadata: list[str] = field(default_factory=list)
@@ -36,24 +32,6 @@ class DomainConfig:
         llm = LLMConfig.from_dict(data.pop("llm", None))
         return cls(**data, llm=llm)
 
-    def tbox(self) -> TBox:
-        """Build the TBox (top-level ontology graph) from this config."""
-        from onto3gpp.ontology.tbox import RelationTypeConstraint
-
-        constraints = [
-            RelationTypeConstraint(
-                source_type=c["source_type"],
-                rel=c["rel"],
-                target_type=c["target_type"],
-            )
-            for c in self.relation_type_constraints
-        ]
-        return TBox(
-            concept_types=list(self.concept_types),
-            relation_types=list(self.relation_types),
-            relation_type_constraints=constraints,
-        )
-
 
 def load_domain(domain_dir: Path) -> DomainConfig:
     """Load a domain pack from a directory containing config.yaml."""
@@ -61,3 +39,14 @@ def load_domain(domain_dir: Path) -> DomainConfig:
     if not config_path.exists():
         raise FileNotFoundError(f"No config.yaml in domain pack: {domain_dir}")
     return DomainConfig.from_yaml(config_path)
+
+
+def load_tbox(domain_dir: Path) -> TBox:
+    """Load the TBox from a domain pack's tbox.yaml."""
+    from onto3gpp.ontology.tbox import tbox_from_dict
+
+    tbox_path = domain_dir / "tbox.yaml"
+    if not tbox_path.exists():
+        raise FileNotFoundError(f"No tbox.yaml in domain pack: {domain_dir}")
+    data = yaml.safe_load(tbox_path.read_text())
+    return tbox_from_dict(data)

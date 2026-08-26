@@ -249,20 +249,42 @@ configured model; deterministic default (`enabled: false`) preserved.
 ABox from documents, with no human-in-the-loop.
 
 **Tasks:**
-- [ ] Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
-- [ ] TBox bootstrap (create top-level ontology if absent; curated by default).
-- [ ] Extract terms + relations (rules + AI; reuse `extract/terms.py`,
+- [x] Domain auto-detection (AI if not specified; prototype: keyword vs. LLM).
+- [x] TBox bootstrap (create top-level ontology if absent; curated by default).
+- [x] Extract terms + relations (rules + AI; reuse `extract/terms.py`,
       `extract/relations.py`).
-- [ ] TBox alignment (check against TBox; flag new types/relations/connections).
-- [ ] TBox evolution (gated, auditable — ADR-0005, ADR-0011).
-- [ ] ABox merge / conflict resolution (deterministic similarity first,
+- [x] TBox alignment (check against TBox; flag new types/relations/connections).
+- [x] TBox evolution (gated, auditable — ADR-0005, ADR-0011).
+- [x] ABox merge / conflict resolution (deterministic similarity first,
       AI-judge for ambiguous cases).
-- [ ] AI-as-judge gate (against gold set + provenance).
-- [ ] CLI: `onto3gpp ingest`.
+- [ ] AI-as-judge gate (against gold set + provenance) — retyping path open.
+- [x] CLI: `onto3gpp ingest`.
 
 **Stage gate:** End-to-end ingest → TBox/ABox build/refine demonstrated; merge
 precision + TBox conformance measured; no regression on the deterministic
-runtime.
+runtime. **Met** (conformance 0.0 on deterministic-first output is the expected
+pre-AI-retyping state; see `docs/status.md` §9).
+
+> **AI-assisted extraction eval (2026-08-25):** AI-assisted extraction on real
+> TS 38.300 **regresses** retrieval vs. the deterministic verb-based baseline
+> (hybrid MRR 0.5813, AI-only 0.5382 vs. baseline 0.6369) on local Ollama
+> models. See `docs/ai_ingestion_report.md`. **Reframed AI role:** AI should
+> *fill gaps* the deterministic extractor misses (gated by the AI-as-judge),
+> not re-extract everything. The AI-extracted dict/ontology is **not promoted**
+> to `main`.
+>
+> **Progressive AI-assisted extraction (2026-08-25):** implemented
+> `prototypes/ai_ingest/ai_progressive.py` — per chunk, feed the deterministic
+> candidates + known terms (from the current dict/ontology) into the AI as
+> **positive reference context**, ask it for NEW concepts, and filter
+> already-known concepts deterministically. Dict/ontology updated
+> incrementally (progressive bootstrapping), checkpointed + resumable. Added
+> **match-size + per-query-addition monitoring** (`_match` metadata:
+> `known_terms`, `known_relations`, `candidates`; running totals every 10
+> chunks) to track context growth as the KB expands. 20-section smoke test
+> confirmed monitoring works (15/20 ok, 22 terms + 3 relations added; 25%
+> failure rate from local-model flakiness). Full 532-section run + eval vs.
+> baseline (MRR 0.6369) pending.
 
 **Branch:** `stage/9-ai-ingestion`
 

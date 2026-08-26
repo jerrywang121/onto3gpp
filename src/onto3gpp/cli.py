@@ -413,14 +413,14 @@ def align(ontology: Path, domain: Path | None) -> None:
     """
     import json
 
-    from onto3gpp.config import load_domain
+    from onto3gpp.config import load_domain, load_tbox
     from onto3gpp.ontology.align import align_abox, conformance_ratio
     from onto3gpp.ontology.schema import ontology_from_dict
 
     if domain is None:
         domain = Path("docs/domain/3gpp")
     cfg = load_domain(domain)
-    tbox = cfg.tbox()
+    tbox = load_tbox(domain)
 
     onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
     from onto3gpp.ontology.abox import ABox, ABoxConcept, ABoxRelation
@@ -459,6 +459,101 @@ def align(ontology: Path, domain: Path | None) -> None:
             click.echo(f"  - {e}")
         if len(result.errors) > 20:
             click.echo(f"  ... and {len(result.errors) - 20} more")
+
+
+@main.command()
+@click.option(
+    "--parsed",
+    type=click.Path(exists=True, path_type=Path),
+    required=True,
+    help="Path to a parsed document (JSONL) to ingest.",
+)
+@click.option(
+    "--domain",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to a domain pack directory (default: docs/domain/3gpp).",
+)
+@click.option(
+    "--abox",
+    "abox_path",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to an existing ABox (JSON) to merge into (default: start empty).",
+)
+@click.option(
+    "--out",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Where to write the merged ABox (JSON). Default: <parsed>.abox.json",
+)
+def ingest(parsed: Path, domain: Path | None, abox_path: Path | None, out: Path | None) -> None:
+    """Ingest a parsed document into the TBox/ABox (Stage 9).
+
+    Extracts terms + relations, aligns against the domain pack's TBox, evolves
+    the TBox for any new types, and merges into the ABox. Deterministic-first;
+    AI hooks are optional.
+    """
+    import json
+
+    from onto3gpp.config import load_domain, load_tbox
+    from onto3gpp.ingest.pipeline import ingest as run_ingest
+    from onto3gpp.ontology.abox import abox_from_dict
+    from onto3gpp.ontology.tbox import tbox_to_dict
+    from onto3gpp.parser import Section
+
+    if domain is None:
+        domain = Path("docs/domain/3gpp")
+    cfg = load_domain(domain)
+    tbox = load_tbox(domain)
+
+    # Load parsed sections from JSONL (one serialized Section per line).
+    sections: list[Section] = []
+    for line in parsed.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        data = json.loads(line)
+        sections.append(
+            Section(
+                spec=data["spec"],
+                release=data["release"],
+                clause=data["clause"],
+                title=data["title"],
+                text=data["text"],
+                parent_clause=data.get("parent_clause", ""),
+                metadata=data.get("metadata", {}),
+            )
+        )
+    abox = abox_from_dict(json.loads(abox_path.read_text(encoding="utf-8"))) if abox_path else None
+
+    result = run_ingest(sections=sections, tbox=tbox, abox=abox, domain=cfg.domain)
+
+    click.echo(f"Domain: {cfg.domain}")
+    click.echo(f"Sections: {len(sections)}")
+    click.echo(f"Added concepts: {result.added_concepts}")
+    click.echo(f"Added relations: {result.added_relations}")
+    click.echo(f"TBox evolved: {result.evolved}")
+    click.echo(f"Conformance ratio: {result.conformance:.4f}")
+    if result.align_errors:
+        click.echo(f"Align errors ({len(result.align_errors)}):")
+        for e in result.align_errors[:20]:
+            click.echo(f"  - {e}")
+
+    out = out or parsed.with_suffix(".abox.json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    from onto3gpp.ontology.abox import abox_to_dict
+
+    out.write_text(json.dumps(abox_to_dict(result.abox), indent=2), encoding="utf-8")
+    click.echo(f"Wrote ABox to {out}")
+
+    import yaml
+
+    tbox_yaml = domain / "tbox.yaml"
+    tbox_yaml.write_text(
+        yaml.safe_dump(tbox_to_dict(result.tbox), sort_keys=False),
+        encoding="utf-8",
+    )
+    click.echo(f"Wrote evolved TBox to {tbox_yaml}")
 
 
 @main.command()

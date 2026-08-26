@@ -103,6 +103,11 @@ def build_automaton(entries: dict[str, DictionaryEntry]) -> Dictionary:
     The automaton is case-insensitive: keys are lowercased, and a map from
     lowercase → original surface is kept for resolution.
     """
+    if not entries:
+        # pyahocorasick cannot make_automaton() on an empty trie; leave the
+        # automaton as None so Dictionary.find() returns [] (it already guards
+        # on `self.automaton is None`).
+        return Dictionary(entries=entries, automaton=None, _lower_to_surface={})
     automaton = ahocorasick.Automaton()
     lower_to_surface: dict[str, str] = {}
     for surface in entries:
