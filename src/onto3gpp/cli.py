@@ -413,14 +413,14 @@ def align(ontology: Path, domain: Path | None) -> None:
     """
     import json
 
-    from onto3gpp.config import load_domain
+    from onto3gpp.config import load_domain, load_tbox
     from onto3gpp.ontology.align import align_abox, conformance_ratio
     from onto3gpp.ontology.schema import ontology_from_dict
 
     if domain is None:
         domain = Path("docs/domain/3gpp")
     cfg = load_domain(domain)
-    tbox = cfg.tbox()
+    tbox = load_tbox(domain)
 
     onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
     from onto3gpp.ontology.abox import ABox, ABoxConcept, ABoxRelation
@@ -496,7 +496,7 @@ def ingest(parsed: Path, domain: Path | None, abox_path: Path | None, out: Path 
     """
     import json
 
-    from onto3gpp.config import load_domain
+    from onto3gpp.config import load_domain, load_tbox
     from onto3gpp.ingest.pipeline import ingest as run_ingest
     from onto3gpp.ontology.abox import abox_from_dict
     from onto3gpp.ontology.tbox import tbox_to_dict
@@ -505,7 +505,7 @@ def ingest(parsed: Path, domain: Path | None, abox_path: Path | None, out: Path 
     if domain is None:
         domain = Path("docs/domain/3gpp")
     cfg = load_domain(domain)
-    tbox = cfg.tbox()
+    tbox = load_tbox(domain)
 
     # Load parsed sections from JSONL (one serialized Section per line).
     sections: list[Section] = []
@@ -546,9 +546,14 @@ def ingest(parsed: Path, domain: Path | None, abox_path: Path | None, out: Path 
     out.write_text(json.dumps(abox_to_dict(result.abox), indent=2), encoding="utf-8")
     click.echo(f"Wrote ABox to {out}")
 
-    tbox_out = out.with_suffix(".tbox.json")
-    tbox_out.write_text(json.dumps(tbox_to_dict(result.tbox), indent=2), encoding="utf-8")
-    click.echo(f"Wrote TBox to {tbox_out}")
+    import yaml
+
+    tbox_yaml = domain / "tbox.yaml"
+    tbox_yaml.write_text(
+        yaml.safe_dump(tbox_to_dict(result.tbox), sort_keys=False),
+        encoding="utf-8",
+    )
+    click.echo(f"Wrote evolved TBox to {tbox_yaml}")
 
 
 @main.command()
