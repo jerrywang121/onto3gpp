@@ -10,3 +10,51 @@
 {"query": "How is small data transmission supported over RACH?", "relevant_clauses": ["18.1"], "spec": "38300-i30"}
 {"query": "What is QoE measurement collection?", "relevant_clauses": ["21.1"], "spec": "38300-i30"}
 {"query": "How does the UE perform cell selection in RRC_IDLE?", "relevant_clauses": ["9.2.1.1"], "spec": "38300-i30"}
+{"query": "What is the difference between a gNB and an ng-eNB?", "relevant_clauses": ["4.1"], "spec": "38300-i30"}
+{"query": "What is the NG interface used for?", "relevant_clauses": ["4.3.1"], "spec": "38300-i30"}
+{"query": "What is the Xn interface used for?", "relevant_clauses": ["4.3.2"], "spec": "38300-i30"}
+{"query": "What is multi-radio dual connectivity?", "relevant_clauses": ["4.5"], "spec": "38300-i30"}
+{"query": "What is integrated access and backhaul (IAB)?", "relevant_clauses": ["4.7.1"], "spec": "38300-i30"}
+{"query": "What are non-public networks (NPN)?", "relevant_clauses": ["4.8"], "spec": "38300-i30"}
+{"query": "What waveforms are used for downlink and uplink transmission?", "relevant_clauses": ["5.1"], "spec": "38300-i30"}
+{"query": "What is the synchronization signal and PBCH block (SSB)?", "relevant_clauses": ["5.2.4"], "spec": "38300-i30"}
+{"query": "What is the random access procedure in the physical layer?", "relevant_clauses": ["5.3.4"], "spec": "38300-i30"}
+{"query": "What is carrier aggregation?", "relevant_clauses": ["5.4.1"], "spec": "38300-i30"}
+{"query": "What are the transport channels?", "relevant_clauses": ["5.5"], "spec": "38300-i30"}
+{"query": "What are the services and functions of the MAC sublayer?", "relevant_clauses": ["6.2.1"], "spec": "38300-i30"}
+{"query": "What are the logical channels in MAC?", "relevant_clauses": ["6.2.2"], "spec": "38300-i30"}
+{"query": "How does HARQ ensure delivery between peer entities?", "relevant_clauses": ["6.2.4"], "spec": "38300-i30"}
+{"query": "What are the RLC transmission modes?", "relevant_clauses": ["6.3.1"], "spec": "38300-i30"}
+{"query": "How does ARQ work in the RLC sublayer?", "relevant_clauses": ["6.3.3"], "spec": "38300-i30"}
+{"query": "What are the services and functions of the PDCP sublayer?", "relevant_clauses": ["6.4.1"], "spec": "38300-i30"}
+{"query": "What is bandwidth adaptation?", "relevant_clauses": ["6.10"], "spec": "38300-i30"}
+{"query": "What is the backhaul adaptation protocol (BAP) sublayer?", "relevant_clauses": ["6.11.1"], "spec": "38300-i30"}
+{"query": "What is multiple transmit/receive point (multi-TRP) operation?", "relevant_clauses": ["6.12"], "spec": "38300-i30"}
+{"query": "What are the services and functions of RRC?", "relevant_clauses": ["7.1"], "spec": "38300-i30"}
+{"query": "What are the RRC protocol states?", "relevant_clauses": ["7.2"], "spec": "38300-i30"}
+{"query": "How is system information scheduled?", "relevant_clauses": ["7.3.2"], "spec": "38300-i30"}
+{"query": "What is access control in RRC?", "relevant_clauses": ["7.4"], "spec": "38300-i30"}
+{"query": "How does the UE capability retrieval framework work?", "relevant_clauses": ["7.5"], "spec": "38300-i30"}
+{"query": "How are NAS messages transported?", "relevant_clauses": ["7.6"], "spec": "38300-i30"}
+{"query": "What UE identities are used for scheduling at cell level?", "relevant_clauses": ["8.1"], "spec": "38300-i30"}
+{"query": "What is mobility in RRC_IDLE?", "relevant_clauses": ["9.2.1"], "spec": "38300-i30"}
+{"query": "What is mobility in RRC_INACTIVE?", "relevant_clauses": ["9.2.2"], "spec": "38300-i30"}
+{"query": "What is mobility in RRC_CONNECTED?", "relevant_clauses": ["9.2.3"], "spec": "38300-i30"}
+{"query": "How does paging work?", "relevant_clauses": ["9.2.5"], "spec": "38300-i30"}
+{"query": "What is radio link failure?", "relevant_clauses": ["9.2.7"], "spec": "38300-i30"}
+{"query": "What is beam failure detection and recovery?", "relevant_clauses": ["9.2.8"], "spec": "38300-i30"}
+{"query": "What is timing advance?", "relevant_clauses": ["9.2.9"], "spec": "38300-i30"}
+{"query": "What is extended DRX for RRC_IDLE and RRC_INACTIVE?", "relevant_clauses": ["9.2.10"], "spec": "38300-i30"}
+{"query": "How does downlink scheduling work?", "relevant_clauses": ["10.2"], "spec": "38300-i30"}
+{"query": "How does uplink scheduling work?", "relevant_clauses": ["10.3"], "spec": "38300-i30"}
+{"query": "What is UE power saving?", "relevant_clauses": ["11"], "spec": "38300-i30"}
+{"query": "How do state transitions and mobility affect security?", "relevant_clauses": ["13.3"], "spec": "38300-i30"}
+{"query": "What is the automatic neighbour cell relation (ANR) function?", "relevant_clauses": ["15.3.3"], "spec": "38300-i30"}
+{"query": "What is network slicing in NG-RAN?", "relevant_clauses": ["16.3.1"], "spec": "38300-i30"}
+{"query": "What is URLLC?", "relevant_clauses": ["16.1.1"], "spec": "38300-i30"}
+{"query": "What is sidelink communication?", "relevant_clauses": ["16.9.1"], "spec": "38300-i30"}
+{"query": "What are multicast and broadcast services?", "relevant_clauses": ["16.10.1"], "spec": "38300-i30"}
+{"query": "What is sidelink relay?", "relevant_clauses": ["16.12.1"], "spec": "38300-i30"}
+{"query": "What is RedCap?", "relevant_clauses": ["16.13.1"], "spec": "38300-i30"}
+{"query": "What are non-terrestrial networks?", "relevant_clauses": ["16.14.1"], "spec": "38300-i30"}
+{"query": "What is support of AI/ML for NG-RAN?", "relevant_clauses": ["16.20.1"], "spec": "38300-i30"}
