@@ -1,0 +1,78 @@
+# Domain: <domain-name>
+# This config drives the pipeline for a new domain.
+# Copy this directory (docs/domain/_template/) to create a new domain, e.g.
+# docs/domain/<your-domain>/, then fill in the values below. No code changes
+# are needed to adapt the pipeline to a new domain.
+
+domain: <domain-name>
+
+# Intent types for query classification (Stage 3). Add/remove intents as the
+# domain requires. See src/onto3gpp/runtime/intent.py.
+intents:
+  - DEFINITION
+  - PROCEDURE
+  - CONFIGURATION
+  - FAILURE
+
+# Deterministic query-intent classification patterns (Stage 3). Each intent
+# maps to a list of regexes; a query is classified by counting regex matches
+# (ties broken by the latest match position). See src/onto3gpp/runtime/intent.py.
+intent_patterns:
+  DEFINITION:
+    - "\\bwhat is\\b"
+    - "\\bwhat are\\b"
+    - "\\bdefine\\b"
+    - "\\bdefinition\\b"
+    - "\\bmeaning\\b"
+  PROCEDURE:
+    - "\\bhow (does|is|are|do)\\b"
+    - "\\bprocedure\\b"
+    - "\\bprocess\\b"
+    - "\\bsteps?\\b"
+  CONFIGURATION:
+    - "\\bconfigure\\b"
+    - "\\bconfiguration\\b"
+    - "\\bsetup\\b"
+    - "\\bestablish\\b"
+  FAILURE:
+    - "\\b(fail|failure|error|break)\\b"
+    - "\\bunsuccessful\\b"
+    - "\\bnot supported\\b"
+
+# Document metadata fields (spec number, release, clause, title, etc.)
+document_metadata:
+  - spec_number
+  - release
+  - version
+  - document_type
+  - title
+
+# Judge confidence threshold (0-1). Candidates below this are rejected by the
+# AI-as-judge gate (see docs/architecture.md §"AI as Judge").
+judge_threshold: 0.8
+
+# External AI model hooks (optional). The pipeline is deterministic and
+# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
+# the improvement loop / AI-assisted ingestion. See docs/architecture.md
+# §"AI as Judge" and ADR-0012.
+#
+# Multi-model routing: each pipeline task resolves to a named model. A task
+# with no entry falls back to `default`. A flat `model:`/`provider:`/
+# `api_base:`/`api_key:` block (the old single-model form) is treated as
+# `default` for backward compatibility.
+llm:
+  enabled: false
+  default:
+    provider: openai
+    model: gpt-4o-mini
+    api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
+    api_key: null         # set via env (OPENAI_API_KEY) or here
+    temperature: 0.0
+    max_tokens: 1024
+  models:
+    extract:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    judge:         {provider: openai, model: gpt-4o,      temperature: 0.0, max_tokens: 1024}
+    align:         {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+    merge:         {provider: ollama, model: llama3,     api_base: http://localhost:11434, temperature: 0.0, max_tokens: 1024}
+    domain_detect: {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 256}
+    improve:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
