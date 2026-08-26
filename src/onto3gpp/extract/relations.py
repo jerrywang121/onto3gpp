@@ -15,6 +15,7 @@ import re
 import ahocorasick
 
 from onto3gpp.ontology.schema import Concept, Ontology, Relation
+from onto3gpp.ontology.tbox import TBox
 from onto3gpp.parser import Section
 
 # verb → relation type (lowercased verb stems)
@@ -97,8 +98,28 @@ def _find_concepts_in_sentence(
     return found
 
 
-def extract_relations(sections: list[Section], onto: Ontology) -> list[Relation]:
-    """Extract typed relations between known concepts from sections."""
+def extract_relations(
+    sections: list[Section],
+    onto: Ontology,
+    tbox: TBox | None = None,
+) -> list[Relation]:
+    """Extract typed relations between known concepts from sections.
+
+    If ``tbox`` is provided, each candidate relation is checked against the
+    TBox before being emitted. A relation is dropped only when it can be
+    *confidently* verified as invalid:
+
+    - the relation type is not a known TBox relation type, or
+    - both endpoint concept types are known TBox concept types and the
+      ``(source.type, rel, target.type)`` edge is not allowed.
+
+    If either endpoint's type is unknown to the TBox (e.g. the generic
+    ``abbreviation``/``phrase`` types from the deterministic extractor), the
+    relation is kept — we cannot verify it, so we stay permissive rather than
+    silently dropping coverage. This keeps the deterministic-first path intact
+    while letting AI-typed concepts (which carry TBox types) be schema-checked
+    at extraction time.
+    """
     by_canonical = _concept_by_canonical(onto)
     if not by_canonical:
         # no known concepts yet — nothing to relate
@@ -122,6 +143,8 @@ def extract_relations(sections: list[Section], onto: Ontology) -> list[Relation]
                 after = [c for c, p in found if p > vpos]
                 if before and after:
                     source, target = before[-1], after[0]
+                    if tbox is not None and _violates_tbox(tbox, source, target, rel):
+                        break  # one relation per sentence
                     relations.append(
                         Relation(
                             source=source.id,
@@ -139,3 +162,20 @@ def extract_relations(sections: list[Section], onto: Ontology) -> list[Relation]
                     break  # one relation per sentence
 
     return relations
+
+
+def _violates_tbox(tbox: TBox, source: Concept, target: Concept, rel: str) -> bool:
+    """Return True if the relation is *confidently* invalid per the TBox.
+
+    A relation is dropped only when we can verify it violates the schema:
+    the relation type is unknown, or both endpoint types are known TBox
+    concept types and the edge is disallowed. If either endpoint type is not
+    a known TBox concept type, we cannot verify the edge and keep it.
+    """
+    if not tbox.is_known_relation_type(rel):
+        return True
+    if not tbox.is_known_concept_type(source.type) or not tbox.is_known_concept_type(
+        target.type
+    ):
+        return False
+    return not tbox.allows(source.type, rel, target.type)

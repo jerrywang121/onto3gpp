@@ -247,11 +247,18 @@ def build_dict(parsed: Path, out: Path, threshold: float) -> None:
 @click.option("--parsed", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option("--dict", "dict_path", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
-def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
+@click.option(
+    "--domain",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to a domain pack directory (default: docs/domain/3gpp).",
+)
+def build_ontology(parsed: Path, dict_path: Path, out: Path, domain: Path | None) -> None:
     """Build an ontology (concepts + relations) from parsed sections + dictionary."""
     import json
 
     from onto3gpp.compile.dictionary import Dictionary
+    from onto3gpp.config import load_tbox
     from onto3gpp.extract.relations import extract_relations
     from onto3gpp.ontology.schema import (
         Concept,
@@ -260,6 +267,10 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
         validate_ontology,
     )
     from onto3gpp.parser import Section
+
+    if domain is None:
+        domain = Path("docs/domain/3gpp")
+    tbox = load_tbox(domain)
 
     dictionary = Dictionary.from_dict(json.loads(dict_path.read_text(encoding="utf-8")))
 
@@ -294,7 +305,7 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path) -> None:
             )
 
     onto = Ontology(concepts=list(concepts.values()))
-    relations = extract_relations(sections, onto)
+    relations = extract_relations(sections, onto, tbox=tbox)
     onto.relations = relations
 
     errors = validate_ontology(onto)

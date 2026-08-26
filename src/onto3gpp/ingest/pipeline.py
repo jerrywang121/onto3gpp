@@ -65,11 +65,14 @@ def _abox_from_ontology(onto: Ontology) -> ABox:
     return ABox(concepts=concepts, relations=relations)
 
 
-def _extract_abox(sections: list[Section]) -> ABox:
+def _extract_abox(sections: list[Section], tbox: TBox) -> ABox:
     """Extract candidate terms + relations from sections into a fresh ABox.
 
     Terms become ABox concepts (typed ``abbreviation``/``phrase``); relations
-    are extracted between known concepts. This is the deterministic-first path.
+    are extracted between known concepts. The TBox is passed to relation
+    extraction so that only schema-conforming relations are emitted (unknown
+    relation types and disallowed ``(source.type, rel, target.type)`` edges are
+    dropped at extraction time, not merely flagged by a later align step).
     """
     candidates = extract_candidates(sections)
     concepts: list[ABoxConcept] = []
@@ -90,7 +93,7 @@ def _extract_abox(sections: list[Section]) -> ABox:
             for c in candidates
         ]
     )
-    relations = extract_relations(sections, onto)
+    relations = extract_relations(sections, onto, tbox=tbox)
     abox_relations = [
         ABoxRelation(
             source=r.source,
@@ -121,7 +124,7 @@ def ingest(
     abox = abox or ABox()
 
     # 1. Extract terms + relations from the incoming sections.
-    extracted = _extract_abox(sections)
+    extracted = _extract_abox(sections, tbox)
 
     # 2. Merge extracted entries into the existing ABox.
     merged = merge_abox(abox, extracted)
