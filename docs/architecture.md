@@ -202,10 +202,12 @@ Every AI prompt and pipeline stage is driven by a **domain pack**:
 docs/domain/
 ├── _template/          # template for new domains
 │   ├── prompts/        # AI prompt templates (parameterized)
-│   └── config.yaml     # domain config (concept types, relations, intents)
+│   ├── config.yaml     # domain config (intents, patterns, metadata, llm)
+│   └── tbox.yaml       # top-level ontology (TBox): concept/relation types + constraints
 └── 3gpp/               # the first concrete domain
     ├── prompts/
-    └── config.yaml
+    ├── config.yaml
+    └── tbox.yaml
 ```
 
 The pipeline code reads the domain pack and never hard-codes 3GPP terms. To
@@ -302,8 +304,9 @@ domain pack and evolved by AI only when evidence demands (see §4.4).
 }
 ```
 
-The TBox is serialized as `tbox.json` (or embedded in the domain pack). It
-answers: *"is a `network_function` allowed to `select` a `procedure`?"*
+The TBox is serialized as `tbox.yaml` in the domain pack, and the `ingest`
+command writes the evolved TBox back to it. It answers: *"is a
+`network_function` allowed to `select` a `procedure`?"*
 
 ### 4.2 Low-level knowledge graph (ABox / instances)
 

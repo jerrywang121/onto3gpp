@@ -385,8 +385,7 @@ endpoints return correct results.
 - `src/onto3gpp/ontology/abox.py` — ABox schema (`ABoxConcept`,
   `ABoxRelation`, `ABox`) with metadata + provenance + serialization.
 - `src/onto3gpp/ontology/align.py` — `align_abox` + `conformance_ratio`.
-- `DomainConfig.relation_type_constraints` + `DomainConfig.tbox()` — builds the
-  TBox from the domain pack `config.yaml`.
+- `load_tbox(domain_dir)` — loads the TBox from the domain pack `tbox.yaml`.
 - CLI `onto3gpp align --ontology <abox.json> [--domain <pack>]` — measures
   TBox conformance.
 - Tests: `test_tbox.py`, `test_abox.py`, `test_align.py` (14 new; full suite
