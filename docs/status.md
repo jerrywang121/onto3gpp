@@ -14,6 +14,41 @@
   clause is split into many chunks (`found` counts chunks, `total_relevant`
   counts distinct clauses). Pre-existing; affects the original 12-query set
   identically. Not a gold-set defect.
+- **Quality fix (2026-08-26):** 7 of the 60 queries originally referenced
+  *parent* clauses with empty text in the parsed data (e.g. `4.3.1`, `9.2.3`,
+  `15.3.3`), making them unanswerable. Repointed them to content-bearing
+  sub-clauses (e.g. `4.3.1.1`/`4.3.1.2`, `9.2.3.1`, `15.3.3.1`/`15.3.3.2`/
+  `15.3.3.5`). Re-validated: **all 60 queries now reference non-empty clauses;
+  no invalid refs.**
+
+## Evaluation — New 60-Query Gold Set on Baseline Dict/Ontology (2026-08-26)
+
+Ran the 60-query gold set against the baseline `data/dict.json` +
+`data/ontology.json` over the 38.300 corpus, in three modes:
+
+| Mode | MRR | NDCG@10 | Recall@5 | Recall@10 | Zero-MRR |
+|------|-----|---------|----------|-----------|----------|
+| Plain BM25 | 0.7300 | 0.7493 | 1.8194 | 2.9167 | 8/60 |
+| Term-expanded | 0.7300 | 0.7493 | 1.8194 | 2.9167 | 8/60 |
+| Full (dict + rerank) | 0.7185 | 0.7424 | 1.8194 | 2.9167 | 8/60 |
+
+**Findings:**
+- **Term expansion adds no lift on this gold set** (0.7300 = 0.7300). The
+  queries use full words the docs spell out, so the abbreviation↔full-name
+  dictionary has nothing to bridge. Same conclusion as Stage 1 — expansion is
+  proven correct by unit tests but needs alias-exercising queries to show lift.
+- **Rerank slightly *hurts*** (0.7185 vs 0.7300, −0.0115 MRR). The reranker's
+  related-concept boost surfaces sibling clauses that share no exact tokens,
+  pushing the exact-match gold clause down. Worth revisiting the boost weight
+  on this larger gold set.
+- **8/60 queries still score MRR 0** — all genuine retrieval failures (their
+  relevant clauses have real content). Examples: handover in RRC_CONNECTED
+  (9.2.3.2.1/2), security principles (13.1), waveforms (5.1), random access
+  (5.3.4), BAP sublayer (6.11.1), system-info scheduling (7.3.2), mobility in
+  RRC_IDLE (9.2.1.x), sidelink relay (16.12.1). These are the next
+  improvement targets.
+- **Recall > 1.0** is the documented harness quirk (chunk-count vs
+  clause-count), not a gold-set defect.
 
 ## Current Stage
 
