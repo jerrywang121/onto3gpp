@@ -59,6 +59,35 @@ existing `_link_abbreviations` (in `extract/terms.py`), which only links when
 the abbreviation appears in parentheses immediately after the full form in the
 source text — that is provenance-grounded and safe.
 
+### Layer 3b — Quantified upside of abbreviation linking (bounded)
+
+Follow-up analysis of `data/ontology.json` and `data/dict.json`:
+
+| Metric | Count |
+|---|---|
+| Abbreviation concepts (all-caps) | 5,351 |
+| Full-form concepts | 427 |
+| Abbrs with an initials-matching full form | 110 |
+| Dict entries where `surface != canonical` (already linked) | 36 |
+
+The **110 initials matches are mostly false positives** — the heuristic cannot
+distinguish real abbreviations from coincidental letter matches:
+
+| Abbr | Naive initials match | Real meaning |
+|------|----------------------|--------------|
+| `TR` | Topological Redundancy | Tracking Area |
+| `MS` | MAC Sublayer | Mobile Station |
+| `IP` | Inter-system Ping-pong | Internet Protocol |
+| `CN` | Core Network / Configured NSSAI | ambiguous |
+| `PS` | PDU Session / Protocol Stacks | Packet Switched |
+
+**Key correction:** the 5,351 abbreviations are **not** mostly redundant
+duplicates. Only a small fraction have a real full-form counterpart in the
+docs. The consolidation upside from abbreviation linking is **bounded by what
+the source text actually defines** (parenthesis pairs), not by what
+initials-matching can invent. To grow it, re-run extraction over more source
+docs (more `Full Form (ABBR)` pairs) — not improve the linking heuristic.
+
 ---
 
 ## Recommended consolidation (safe subset)
@@ -70,7 +99,9 @@ via the extractor, not heuristic.
 
 **Net safe collapse on current graph: ~130 concepts** (21 normalization +
 109 provenance-grounded abbr links), but the abbr links need the extractor's
-parenthesis-based method, not initials.
+parenthesis-based method, not initials. Note the 109 figure is an **upper
+bound** — the provenance-grounded extractor currently produces only 36
+correct links, and the initials heuristic that reaches 109 is unreliable.
 
 ---
 
