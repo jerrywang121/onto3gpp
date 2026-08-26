@@ -1,0 +1,20 @@
+{
+  "input": "/home/jerry/personal/onto3gpp/data/ontology.json",
+  "n_concepts_initial": 5778,
+  "layer1_normalize": {
+    "groups": 21,
+    "concepts_collapsed": 21
+  },
+  "layer2_fuzzy_diagnostic": {
+    "threshold": 0.95,
+    "merged": 104,
+    "groups": 103,
+    "note": "DIAGNOSTIC ONLY. Dice bigram is unsafe for 3GPP terms (START/STOP, ACTIVE/INACTIVE, distinct C1-*/CP-* IDs). Not applied."
+  },
+  "layer3_abbr": {
+    "abbr_concepts_initial": 5351,
+    "linked_to_full_form": 109
+  },
+  "n_concepts_final": 5648,
+  "total_collapsed": 130
+}

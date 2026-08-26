@@ -1,0 +1,86 @@
+{
+  "ims mo": [
+    "MO-IMS",
+    "MO IMS"
+  ],
+  "n1 nas": [
+    "N1 NAS",
+    "N1-NAS"
+  ],
+  "registration update": [
+    "REGISTRATION-UPDATE",
+    "Registration Update"
+  ],
+  "bh rlc": [
+    "BH-RLC",
+    "BH RLC"
+  ],
+  "pc5 rrc": [
+    "PC5-RRC",
+    "PC5 RRC"
+  ],
+  "am rlc": [
+    "RLC-AM",
+    "AM-RLC"
+  ],
+  "rlc um": [
+    "RLC-UM",
+    "UM-RLC"
+  ],
+  "bfd rs": [
+    "BFD-RS",
+    "RS-BFD"
+  ],
+  "drx sl": [
+    "SL DRX",
+    "SL-DRX"
+  ],
+  "broadcast mbs": [
+    "Broadcast MBS",
+    "MBS Broadcast"
+  ],
+  "cg sdt": [
+    "CG-SDT",
+    "SDT-CG"
+  ],
+  "nr ntn": [
+    "NR NTN",
+    "NR-NTN"
+  ],
+  "dl ul": [
+    "DL-UL",
+    "UL-DL"
+  ],
+  "csi pucch": [
+    "PUCCH-CSI",
+    "CSI-PUCCH"
+  ],
+  "nr ue": [
+    "UE-NR",
+    "NR-UE"
+  ],
+  "rlm rs": [
+    "RLM-RS",
+    "RS-RLM"
+  ],
+  "sl v2x": [
+    "SL-V2X",
+    "V2X-SL"
+  ],
+  "0 1 dci": [
+    "DCI-1-0",
+    "DCI-0-1"
+  ],
+  "tci ul": [
+    "TCI-UL",
+    "UL-TCI"
+  ],
+  "cg pusch": [
+    "CG-PUSCH",
+    "PUSCH-CG"
+  ],
+  "bc drx gc": [
+    "DRX-GC-BC",
+    "GC-BC-DRX"
+  ]
+}
