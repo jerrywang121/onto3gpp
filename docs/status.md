@@ -524,8 +524,23 @@ types into curated TBox types.
   addition rate grow over the run.
 - **Status:** 20-section smoke test confirmed the monitoring works (15/20 ok,
   22 terms + 3 relations added; 25% failure rate from local-model flakiness —
-  failed sections skipped, run checkpointed). Full 532-section run in progress;
-  eval vs. baseline (MRR 0.6369) pending.
+  failed sections skipped, run checkpointed). Full 532-section run completed
+  (2026-08-26, `ab1500`): 20/20 chunks ok, 0 failures, 206 terms + 92 relations
+  added (final dict 5,897 / 5,884 concepts), 0 fallback triggers, 631s.
+- **Progressive eval vs. baseline (2026-08-26) — `data/gold_queries_38300.jsonl`:**
+
+| Variant | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|---------|-----|---------|----------|-----------|
+| **Baseline (verb-based)** | **0.6369** | **0.6699** | **1.5833** | **2.3333** |
+| Progressive AI-ingestion | 0.6369 | 0.6612 | 1.5000 | 2.2500 |
+
+- **Finding: progressive AI-ingestion is neutral on MRR (0.6369 = 0.6369) but
+  slightly regresses NDCG@10 / Recall@5 / Recall@10** (−0.009 / −0.083 /
+  −0.083). The gap-filling strategy avoids the large regression of the earlier
+  AI-only/hybrid variants (which lost 0.056–0.099 MRR), but the added terms are
+  still not discriminative enough to move MRR and slightly dilute the other
+  metrics. **Do not promote** the AI-ingested dict/ontology to `main`; the
+  deterministic verb-based baseline remains the runtime default.
 
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 

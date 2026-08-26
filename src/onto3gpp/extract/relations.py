@@ -65,7 +65,8 @@ def _build_automaton(by_canonical: dict[str, Concept]) -> ahocorasick.Automaton:
     automaton = ahocorasick.Automaton()
     for canonical in by_canonical:
         automaton.add_word(canonical, canonical)
-    automaton.make_automaton()
+    if by_canonical:
+        automaton.make_automaton()
     return automaton
 
 
@@ -99,6 +100,9 @@ def _find_concepts_in_sentence(
 def extract_relations(sections: list[Section], onto: Ontology) -> list[Relation]:
     """Extract typed relations between known concepts from sections."""
     by_canonical = _concept_by_canonical(onto)
+    if not by_canonical:
+        # no known concepts yet — nothing to relate
+        return []
     automaton = _build_automaton(by_canonical)
     relations: list[Relation] = []
 

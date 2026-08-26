@@ -175,9 +175,8 @@ per-query addition rate grow over the run.
 ### 8.4 Status
 
 A 20-section smoke test confirmed the monitoring works (progress log shows
-`match` metadata + per-chunk additions). The full 532-section run is in
-progress; eval results vs. the verb-based baseline (MRR 0.6369) will be
-appended here when complete.
+`match` metadata + per-chunk additions). The full 532-section run completed
+(2026-08-26, `ab1500`); eval results vs. the verb-based baseline are below.
 
 **20-section smoke test (2026-08-25):**
 
@@ -199,3 +198,34 @@ appended here when complete.
 - **Match sizes grow with the KB:** `known_terms` ranged 0→53 across chunks,
   confirming the context fed to the AI grows as the dict/ontology expand — the
   exact growth the monitoring was designed to track.
+
+### 8.5 Full 532-section run + eval (2026-08-26)
+
+The full run (`ab1500`) processed all 532 sections with **0 failures** and
+**0 fallback triggers** (extract/verify/relations all deterministic-path).
+
+| Metric | Value |
+|---|---|
+| Sections processed | 532 (20/20 chunks ok) |
+| OK / failed | 532 / 0 |
+| Terms added | 206 |
+| Relations added | 92 |
+| Final dict / concepts | 5,897 / 5,884 |
+| Total time | 631s (~0.84 sections/s) |
+
+**Eval vs. baseline (`data/gold_queries_38300.jsonl`, 12 queries):**
+
+| Variant | MRR | NDCG@10 | Recall@5 | Recall@10 |
+|---|---|---|---|---|
+| **Baseline (verb-based)** | **0.6369** | **0.6699** | **1.5833** | **2.3333** |
+| Progressive AI-ingestion | 0.6369 | 0.6612 | 1.5000 | 2.2500 |
+
+**Finding:** the progressive gap-filling strategy is **neutral on MRR**
+(0.6369 = 0.6369) but slightly regresses NDCG@10 / Recall@5 / Recall@10
+(−0.009 / −0.083 / −0.083). It avoids the large regression of the earlier
+AI-only/hybrid variants (which lost 0.056–0.099 MRR), but the 206 added terms
+are still not discriminative enough to move MRR and slightly dilute the other
+metrics. **Conclusion (unchanged):** do **not** promote the AI-ingested
+dict/ontology to `main`; the deterministic verb-based baseline remains the
+runtime default. The progressive run validates that gap-filling is *safe* (no
+MRR regression) but not yet *beneficial*.
