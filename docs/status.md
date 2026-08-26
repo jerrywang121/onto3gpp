@@ -2,7 +2,18 @@
 
 > **Purpose:** Live record of where we are, what's measured, and what's next.
 > This is the persistent memory of project progress. Keep it concise.
-> **Last updated:** 2026-08-25
+> **Last updated:** 2026-08-26
+
+## Gold Set
+
+- `data/gold_queries_38300.jsonl` — **60 queries** (was 12), all scoped to spec
+  `38300-i30`, referencing verified TS 38.300 clauses. Covers architecture,
+  physical layer, L2 protocols, RRC, mobility, scheduling, QoS, security,
+  verticals, interference, SDT, QoE. Binary relevance, same JSONL format.
+- **Known harness quirk:** Recall@5/10 can exceed 1.0 because a single relevant
+  clause is split into many chunks (`found` counts chunks, `total_relevant`
+  counts distinct clauses). Pre-existing; affects the original 12-query set
+  identically. Not a gold-set defect.
 
 ## Current Stage
 
