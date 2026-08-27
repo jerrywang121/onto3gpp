@@ -1,0 +1,5848 @@
+{
+  "concepts": [
+    {
+      "id": "5gc",
+      "canonical": "5GC",
+      "type": "architecture",
+      "aliases": [
+        "5G Core Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "5G Core Network"
+      }
+    },
+    {
+      "id": "5gs",
+      "canonical": "5GS",
+      "type": "architecture",
+      "aliases": [
+        "5G System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "5G System"
+      }
+    },
+    {
+      "id": "5qi",
+      "canonical": "5QI",
+      "type": "qos",
+      "aliases": [
+        "5G QoS Identifier"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "5G QoS Identifier"
+      }
+    },
+    {
+      "id": "a2x",
+      "canonical": "A2X",
+      "type": "concept",
+      "aliases": [
+        "Aircraft-to-Everything"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Aircraft-to-Everything"
+      }
+    },
+    {
+      "id": "a-csi",
+      "canonical": "A-CSI",
+      "type": "qos",
+      "aliases": [
+        "Aperiodic CSI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Aperiodic CSI"
+      }
+    },
+    {
+      "id": "agc",
+      "canonical": "AGC",
+      "type": "concept",
+      "aliases": [
+        "Automatic Gain Control"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Automatic Gain Control"
+      }
+    },
+    {
+      "id": "ai",
+      "canonical": "AI",
+      "type": "concept",
+      "aliases": [
+        "Artificial Intelligence"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Artificial Intelligence"
+      }
+    },
+    {
+      "id": "aka",
+      "canonical": "AKA",
+      "type": "security",
+      "aliases": [
+        "Authentication and Key Agreement"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Authentication and Key Agreement"
+      }
+    },
+    {
+      "id": "ambr",
+      "canonical": "AMBR",
+      "type": "concept",
+      "aliases": [
+        "Aggregate Maximum Bit Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Aggregate Maximum Bit Rate"
+      }
+    },
+    {
+      "id": "amc",
+      "canonical": "AMC",
+      "type": "concept",
+      "aliases": [
+        "Adaptive Modulation and Coding"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Adaptive Modulation and Coding"
+      }
+    },
+    {
+      "id": "amf",
+      "canonical": "AMF",
+      "type": "network_function",
+      "aliases": [
+        "Access and Mobility Management Function"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Access and Mobility Management Function"
+      }
+    },
+    {
+      "id": "ar",
+      "canonical": "AR",
+      "type": "concept",
+      "aliases": [
+        "Augmented Reality"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Augmented Reality"
+      }
+    },
+    {
+      "id": "arp",
+      "canonical": "ARP",
+      "type": "concept",
+      "aliases": [
+        "Allocation and Retention Priority"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Allocation and Retention Priority"
+      }
+    },
+    {
+      "id": "atg",
+      "canonical": "ATG",
+      "type": "concept",
+      "aliases": [
+        "Air to Ground"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Air to Ground"
+      }
+    },
+    {
+      "id": "ba",
+      "canonical": "BA",
+      "type": "concept",
+      "aliases": [
+        "Bandwidth Adaptation"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Bandwidth Adaptation"
+      }
+    },
+    {
+      "id": "bcch",
+      "canonical": "BCCH",
+      "type": "channel",
+      "aliases": [
+        "Broadcast Control Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Broadcast Control Channel"
+      }
+    },
+    {
+      "id": "bch",
+      "canonical": "BCH",
+      "type": "channel",
+      "aliases": [
+        "Broadcast Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Broadcast Channel"
+      }
+    },
+    {
+      "id": "bfd",
+      "canonical": "BFD",
+      "type": "concept",
+      "aliases": [
+        "Beam Failure Detection"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Beam Failure Detection"
+      }
+    },
+    {
+      "id": "bh",
+      "canonical": "BH",
+      "type": "concept",
+      "aliases": [
+        "Backhaul"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Backhaul"
+      }
+    },
+    {
+      "id": "bl",
+      "canonical": "BL",
+      "type": "concept",
+      "aliases": [
+        "Bandwidth reduced Low complexity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Bandwidth reduced Low complexity"
+      }
+    },
+    {
+      "id": "bpsk",
+      "canonical": "BPSK",
+      "type": "concept",
+      "aliases": [
+        "Binary Phase Shift Keying"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Binary Phase Shift Keying"
+      }
+    },
+    {
+      "id": "brid",
+      "canonical": "BRID",
+      "type": "concept",
+      "aliases": [
+        "Broadcast Remote Identification"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Broadcast Remote Identification"
+      }
+    },
+    {
+      "id": "c-rnti",
+      "canonical": "C-RNTI",
+      "type": "cell",
+      "aliases": [
+        "Cell RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cell RNTI"
+      }
+    },
+    {
+      "id": "cag",
+      "canonical": "CAG",
+      "type": "concept",
+      "aliases": [
+        "Closed Access Group"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Closed Access Group"
+      }
+    },
+    {
+      "id": "capc",
+      "canonical": "CAPC",
+      "type": "channel",
+      "aliases": [
+        "Channel Access Priority Class"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Channel Access Priority Class"
+      }
+    },
+    {
+      "id": "cbra",
+      "canonical": "CBRA",
+      "type": "concept",
+      "aliases": [
+        "Contention Based Random Access"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Contention Based Random Access"
+      }
+    },
+    {
+      "id": "cce",
+      "canonical": "CCE",
+      "type": "channel",
+      "aliases": [
+        "Control Channel Element"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Control Channel Element"
+      }
+    },
+    {
+      "id": "cd-ssb",
+      "canonical": "CD-SSB",
+      "type": "cell",
+      "aliases": [
+        "Cell Defining SSB"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cell Defining SSB"
+      }
+    },
+    {
+      "id": "celldtrx-rnti",
+      "canonical": "cellDTRX-RNTI",
+      "type": "cell",
+      "aliases": [
+        "Cell Discontinuous Transmission and Reception RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cell Discontinuous Transmission and Reception RNTI"
+      }
+    },
+    {
+      "id": "cfr",
+      "canonical": "CFR",
+      "type": "frequency_band",
+      "aliases": [
+        "Common Frequency Resource"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Common Frequency Resource"
+      }
+    },
+    {
+      "id": "cfra",
+      "canonical": "CFRA",
+      "type": "concept",
+      "aliases": [
+        "Contention Free Random Access"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Contention Free Random Access"
+      }
+    },
+    {
+      "id": "cg",
+      "canonical": "CG",
+      "type": "concept",
+      "aliases": [
+        "Configured Grant"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Configured Grant"
+      }
+    },
+    {
+      "id": "cho",
+      "canonical": "CHO",
+      "type": "mobility",
+      "aliases": [
+        "Conditional Handover"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Conditional Handover"
+      }
+    },
+    {
+      "id": "ciot",
+      "canonical": "CIoT",
+      "type": "cell",
+      "aliases": [
+        "Cellular Internet of Things"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cellular Internet of Things"
+      }
+    },
+    {
+      "id": "cli",
+      "canonical": "CLI",
+      "type": "concept",
+      "aliases": [
+        "Cross Link interference"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cross Link interference"
+      }
+    },
+    {
+      "id": "cmas",
+      "canonical": "CMAS",
+      "type": "concept",
+      "aliases": [
+        "Commercial Mobile Alert Service"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Commercial Mobile Alert Service"
+      }
+    },
+    {
+      "id": "coreset",
+      "canonical": "CORESET",
+      "type": "concept",
+      "aliases": [
+        "Control Resource Set"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Control Resource Set"
+      }
+    },
+    {
+      "id": "cp",
+      "canonical": "CP",
+      "type": "concept",
+      "aliases": [
+        "Cyclic Prefix"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Cyclic Prefix"
+      }
+    },
+    {
+      "id": "cpa",
+      "canonical": "CPA",
+      "type": "cell",
+      "aliases": [
+        "Conditional PSCell Addition"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Conditional PSCell Addition"
+      }
+    },
+    {
+      "id": "cpc",
+      "canonical": "CPC",
+      "type": "cell",
+      "aliases": [
+        "Conditional PSCell Change"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Conditional PSCell Change"
+      }
+    },
+    {
+      "id": "daa",
+      "canonical": "DAA",
+      "type": "concept",
+      "aliases": [
+        "Detect And Avoid"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Detect And Avoid"
+      }
+    },
+    {
+      "id": "dag",
+      "canonical": "DAG",
+      "type": "concept",
+      "aliases": [
+        "Directed Acyclic Graph"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Directed Acyclic Graph"
+      }
+    },
+    {
+      "id": "daps",
+      "canonical": "DAPS",
+      "type": "protocol",
+      "aliases": [
+        "Dual Active Protocol Stack"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Dual Active Protocol Stack"
+      }
+    },
+    {
+      "id": "dft",
+      "canonical": "DFT",
+      "type": "concept",
+      "aliases": [
+        "Discrete Fourier Transform"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Discrete Fourier Transform"
+      }
+    },
+    {
+      "id": "dci",
+      "canonical": "DCI",
+      "type": "concept",
+      "aliases": [
+        "Downlink Control Information"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Downlink Control Information"
+      }
+    },
+    {
+      "id": "dcp",
+      "canonical": "DCP",
+      "type": "concept",
+      "aliases": [
+        "DCI with CRC scrambled by PS-RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "DCI with CRC scrambled by PS-RNTI"
+      }
+    },
+    {
+      "id": "dcr",
+      "canonical": "DCR",
+      "type": "concept",
+      "aliases": [
+        "Direct Communication Request"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Direct Communication Request"
+      }
+    },
+    {
+      "id": "dl-aod",
+      "canonical": "DL-AoD",
+      "type": "concept",
+      "aliases": [
+        "Downlink Angle-of-Departure"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Downlink Angle-of-Departure"
+      }
+    },
+    {
+      "id": "dl-sch",
+      "canonical": "DL-SCH",
+      "type": "channel",
+      "aliases": [
+        "Downlink Shared Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Downlink Shared Channel"
+      }
+    },
+    {
+      "id": "dl-tdoa",
+      "canonical": "DL-TDOA",
+      "type": "concept",
+      "aliases": [
+        "Downlink Time Difference Of Arrival"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Downlink Time Difference Of Arrival"
+      }
+    },
+    {
+      "id": "dmrs",
+      "canonical": "DMRS",
+      "type": "channel",
+      "aliases": [
+        "Demodulation Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Demodulation Reference Signal"
+      }
+    },
+    {
+      "id": "drx",
+      "canonical": "DRX",
+      "type": "concept",
+      "aliases": [
+        "Discontinuous Reception"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Discontinuous Reception"
+      }
+    },
+    {
+      "id": "dsr",
+      "canonical": "DSR",
+      "type": "concept",
+      "aliases": [
+        "Delay Status Report"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Delay Status Report"
+      }
+    },
+    {
+      "id": "dtx",
+      "canonical": "DTX",
+      "type": "concept",
+      "aliases": [
+        "Discontinuous Transmission"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Discontinuous Transmission"
+      }
+    },
+    {
+      "id": "e-cid",
+      "canonical": "E-CID",
+      "type": "cell",
+      "aliases": [
+        "Enhanced Cell-ID (positioning method)"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Enhanced Cell-ID (positioning method)"
+      }
+    },
+    {
+      "id": "ec",
+      "canonical": "EC",
+      "type": "concept",
+      "aliases": [
+        "Energy Cost"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Energy Cost"
+      }
+    },
+    {
+      "id": "ehc",
+      "canonical": "EHC",
+      "type": "protocol",
+      "aliases": [
+        "Ethernet Header Compression"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Ethernet Header Compression"
+      }
+    },
+    {
+      "id": "epws",
+      "canonical": "ePWS",
+      "type": "architecture",
+      "aliases": [
+        "enhancements of Public Warning System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "enhancements of Public Warning System"
+      }
+    },
+    {
+      "id": "etws",
+      "canonical": "ETWS",
+      "type": "architecture",
+      "aliases": [
+        "Earthquake and Tsunami Warning System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Earthquake and Tsunami Warning System"
+      }
+    },
+    {
+      "id": "fs",
+      "canonical": "FS",
+      "type": "concept",
+      "aliases": [
+        "Feature Set"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Feature Set"
+      }
+    },
+    {
+      "id": "fsa_id",
+      "canonical": "FSA ID",
+      "type": "frequency_band",
+      "aliases": [
+        "Frequency Selection Area Identity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Frequency Selection Area Identity"
+      }
+    },
+    {
+      "id": "g-cs-rnti",
+      "canonical": "G-CS-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Group Configured Scheduling RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Group Configured Scheduling RNTI"
+      }
+    },
+    {
+      "id": "g-rnti",
+      "canonical": "G-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Group RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Group RNTI"
+      }
+    },
+    {
+      "id": "gfbr",
+      "canonical": "GFBR",
+      "type": "qos",
+      "aliases": [
+        "Guaranteed Flow Bit Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Guaranteed Flow Bit Rate"
+      }
+    },
+    {
+      "id": "gin",
+      "canonical": "GIN",
+      "type": "architecture",
+      "aliases": [
+        "Group ID for Network selection"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Group ID for Network selection"
+      }
+    },
+    {
+      "id": "gnss",
+      "canonical": "GNSS",
+      "type": "architecture",
+      "aliases": [
+        "Global Navigation Satellite System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Global Navigation Satellite System"
+      }
+    },
+    {
+      "id": "gso",
+      "canonical": "GSO",
+      "type": "concept",
+      "aliases": [
+        "Geosynchronous Orbit"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Geosynchronous Orbit"
+      }
+    },
+    {
+      "id": "h-sfn",
+      "canonical": "H-SFN",
+      "type": "qos",
+      "aliases": [
+        "Hyper System Frame Number"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Hyper System Frame Number"
+      }
+    },
+    {
+      "id": "haps",
+      "canonical": "HAPS",
+      "type": "concept",
+      "aliases": [
+        "High Altitude Platform Station"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "High Altitude Platform Station"
+      }
+    },
+    {
+      "id": "hrnn",
+      "canonical": "HRNN",
+      "type": "architecture",
+      "aliases": [
+        "Human-Readable Network Name"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Human-Readable Network Name"
+      }
+    },
+    {
+      "id": "iab",
+      "canonical": "IAB",
+      "type": "network_function",
+      "aliases": [
+        "Integrated Access and Backhaul"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Integrated Access and Backhaul"
+      }
+    },
+    {
+      "id": "ifri",
+      "canonical": "IFRI",
+      "type": "mobility",
+      "aliases": [
+        "Intra Frequency Reselection Indication"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Intra Frequency Reselection Indication"
+      }
+    },
+    {
+      "id": "i-rnti",
+      "canonical": "I-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Inactive RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Inactive RNTI"
+      }
+    },
+    {
+      "id": "int-rnti",
+      "canonical": "INT-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Interruption RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Interruption RNTI"
+      }
+    },
+    {
+      "id": "kpas",
+      "canonical": "KPAS",
+      "type": "architecture",
+      "aliases": [
+        "Korean Public Alarm System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Korean Public Alarm System"
+      }
+    },
+    {
+      "id": "l2",
+      "canonical": "L2",
+      "type": "concept",
+      "aliases": [
+        "Layer-2"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Layer-2"
+      }
+    },
+    {
+      "id": "l3",
+      "canonical": "L3",
+      "type": "concept",
+      "aliases": [
+        "Layer-3"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Layer-3"
+      }
+    },
+    {
+      "id": "lbt",
+      "canonical": "LBT",
+      "type": "concept",
+      "aliases": [
+        "Listen Before Talk"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Listen Before Talk"
+      }
+    },
+    {
+      "id": "ldpc",
+      "canonical": "LDPC",
+      "type": "concept",
+      "aliases": [
+        "Low Density Parity Check"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Low Density Parity Check"
+      }
+    },
+    {
+      "id": "leo",
+      "canonical": "LEO",
+      "type": "concept",
+      "aliases": [
+        "Low Earth Orbit"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Low Earth Orbit"
+      }
+    },
+    {
+      "id": "ltm",
+      "canonical": "LTM",
+      "type": "mobility",
+      "aliases": [
+        "L1/L2 Triggered Mobility"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "L1/L2 Triggered Mobility"
+      }
+    },
+    {
+      "id": "mbs",
+      "canonical": "MBS",
+      "type": "concept",
+      "aliases": [
+        "Multicast/Broadcast Services"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multicast/Broadcast Services"
+      }
+    },
+    {
+      "id": "mce",
+      "canonical": "MCE",
+      "type": "channel",
+      "aliases": [
+        "Measurement Collection Entity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Measurement Collection Entity"
+      }
+    },
+    {
+      "id": "mcch",
+      "canonical": "MCCH",
+      "type": "channel",
+      "aliases": [
+        "MBS Control Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "MBS Control Channel"
+      }
+    },
+    {
+      "id": "mdbv",
+      "canonical": "MDBV",
+      "type": "concept",
+      "aliases": [
+        "Maximum Data Burst Volume"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Maximum Data Burst Volume"
+      }
+    },
+    {
+      "id": "meo",
+      "canonical": "MEO",
+      "type": "concept",
+      "aliases": [
+        "Medium Earth Orbit"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Medium Earth Orbit"
+      }
+    },
+    {
+      "id": "mib",
+      "canonical": "MIB",
+      "type": "channel",
+      "aliases": [
+        "Master Information Block"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Master Information Block"
+      }
+    },
+    {
+      "id": "mico",
+      "canonical": "MICO",
+      "type": "concept",
+      "aliases": [
+        "Mobile Initiated Connection Only"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Mobile Initiated Connection Only"
+      }
+    },
+    {
+      "id": "mfbr",
+      "canonical": "MFBR",
+      "type": "qos",
+      "aliases": [
+        "Maximum Flow Bit Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Maximum Flow Bit Rate"
+      }
+    },
+    {
+      "id": "ml",
+      "canonical": "ML",
+      "type": "concept",
+      "aliases": [
+        "Machine Learning"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Machine Learning"
+      }
+    },
+    {
+      "id": "mmtel",
+      "canonical": "MMTEL",
+      "type": "concept",
+      "aliases": [
+        "Multimedia telephony"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multimedia telephony"
+      }
+    },
+    {
+      "id": "mno",
+      "canonical": "MNO",
+      "type": "qos",
+      "aliases": [
+        "Mobile Network Operator"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Mobile Network Operator"
+      }
+    },
+    {
+      "id": "mo-sdt",
+      "canonical": "MO-SDT",
+      "type": "concept",
+      "aliases": [
+        "Mobile Originated SDT"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Mobile Originated SDT"
+      }
+    },
+    {
+      "id": "mp",
+      "canonical": "MP",
+      "type": "concept",
+      "aliases": [
+        "Multi-Path"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multi-Path"
+      }
+    },
+    {
+      "id": "mpe",
+      "canonical": "MPE",
+      "type": "qos",
+      "aliases": [
+        "Maximum Permissible Exposure"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Maximum Permissible Exposure"
+      }
+    },
+    {
+      "id": "mrb",
+      "canonical": "MRB",
+      "type": "channel",
+      "aliases": [
+        "MBS Radio Bearer"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "MBS Radio Bearer"
+      }
+    },
+    {
+      "id": "mt",
+      "canonical": "MT",
+      "type": "concept",
+      "aliases": [
+        "Mobile Termination"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Mobile Termination"
+      }
+    },
+    {
+      "id": "mt-sdt",
+      "canonical": "MT-SDT",
+      "type": "concept",
+      "aliases": [
+        "Mobile Terminated SDT"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Mobile Terminated SDT"
+      }
+    },
+    {
+      "id": "mtch",
+      "canonical": "MTCH",
+      "type": "channel",
+      "aliases": [
+        "MBS Traffic Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "MBS Traffic Channel"
+      }
+    },
+    {
+      "id": "mtsi",
+      "canonical": "MTSI",
+      "type": "concept",
+      "aliases": [
+        "Multimedia Telephony Service for IMS"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multimedia Telephony Service for IMS"
+      }
+    },
+    {
+      "id": "mu-mimo",
+      "canonical": "MU-MIMO",
+      "type": "concept",
+      "aliases": [
+        "Multi User MIMO"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multi User MIMO"
+      }
+    },
+    {
+      "id": "multi-rtt",
+      "canonical": "Multi-RTT",
+      "type": "concept",
+      "aliases": [
+        "Multi-Round Trip Time"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multi-Round Trip Time"
+      }
+    },
+    {
+      "id": "musim",
+      "canonical": "MUSIM",
+      "type": "concept",
+      "aliases": [
+        "Multi-Universal Subscriber Identity Module"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Multi-Universal Subscriber Identity Module"
+      }
+    },
+    {
+      "id": "n3c",
+      "canonical": "N3C",
+      "type": "interface",
+      "aliases": [
+        "Non-3GPP Connection"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Non-3GPP Connection"
+      }
+    },
+    {
+      "id": "nb-iot",
+      "canonical": "NB-IoT",
+      "type": "concept",
+      "aliases": [
+        "Narrow Band Internet of Things"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Narrow Band Internet of Things"
+      }
+    },
+    {
+      "id": "ncd-ssb",
+      "canonical": "NCD-SSB",
+      "type": "cell",
+      "aliases": [
+        "Non Cell Defining SSB"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Non Cell Defining SSB"
+      }
+    },
+    {
+      "id": "ncgi",
+      "canonical": "NCGI",
+      "type": "cell",
+      "aliases": [
+        "NR Cell Global Identifier"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "NR Cell Global Identifier"
+      }
+    },
+    {
+      "id": "ncl",
+      "canonical": "NCL",
+      "type": "cell",
+      "aliases": [
+        "Neighbour Cell List"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Neighbour Cell List"
+      }
+    },
+    {
+      "id": "ncr",
+      "canonical": "NCR",
+      "type": "network_function",
+      "aliases": [
+        "Neighbour Cell Relation"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Neighbour Cell Relation"
+      }
+    },
+    {
+      "id": "ncrt",
+      "canonical": "NCRT",
+      "type": "network_function",
+      "aliases": [
+        "Neighbour Cell Relation Table"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Neighbour Cell Relation Table"
+      }
+    },
+    {
+      "id": "nes",
+      "canonical": "NES",
+      "type": "architecture",
+      "aliases": [
+        "Network Energy Savings"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Network Energy Savings"
+      }
+    },
+    {
+      "id": "ngap",
+      "canonical": "NGAP",
+      "type": "interface",
+      "aliases": [
+        "NG Application Protocol"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "NG Application Protocol"
+      }
+    },
+    {
+      "id": "ngso",
+      "canonical": "NGSO",
+      "type": "concept",
+      "aliases": [
+        "Non-Geosynchronous Orbit"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Non-Geosynchronous Orbit"
+      }
+    },
+    {
+      "id": "nid",
+      "canonical": "NID",
+      "type": "architecture",
+      "aliases": [
+        "Network Identifier"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Network Identifier"
+      }
+    },
+    {
+      "id": "npn",
+      "canonical": "NPN",
+      "type": "architecture",
+      "aliases": [
+        "Non-Public Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Non-Public Network"
+      }
+    },
+    {
+      "id": "nr",
+      "canonical": "NR",
+      "type": "concept",
+      "aliases": [
+        "NR Radio Access"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "NR Radio Access"
+      }
+    },
+    {
+      "id": "nsag",
+      "canonical": "NSAG",
+      "type": "architecture",
+      "aliases": [
+        "Network Slice AS Group"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Network Slice AS Group"
+      }
+    },
+    {
+      "id": "ntn",
+      "canonical": "NTN",
+      "type": "architecture",
+      "aliases": [
+        "Non-Terrestrial Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Non-Terrestrial Network"
+      }
+    },
+    {
+      "id": "p-mpr",
+      "canonical": "P-MPR",
+      "type": "concept",
+      "aliases": [
+        "Power Management Maximum Power Reduction"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Power Management Maximum Power Reduction"
+      }
+    },
+    {
+      "id": "p-rnti",
+      "canonical": "P-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Paging RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging RNTI"
+      }
+    },
+    {
+      "id": "pch",
+      "canonical": "PCH",
+      "type": "channel",
+      "aliases": [
+        "Paging Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging Channel"
+      }
+    },
+    {
+      "id": "pci",
+      "canonical": "PCI",
+      "type": "cell",
+      "aliases": [
+        "Physical Cell Identifier"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Cell Identifier"
+      }
+    },
+    {
+      "id": "pdb",
+      "canonical": "PDB",
+      "type": "qos",
+      "aliases": [
+        "Packet Delay Budget"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Packet Delay Budget"
+      }
+    },
+    {
+      "id": "pdc",
+      "canonical": "PDC",
+      "type": "concept",
+      "aliases": [
+        "Propagation Delay Compensation"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Propagation Delay Compensation"
+      }
+    },
+    {
+      "id": "pdcch",
+      "canonical": "PDCCH",
+      "type": "channel",
+      "aliases": [
+        "Physical Downlink Control Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Downlink Control Channel"
+      }
+    },
+    {
+      "id": "pdsch",
+      "canonical": "PDSCH",
+      "type": "channel",
+      "aliases": [
+        "Physical Downlink Shared Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Downlink Shared Channel"
+      }
+    },
+    {
+      "id": "pei",
+      "canonical": "PEI",
+      "type": "concept",
+      "aliases": [
+        "Paging Early Indication"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging Early Indication"
+      }
+    },
+    {
+      "id": "per",
+      "canonical": "PER",
+      "type": "qos",
+      "aliases": [
+        "Packet Error Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Packet Error Rate"
+      }
+    },
+    {
+      "id": "ph",
+      "canonical": "PH",
+      "type": "qos",
+      "aliases": [
+        "Paging Hyperframe"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging Hyperframe"
+      }
+    },
+    {
+      "id": "plmn",
+      "canonical": "PLMN",
+      "type": "architecture",
+      "aliases": [
+        "Public Land Mobile Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Public Land Mobile Network"
+      }
+    },
+    {
+      "id": "pni-npn",
+      "canonical": "PNI-NPN",
+      "type": "architecture",
+      "aliases": [
+        "Public Network Integrated NPN"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Public Network Integrated NPN"
+      }
+    },
+    {
+      "id": "po",
+      "canonical": "PO",
+      "type": "concept",
+      "aliases": [
+        "Paging Occasion"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging Occasion"
+      }
+    },
+    {
+      "id": "pqi",
+      "canonical": "PQI",
+      "type": "qos",
+      "aliases": [
+        "PC5 5QI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "PC5 5QI"
+      }
+    },
+    {
+      "id": "prach",
+      "canonical": "PRACH",
+      "type": "channel",
+      "aliases": [
+        "Physical Random Access Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Random Access Channel"
+      }
+    },
+    {
+      "id": "prb",
+      "canonical": "PRB",
+      "type": "channel",
+      "aliases": [
+        "Physical Resource Block"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Resource Block"
+      }
+    },
+    {
+      "id": "prg",
+      "canonical": "PRG",
+      "type": "channel",
+      "aliases": [
+        "Precoding Resource block Group"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Precoding Resource block Group"
+      }
+    },
+    {
+      "id": "prs",
+      "canonical": "PRS",
+      "type": "channel",
+      "aliases": [
+        "Positioning Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Positioning Reference Signal"
+      }
+    },
+    {
+      "id": "ps-rnti",
+      "canonical": "PS-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Power Saving RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Power Saving RNTI"
+      }
+    },
+    {
+      "id": "psdb",
+      "canonical": "PSDB",
+      "type": "qos",
+      "aliases": [
+        "PDU Set Delay Budget"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "PDU Set Delay Budget"
+      }
+    },
+    {
+      "id": "pser",
+      "canonical": "PSER",
+      "type": "qos",
+      "aliases": [
+        "PDU Set Error Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "PDU Set Error Rate"
+      }
+    },
+    {
+      "id": "psi",
+      "canonical": "PSI",
+      "type": "qos",
+      "aliases": [
+        "PDU Set Importance"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "PDU Set Importance"
+      }
+    },
+    {
+      "id": "psihi",
+      "canonical": "PSIHI",
+      "type": "qos",
+      "aliases": [
+        "PDU Set Integrated Handling Information"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "PDU Set Integrated Handling Information"
+      }
+    },
+    {
+      "id": "pss",
+      "canonical": "PSS",
+      "type": "channel",
+      "aliases": [
+        "Primary Synchronisation Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Primary Synchronisation Signal"
+      }
+    },
+    {
+      "id": "ptm",
+      "canonical": "PTM",
+      "type": "concept",
+      "aliases": [
+        "Point to Multipoint"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Point to Multipoint"
+      }
+    },
+    {
+      "id": "ptp",
+      "canonical": "PTP",
+      "type": "concept",
+      "aliases": [
+        "Point to Point"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Point to Point"
+      }
+    },
+    {
+      "id": "ptw",
+      "canonical": "PTW",
+      "type": "concept",
+      "aliases": [
+        "Paging Time Window"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Paging Time Window"
+      }
+    },
+    {
+      "id": "pucch",
+      "canonical": "PUCCH",
+      "type": "channel",
+      "aliases": [
+        "Physical Uplink Control Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Uplink Control Channel"
+      }
+    },
+    {
+      "id": "pusch",
+      "canonical": "PUSCH",
+      "type": "channel",
+      "aliases": [
+        "Physical Uplink Shared Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Physical Uplink Shared Channel"
+      }
+    },
+    {
+      "id": "pws",
+      "canonical": "PWS",
+      "type": "architecture",
+      "aliases": [
+        "Public Warning System"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Public Warning System"
+      }
+    },
+    {
+      "id": "qam",
+      "canonical": "QAM",
+      "type": "concept",
+      "aliases": [
+        "Quadrature Amplitude Modulation"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Quadrature Amplitude Modulation"
+      }
+    },
+    {
+      "id": "qfi",
+      "canonical": "QFI",
+      "type": "qos",
+      "aliases": [
+        "QoS Flow ID"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "QoS Flow ID"
+      }
+    },
+    {
+      "id": "qmc",
+      "canonical": "QMC",
+      "type": "qos",
+      "aliases": [
+        "QoE Measurement Collection"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "QoE Measurement Collection"
+      }
+    },
+    {
+      "id": "qoe",
+      "canonical": "QoE",
+      "type": "qos",
+      "aliases": [
+        "Quality of Experience"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Quality of Experience"
+      }
+    },
+    {
+      "id": "qpsk",
+      "canonical": "QPSK",
+      "type": "concept",
+      "aliases": [
+        "Quadrature Phase Shift Keying"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Quadrature Phase Shift Keying"
+      }
+    },
+    {
+      "id": "ra",
+      "canonical": "RA",
+      "type": "concept",
+      "aliases": [
+        "Random Access"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Random Access"
+      }
+    },
+    {
+      "id": "ra-rnti",
+      "canonical": "RA-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Random Access RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Random Access RNTI"
+      }
+    },
+    {
+      "id": "rach",
+      "canonical": "RACH",
+      "type": "channel",
+      "aliases": [
+        "Random Access Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Random Access Channel"
+      }
+    },
+    {
+      "id": "ranac",
+      "canonical": "RANAC",
+      "type": "concept",
+      "aliases": [
+        "RAN-based Notification Area Code"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "RAN-based Notification Area Code"
+      }
+    },
+    {
+      "id": "reg",
+      "canonical": "REG",
+      "type": "concept",
+      "aliases": [
+        "Resource Element Group"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Resource Element Group"
+      }
+    },
+    {
+      "id": "rim",
+      "canonical": "RIM",
+      "type": "concept",
+      "aliases": [
+        "Remote Interference Management"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Remote Interference Management"
+      }
+    },
+    {
+      "id": "rlm",
+      "canonical": "RLM",
+      "type": "concept",
+      "aliases": [
+        "Radio Link Monitoring"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Radio Link Monitoring"
+      }
+    },
+    {
+      "id": "rmsi",
+      "canonical": "RMSI",
+      "type": "concept",
+      "aliases": [
+        "Remaining Minimum SI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Remaining Minimum SI"
+      }
+    },
+    {
+      "id": "rna",
+      "canonical": "RNA",
+      "type": "concept",
+      "aliases": [
+        "RAN-based Notification Area"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "RAN-based Notification Area"
+      }
+    },
+    {
+      "id": "rnau",
+      "canonical": "RNAU",
+      "type": "concept",
+      "aliases": [
+        "RAN-based Notification Area Update"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "RAN-based Notification Area Update"
+      }
+    },
+    {
+      "id": "rnti",
+      "canonical": "RNTI",
+      "type": "architecture",
+      "aliases": [
+        "Radio Network Temporary Identifier"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Radio Network Temporary Identifier"
+      }
+    },
+    {
+      "id": "rqa",
+      "canonical": "RQA",
+      "type": "qos",
+      "aliases": [
+        "Reflective QoS Attribute"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reflective QoS Attribute"
+      }
+    },
+    {
+      "id": "rqos",
+      "canonical": "RQoS",
+      "type": "qos",
+      "aliases": [
+        "Reflective Quality of Service"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reflective Quality of Service"
+      }
+    },
+    {
+      "id": "rs",
+      "canonical": "RS",
+      "type": "channel",
+      "aliases": [
+        "Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reference Signal"
+      }
+    },
+    {
+      "id": "rsrp",
+      "canonical": "RSRP",
+      "type": "channel",
+      "aliases": [
+        "Reference Signal Received Power"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reference Signal Received Power"
+      }
+    },
+    {
+      "id": "rsrq",
+      "canonical": "RSRQ",
+      "type": "channel",
+      "aliases": [
+        "Reference Signal Received Quality"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reference Signal Received Quality"
+      }
+    },
+    {
+      "id": "rssi",
+      "canonical": "RSSI",
+      "type": "channel",
+      "aliases": [
+        "Received Signal Strength Indicator"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Received Signal Strength Indicator"
+      }
+    },
+    {
+      "id": "rstd",
+      "canonical": "RSTD",
+      "type": "channel",
+      "aliases": [
+        "Reference Signal Time Difference"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Reference Signal Time Difference"
+      }
+    },
+    {
+      "id": "rtt",
+      "canonical": "RTT",
+      "type": "concept",
+      "aliases": [
+        "Round Trip Time"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Round Trip Time"
+      }
+    },
+    {
+      "id": "rvqoe",
+      "canonical": "RVQoE",
+      "type": "qos",
+      "aliases": [
+        "RAN visible QoE"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "RAN visible QoE"
+      }
+    },
+    {
+      "id": "scs",
+      "canonical": "SCS",
+      "type": "concept",
+      "aliases": [
+        "SubCarrier Spacing"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "SubCarrier Spacing"
+      }
+    },
+    {
+      "id": "sd",
+      "canonical": "SD",
+      "type": "concept",
+      "aliases": [
+        "Slice Differentiator"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Slice Differentiator"
+      }
+    },
+    {
+      "id": "sdap",
+      "canonical": "SDAP",
+      "type": "protocol",
+      "aliases": [
+        "Service Data Adaptation Protocol"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Service Data Adaptation Protocol"
+      }
+    },
+    {
+      "id": "sdt",
+      "canonical": "SDT",
+      "type": "concept",
+      "aliases": [
+        "Small Data Transmission"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Small Data Transmission"
+      }
+    },
+    {
+      "id": "sd-rsrp",
+      "canonical": "SD-RSRP",
+      "type": "concept",
+      "aliases": [
+        "Sidelink Discovery RSRP"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Sidelink Discovery RSRP"
+      }
+    },
+    {
+      "id": "sfi-rnti",
+      "canonical": "SFI-RNTI",
+      "type": "concept",
+      "aliases": [
+        "Slot Format Indication RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Slot Format Indication RNTI"
+      }
+    },
+    {
+      "id": "shr",
+      "canonical": "SHR",
+      "type": "mobility",
+      "aliases": [
+        "Successful Handover Report"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Successful Handover Report"
+      }
+    },
+    {
+      "id": "sib",
+      "canonical": "SIB",
+      "type": "channel",
+      "aliases": [
+        "System Information Block"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "System Information Block"
+      }
+    },
+    {
+      "id": "si-rnti",
+      "canonical": "SI-RNTI",
+      "type": "architecture",
+      "aliases": [
+        "System Information RNTI"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "System Information RNTI"
+      }
+    },
+    {
+      "id": "sla",
+      "canonical": "SLA",
+      "type": "concept",
+      "aliases": [
+        "Service Level Agreement"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Service Level Agreement"
+      }
+    },
+    {
+      "id": "sl-prs",
+      "canonical": "SL-PRS",
+      "type": "channel",
+      "aliases": [
+        "Sidelink Positioning Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Sidelink Positioning Reference Signal"
+      }
+    },
+    {
+      "id": "sl-rsrp",
+      "canonical": "SL-RSRP",
+      "type": "concept",
+      "aliases": [
+        "Sidelink RSRP"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Sidelink RSRP"
+      }
+    },
+    {
+      "id": "smc",
+      "canonical": "SMC",
+      "type": "security",
+      "aliases": [
+        "Security Mode Command"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Security Mode Command"
+      }
+    },
+    {
+      "id": "smf",
+      "canonical": "SMF",
+      "type": "network_function",
+      "aliases": [
+        "Session Management Function"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Session Management Function"
+      }
+    },
+    {
+      "id": "smtc",
+      "canonical": "SMTC",
+      "type": "channel",
+      "aliases": [
+        "SS/PBCH block Measurement Timing Configuration"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "SS/PBCH block Measurement Timing Configuration"
+      }
+    },
+    {
+      "id": "s-nssai",
+      "canonical": "S-NSSAI",
+      "type": "architecture",
+      "aliases": [
+        "Single Network Slice Selection Assistance Information"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Single Network Slice Selection Assistance Information"
+      }
+    },
+    {
+      "id": "snpn",
+      "canonical": "SNPN",
+      "type": "architecture",
+      "aliases": [
+        "Stand-alone Non-Public Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Stand-alone Non-Public Network"
+      }
+    },
+    {
+      "id": "snpn_id",
+      "canonical": "SNPN ID",
+      "type": "architecture",
+      "aliases": [
+        "Stand-alone Non-Public Network Identity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Stand-alone Non-Public Network Identity"
+      }
+    },
+    {
+      "id": "spr",
+      "canonical": "SPR",
+      "type": "cell",
+      "aliases": [
+        "Successful PSCell Addition/Change Report"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Successful PSCell Addition/Change Report"
+      }
+    },
+    {
+      "id": "sps",
+      "canonical": "SPS",
+      "type": "qos",
+      "aliases": [
+        "Semi-Persistent Scheduling"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Semi-Persistent Scheduling"
+      }
+    },
+    {
+      "id": "sr",
+      "canonical": "SR",
+      "type": "concept",
+      "aliases": [
+        "Scheduling Request"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Scheduling Request"
+      }
+    },
+    {
+      "id": "srap",
+      "canonical": "SRAP",
+      "type": "protocol",
+      "aliases": [
+        "Sidelink Relay Adaptation Protocol"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Sidelink Relay Adaptation Protocol"
+      }
+    },
+    {
+      "id": "srs",
+      "canonical": "SRS",
+      "type": "channel",
+      "aliases": [
+        "Sounding Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Sounding Reference Signal"
+      }
+    },
+    {
+      "id": "srvcc",
+      "canonical": "SRVCC",
+      "type": "concept",
+      "aliases": [
+        "Single Radio Voice Call Continuity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Single Radio Voice Call Continuity"
+      }
+    },
+    {
+      "id": "ss",
+      "canonical": "SS",
+      "type": "channel",
+      "aliases": [
+        "Synchronization Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Synchronization Signal"
+      }
+    },
+    {
+      "id": "ssb",
+      "canonical": "SSB",
+      "type": "channel",
+      "aliases": [
+        "SS/PBCH block"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "SS/PBCH block"
+      }
+    },
+    {
+      "id": "sss",
+      "canonical": "SSS",
+      "type": "channel",
+      "aliases": [
+        "Secondary Synchronisation Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Secondary Synchronisation Signal"
+      }
+    },
+    {
+      "id": "sssg",
+      "canonical": "SSSG",
+      "type": "concept",
+      "aliases": [
+        "Search Space Set Group"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Search Space Set Group"
+      }
+    },
+    {
+      "id": "sst",
+      "canonical": "SST",
+      "type": "concept",
+      "aliases": [
+        "Slice/Service Type"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Slice/Service Type"
+      }
+    },
+    {
+      "id": "su-mimo",
+      "canonical": "SU-MIMO",
+      "type": "concept",
+      "aliases": [
+        "Single User MIMO"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Single User MIMO"
+      }
+    },
+    {
+      "id": "sul",
+      "canonical": "SUL",
+      "type": "concept",
+      "aliases": [
+        "Supplementary Uplink"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Supplementary Uplink"
+      }
+    },
+    {
+      "id": "ta",
+      "canonical": "TA",
+      "type": "concept",
+      "aliases": [
+        "Timing Advance"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Timing Advance"
+      }
+    },
+    {
+      "id": "tb",
+      "canonical": "TB",
+      "type": "channel",
+      "aliases": [
+        "Transport Block"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Transport Block"
+      }
+    },
+    {
+      "id": "tce",
+      "canonical": "TCE",
+      "type": "channel",
+      "aliases": [
+        "Trace Collection Entity"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Trace Collection Entity"
+      }
+    },
+    {
+      "id": "tnl",
+      "canonical": "TNL",
+      "type": "architecture",
+      "aliases": [
+        "Transport Network Layer"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Transport Network Layer"
+      }
+    },
+    {
+      "id": "tpc",
+      "canonical": "TPC",
+      "type": "concept",
+      "aliases": [
+        "Transmit Power Control"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Transmit Power Control"
+      }
+    },
+    {
+      "id": "trp",
+      "canonical": "TRP",
+      "type": "network_function",
+      "aliases": [
+        "Transmit/Receive Point"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Transmit/Receive Point"
+      }
+    },
+    {
+      "id": "trs",
+      "canonical": "TRS",
+      "type": "channel",
+      "aliases": [
+        "Tracking Reference Signal"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Tracking Reference Signal"
+      }
+    },
+    {
+      "id": "tss",
+      "canonical": "TSS",
+      "type": "concept",
+      "aliases": [
+        "Timing Synchronization Status"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Timing Synchronization Status"
+      }
+    },
+    {
+      "id": "u2n",
+      "canonical": "U2N",
+      "type": "architecture",
+      "aliases": [
+        "UE-to-Network"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "UE-to-Network"
+      }
+    },
+    {
+      "id": "u2u",
+      "canonical": "U2U",
+      "type": "concept",
+      "aliases": [
+        "UE-to-UE"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "UE-to-UE"
+      }
+    },
+    {
+      "id": "uav",
+      "canonical": "UAV",
+      "type": "device",
+      "aliases": [
+        "Uncrewed Aerial Vehicle"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uncrewed Aerial Vehicle"
+      }
+    },
+    {
+      "id": "uci",
+      "canonical": "UCI",
+      "type": "concept",
+      "aliases": [
+        "Uplink Control Information"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uplink Control Information"
+      }
+    },
+    {
+      "id": "udc",
+      "canonical": "UDC",
+      "type": "protocol",
+      "aliases": [
+        "Uplink Data Compression"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uplink Data Compression"
+      }
+    },
+    {
+      "id": "udm",
+      "canonical": "UDM",
+      "type": "network_function",
+      "aliases": [
+        "Unified Data Management"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Unified Data Management"
+      }
+    },
+    {
+      "id": "ue-slice-mbr",
+      "canonical": "UE-Slice-MBR",
+      "type": "device",
+      "aliases": [
+        "UE Slice Maximum Bit Rate"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "UE Slice Maximum Bit Rate"
+      }
+    },
+    {
+      "id": "ul-aoa",
+      "canonical": "UL-AoA",
+      "type": "concept",
+      "aliases": [
+        "Uplink Angles of Arrival"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uplink Angles of Arrival"
+      }
+    },
+    {
+      "id": "ul-rtoa",
+      "canonical": "UL-RTOA",
+      "type": "concept",
+      "aliases": [
+        "Uplink Relative Time of Arrival"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uplink Relative Time of Arrival"
+      }
+    },
+    {
+      "id": "ul-sch",
+      "canonical": "UL-SCH",
+      "type": "channel",
+      "aliases": [
+        "Uplink Shared Channel"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Uplink Shared Channel"
+      }
+    },
+    {
+      "id": "upf",
+      "canonical": "UPF",
+      "type": "network_function",
+      "aliases": [
+        "User Plane Function"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "User Plane Function"
+      }
+    },
+    {
+      "id": "urllc",
+      "canonical": "URLLC",
+      "type": "concept",
+      "aliases": [
+        "Ultra-Reliable and Low Latency Communications"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Ultra-Reliable and Low Latency Communications"
+      }
+    },
+    {
+      "id": "vr",
+      "canonical": "VR",
+      "type": "concept",
+      "aliases": [
+        "Virtual Reality"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Virtual Reality"
+      }
+    },
+    {
+      "id": "v2x",
+      "canonical": "V2X",
+      "type": "concept",
+      "aliases": [
+        "Vehicle-to-Everything"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Vehicle-to-Everything"
+      }
+    },
+    {
+      "id": "xn-c",
+      "canonical": "Xn-C",
+      "type": "interface",
+      "aliases": [
+        "Xn-Control plane"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Xn-Control plane"
+      }
+    },
+    {
+      "id": "xn-u",
+      "canonical": "Xn-U",
+      "type": "interface",
+      "aliases": [
+        "Xn-User plane"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Xn-User plane"
+      }
+    },
+    {
+      "id": "xnap",
+      "canonical": "XnAP",
+      "type": "interface",
+      "aliases": [
+        "Xn Application Protocol"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "Xn Application Protocol"
+      }
+    },
+    {
+      "id": "xr",
+      "canonical": "XR",
+      "type": "concept",
+      "aliases": [
+        "eXtended Reality"
+      ],
+      "provenance": {
+        "clause": "3.1",
+        "source": "abbreviation",
+        "expansion": "eXtended Reality"
+      }
+    },
+    {
+      "id": "2rx_xr_ue",
+      "canonical": "2Rx XR UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "two antenna port XR UE as specified in TS 38.101-1 [18]."
+      }
+    },
+    {
+      "id": "a2x_communication",
+      "canonical": "A2X communication",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A communication to support A2X services leveraging PC5 reference points. A2X services are realized by various types of A2X applications, i.e. BRID or DAA."
+      }
+    },
+    {
+      "id": "aerial_ue_communication",
+      "canonical": "Aerial UE communication",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "functionality enabling Aerial UE function, as defined in 16.18."
+      }
+    },
+    {
+      "id": "air_to_ground_network",
+      "canonical": "Air to Ground network",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "An NG-RAN consisting of ground-based gNBs, which provide cell towers that send signals up to an aircraft's antenna(s) of onboard ATG terminal, with typical vertical altitude of around 10,000m and take-off/landing altitudes down to 3000m."
+      }
+    },
+    {
+      "id": "bh_rlc_channel",
+      "canonical": "BH RLC channel",
+      "type": "channel",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an RLC channel between two nodes, which is used to transport backhaul packets."
+      }
+    },
+    {
+      "id": "boundary_iab-node",
+      "canonical": "Boundary IAB-node",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "broadcast_mrb",
+      "canonical": "Broadcast MRB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A radio bearer configured for MBS broadcast delivery."
+      }
+    },
+    {
+      "id": "cag_cell",
+      "canonical": "CAG Cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a PLMN cell broadcasting at least one Closed Access Group identity."
+      }
+    },
+    {
+      "id": "cag_member_cell",
+      "canonical": "CAG Member Cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "for a UE, a CAG cell broadcasting the identity of the selected PLMN, registered PLMN or equivalent PLMN, and for that PLMN, a CAG identifier belonging to the Allowed CAG list of the UE for that PLMN."
+      }
+    },
+    {
+      "id": "cag-only_cell",
+      "canonical": "CAG-only cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a CAG cell that is only available for normal service for CAG UEs."
+      }
+    },
+    {
+      "id": "cell-defining_ssb",
+      "canonical": "Cell-Defining SSB",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an SSB with an RMSI associated."
+      }
+    },
+    {
+      "id": "child_node",
+      "canonical": "Child node",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "IAB-DU's and IAB-donor-DU's next hop neighbour node; the child node is also an IAB-node."
+      }
+    },
+    {
+      "id": "conditional_handover",
+      "canonical": "Conditional Handover",
+      "type": "procedure",
+      "aliases": [
+        "CHO"
+      ],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a handover procedure that is executed only when execution condition(s) are met."
+      }
+    },
+    {
+      "id": "coreset_0",
+      "canonical": "CORESET#0",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "the control resource set for at least SIB1 scheduling, can be configured either via MIB or via dedicated RRC signalling."
+      }
+    },
+    {
+      "id": "daps_handover",
+      "canonical": "DAPS Handover",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a handover procedure that maintains the source gNB connection after reception of RRC message for handover and until releasing the source cell after successful random access to the target gNB."
+      }
+    },
+    {
+      "id": "data_burst",
+      "canonical": "Data Burst",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A set of multiple PDUs generated and sent by the application in a short period of time, as defined in TS 23.501 [3]."
+      }
+    },
+    {
+      "id": "direct_path",
+      "canonical": "Direct Path",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a type of UE-to-Network transmission path, where data is transmitted between a UE and the network without sidelink relaying."
+      }
+    },
+    {
+      "id": "downstream",
+      "canonical": "Downstream",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "direction toward child node or UE in IAB-topology."
+      }
+    },
+    {
+      "id": "early_data_forwarding",
+      "canonical": "Early Data Forwarding",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "data forwarding that is initiated before the UE executes the handover."
+      }
+    },
+    {
+      "id": "earth-centered_earth-fixed",
+      "canonical": "Earth-centered, earth-fixed",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a global geodetic reference system for the Earth intended for practical applications of mapping, charting, geopositioning and navigation, as specified in NIMA TR 8350.2 [51]."
+      }
+    },
+    {
+      "id": "eredcap_ue",
+      "canonical": "eRedCap UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE with enhanced reduced capabilities as specified in clause 4.2.22.1 in TS 38.306 [11]."
+      }
+    },
+    {
+      "id": "feeder_link",
+      "canonical": "Feeder link",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "wireless link between the NTN Gateway and the NTN payload."
+      }
+    },
+    {
+      "id": "geosynchronous_orbit",
+      "canonical": "Geosynchronous Orbit",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "earth-centered orbit at approximately 35786 kilometres above Earth's surface and synchronised with Earth's rotation. A geostationary orbit is a non-inclined geosynchronous orbit, i.e. in the Earth's equator plane."
+      }
+    },
+    {
+      "id": "group_id_for_network_selection",
+      "canonical": "Group ID for Network Selection",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an identifier used during SNPN selection to enhance the likelihood of selecting a preferred SNPN that supports a Default Credentials Server or a Credentials Holder, as specified in TS 23.501 [3]."
+      }
+    },
+    {
+      "id": "gnb",
+      "canonical": "gNB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "node providing NR user plane and control plane protocol terminations towards the UE, and connected via the NG interface to the 5GC."
+      }
+    },
+    {
+      "id": "high_altitude_platform_station",
+      "canonical": "High Altitude Platform Station",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "airborne vehicle embarking the NTN payload placed at an altitude between 8 and 50 km."
+      }
+    },
+    {
+      "id": "iab-donor",
+      "canonical": "IAB-donor",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "gNB that provides network access to UEs via a network of backhaul and access links."
+      }
+    },
+    {
+      "id": "iab-donor-cu",
+      "canonical": "IAB-donor-CU",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "iab-donor-du",
+      "canonical": "IAB-donor-DU",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "iab-du",
+      "canonical": "IAB-DU",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "gNB-DU functionality supported by the IAB-node to terminate the NR access interface to UEs and next-hop IAB-nodes, and to terminate the F1 protocol to the gNB-CU functionality, as defined in TS 38.401 [4], on the IAB-donor."
+      }
+    },
+    {
+      "id": "iab-mt",
+      "canonical": "IAB-MT",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "IAB-node function that terminates the Uu interface to the parent node using the procedures and behaviours specified for UEs unless stated otherwise. IAB-MT function used in 38-series of 3GPP Specifications corresponds to IAB-UE function defined in TS 23.501 [3]."
+      }
+    },
+    {
+      "id": "iab-node",
+      "canonical": "IAB-node",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "RAN node that supports NR access links to UEs and NR backhaul links to parent nodes and child nodes. The IAB-node does not support backhauling via LTE."
+      }
+    },
+    {
+      "id": "iab_topology",
+      "canonical": "IAB topology",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "the unison of all IAB-nodes and IAB-donor-DUs whose F1 and/or RRC connections are terminated at the same IAB-donor-CU."
+      }
+    },
+    {
+      "id": "indirect_path",
+      "canonical": "Indirect Path",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a type of UE-to-Network transmission path, where data is forwarded via a U2N Relay UE between a U2N Remote UE and the network."
+      }
+    },
+    {
+      "id": "inter-donor_partial_migration",
+      "canonical": "Inter-donor partial migration",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "migration of an IAB-MT to a parent node underneath a different IAB-donor-CU while the collocated IAB-DU and its descendant IAB-node(s), if any, are terminated at the initial IAB-donor-CU. The procedure renders the said IAB-node as a boundary IAB-node."
+      }
+    },
+    {
+      "id": "intra-system_handover",
+      "canonical": "Intra-system Handover",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "handover that does not involve a CN change (EPC or 5GC)."
+      }
+    },
+    {
+      "id": "inter-system_handover",
+      "canonical": "Inter-system Handover",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "handover that involves a CN change (EPC or 5GC)."
+      }
+    },
+    {
+      "id": "late_data_forwarding",
+      "canonical": "Late Data Forwarding",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "data forwarding that is initiated after the source NG-RAN node knows that the UE has successfully accessed a target NG-RAN node."
+      }
+    },
+    {
+      "id": "l1_l2_triggered_mobility",
+      "canonical": "L1/L2 Triggered Mobility",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a cell switch procedure that the network triggers via MAC CE based on L1 measurements."
+      }
+    },
+    {
+      "id": "mapped_cell_id",
+      "canonical": "Mapped Cell ID",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "in NTN, it corresponds to a fixed geographical area."
+      }
+    },
+    {
+      "id": "mbs_radio_bearer",
+      "canonical": "MBS Radio Bearer",
+      "type": "bearer",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A radio bearer configured for MBS delivery."
+      }
+    },
+    {
+      "id": "mobile-iab_cell",
+      "canonical": "Mobile-IAB cell",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a cell of a mobile IAB-DU."
+      }
+    },
+    {
+      "id": "mobile_iab-du",
+      "canonical": "Mobile IAB-DU",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "gNB-DU functionality supported by the mobile IAB-node to terminate the NR access interface to UEs, and to terminate the F1 protocol to the gNB-CU functionality on the IAB-donor, as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "mobile_iab-du_migration",
+      "canonical": "Mobile IAB-DU migration",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "procedure for a mobile IAB-node as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "mobile_iab-mt",
+      "canonical": "Mobile IAB-MT",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "mobile IAB-node function that terminates the Uu interface to the parent node using the procedures and behaviours specified for UEs unless stated otherwise."
+      }
+    },
+    {
+      "id": "mobile_iab-mt_migration",
+      "canonical": "Mobile IAB-MT migration",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "procedure for a mobile IAB-MT as defined in TS 38.401 [4]."
+      }
+    },
+    {
+      "id": "mobile_iab-node",
+      "canonical": "Mobile IAB-node",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "RAN node that supports NR access links to UEs and an NR backhaul link to a parent node, and that can conduct physical mobility across the RAN area. The mobile IAB-node function used in 38-series of 3GPP Specifications corresponds to the MBSR function defined in TS 23.501 [3]."
+      }
+    },
+    {
+      "id": "mp_relay_ue",
+      "canonical": "MP Relay UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that provides functionality to support connectivity to the network for MP Remote UE(s)."
+      }
+    },
+    {
+      "id": "mp_remote_ue",
+      "canonical": "MP Remote UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that communicates with the network via a direct Uu link and a MP Relay UE."
+      }
+    },
+    {
+      "id": "msg1",
+      "canonical": "MSG1",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "preamble transmission of the random access procedure for 4-step random access (RA) type."
+      }
+    },
+    {
+      "id": "msg3",
+      "canonical": "MSG3",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "first scheduled transmission of the random access procedure."
+      }
+    },
+    {
+      "id": "msga",
+      "canonical": "MSGA",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "preamble and payload transmissions of the random access procedure for 2-step RA type."
+      }
+    },
+    {
+      "id": "msgb",
+      "canonical": "MSGB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "response to MSGA in the 2-step random access procedure. MSGB may consist of response(s) for contention resolution, fallback indication(s), and backoff indication."
+      }
+    },
+    {
+      "id": "multicast_broadcast_service",
+      "canonical": "Multicast/Broadcast Service",
+      "type": "network_service",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A point-to-multipoint service as defined in TS 23.247 [45]."
+      }
+    },
+    {
+      "id": "multicast_mrb",
+      "canonical": "Multicast MRB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "A radio bearer configured for MBS multicast delivery."
+      }
+    },
+    {
+      "id": "multi-hop_backhauling",
+      "canonical": "Multi-hop backhauling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "using a chain of NR backhaul links between an IAB-node and an IAB-donor."
+      }
+    },
+    {
+      "id": "ncr-fwd",
+      "canonical": "NCR-Fwd",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "Network-Controlled Repeater node function, which performs amplifying-and-forwarding of UL/DL RF signals between gNB and UE. The behaviour of the NCR-Fwd is controlled according to the side control information received by the NCR-MT from a gNB."
+      }
+    },
+    {
+      "id": "ncr-fwd_access_link",
+      "canonical": "NCR-Fwd access link",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "link used for transmissions between the NCR-Fwd and UEs."
+      }
+    },
+    {
+      "id": "ncr-fwd_backhaul_link",
+      "canonical": "NCR-Fwd backhaul link",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "link used for backhauling between the NCR-Fwd and gNB."
+      }
+    },
+    {
+      "id": "ncr-mt",
+      "canonical": "NCR-MT",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "NCR-node entity which communicates with a gNB via a control link to receive side control information. The control link is based on NR Uu interface."
+      }
+    },
+    {
+      "id": "ncr-node",
+      "canonical": "NCR-node",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "RAN node comprising NCR-MT and NCR-Fwd."
+      }
+    },
+    {
+      "id": "ng-enb",
+      "canonical": "ng-eNB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "node providing E-UTRA user plane and control plane protocol terminations towards the UE, and connected via the NG interface to the 5GC."
+      }
+    },
+    {
+      "id": "ng-c",
+      "canonical": "NG-C",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "control plane interface between NG-RAN and 5GC."
+      }
+    },
+    {
+      "id": "ng-u",
+      "canonical": "NG-U",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "user plane interface between NG-RAN and 5GC."
+      }
+    },
+    {
+      "id": "ng-ran_node",
+      "canonical": "NG-RAN node",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "either a gNB or an ng-eNB."
+      }
+    },
+    {
+      "id": "non-cag_cell",
+      "canonical": "Non-CAG Cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a PLMN cell which does not broadcast any Closed Access Group identity."
+      }
+    },
+    {
+      "id": "non-cell_defining_ssb",
+      "canonical": "Non-Cell Defining SSB",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an SSB without an RMSI associated."
+      }
+    },
+    {
+      "id": "non-geosynchronous_orbit",
+      "canonical": "Non-Geosynchronous orbit",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "earth-centered orbit with an orbital period that does not match Earth's rotation on its axis. This includes Low and Medium Earth Orbit (LEO and MEO). LEO operates at altitudes between 300 km and 1500 km and MEO at altitudes between 7000 km and 25000 km, approximately."
+      }
+    },
+    {
+      "id": "non-terrestrial_network",
+      "canonical": "Non-terrestrial network",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an NG-RAN consisting of gNBs, which provide non-terrestrial NR access to UEs by means of an NTN payload embarked on an airborne or space-borne NTN vehicle and an NTN Gateway."
+      }
+    },
+    {
+      "id": "nr_backhaul_link",
+      "canonical": "NR backhaul link",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "NR link used for backhauling between an IAB-node and an IAB-donor, and between IAB-nodes in case of a multi-hop backhauling."
+      }
+    },
+    {
+      "id": "nr_sidelink_communication",
+      "canonical": "NR sidelink communication",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "AS functionality enabling at least V2X communication as defined in TS 23.287 [40] and/or A2X communication as defined in TS 23.256 [60] and/or the ProSe communication (including ProSe non-Relay and UE-to-Network Relay communication) as defined in TS 23.304 [48], between two or more nearby UEs, using"
+      }
+    },
+    {
+      "id": "nr_sidelink_discovery",
+      "canonical": "NR sidelink discovery",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "AS functionality enabling ProSe non-Relay Discovery and ProSe UE-to-Network Relay discovery for Proximity based Services as defined in TS 23.304 [48] between two or more nearby UEs, using NR technology but not traversing any network node."
+      }
+    },
+    {
+      "id": "ntn_gateway",
+      "canonical": "NTN Gateway",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an earth station located at the surface of the earth, providing connectivity to the NTN payload using the feeder link. An NTN Gateway is a TNL node."
+      }
+    },
+    {
+      "id": "ntn_payload",
+      "canonical": "NTN payload",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a network node, embarked on board a satellite or high altitude platform station, providing connectivity functions, between the service link and the feeder link. In the current version of this specification, the NTN payload is a TNL node."
+      }
+    },
+    {
+      "id": "numerology",
+      "canonical": "Numerology",
+      "type": "parameter",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "corresponds to one subcarrier spacing in the frequency domain. By scaling a reference subcarrier spacing by an integer N, different numerologies can be defined."
+      }
+    },
+    {
+      "id": "parent_node",
+      "canonical": "Parent node",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "IAB-MT's or mobile IAB-MT's next hop neighbour node; the parent node can be an IAB-node or IAB-donor-DU PC5 Relay RLC channel"
+      }
+    },
+    {
+      "id": "iab-mt_s_or_mobile_iab-mt_s_next_hop_neighbour_node_the_parent_node_can_be_an_iab-node_or_iab-donor-du_pc5_relay_rlc_channel",
+      "canonical": "IAB-MT's or mobile IAB-MT's next hop neighbour node; the parent node can be an IAB-node or IAB-donor-DU PC5 Relay RLC channel",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an RLC channel between L2 U2N Remote UE and L2 U2N Relay UE, or between L2 U2U Remote UE and L2 U2U Relay UE, which is used to transport packets over PC5 for L2 UE-to-Network/UE-to-UE Relay."
+      }
+    },
+    {
+      "id": "pdu_set",
+      "canonical": "PDU Set",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "one or more PDUs carrying the payload of one unit of information generated at the application level (e.g. frame(s) or video slice(s) for XR Services), as defined in TS 23.501 [3]."
+      }
+    },
+    {
+      "id": "plmn_cell",
+      "canonical": "PLMN Cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a cell of the PLMN."
+      }
+    },
+    {
+      "id": "rach-less_ltm",
+      "canonical": "RACH-less LTM",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an LTM cell switch procedure where UE skips the random access procedure."
+      }
+    },
+    {
+      "id": "redcap_ue",
+      "canonical": "RedCap UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE with reduced capabilities as specified in clause 4.2.21.1 in TS 38.306 [11]."
+      }
+    },
+    {
+      "id": "relay_discovery",
+      "canonical": "Relay discovery",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "AS functionality enabling 5G ProSe UE-to-Network Relay Discovery as defined in TS 23.304 [48], using NR technology but not traversing any network node."
+      }
+    },
+    {
+      "id": "satellite",
+      "canonical": "Satellite",
+      "type": "network_entity",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a space-borne vehicle orbiting the Earth embarking the NTN payload."
+      }
+    },
+    {
+      "id": "service_link",
+      "canonical": "Service link",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "wireless link between the NTN payload and UE."
+      }
+    },
+    {
+      "id": "sidelink_discovery_rsrp",
+      "canonical": "Sidelink Discovery RSRP",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "RSRP measurements on PC5 link related to NR sidelink discovery."
+      }
+    },
+    {
+      "id": "sidelink_rsrp",
+      "canonical": "Sidelink RSRP",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "RSRP measurements on PC5 link related to NR sidelink communication."
+      }
+    },
+    {
+      "id": "snpn_access_mode",
+      "canonical": "SNPN Access Mode",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "mode of operation whereby a UE only accesses SNPNs."
+      }
+    },
+    {
+      "id": "snpn-only_cell",
+      "canonical": "SNPN-only cell",
+      "type": "cell",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a cell that is only available for normal service for SNPN subscribers."
+      }
+    },
+    {
+      "id": "snpn_identity",
+      "canonical": "SNPN Identity",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "the identity of Stand-alone NPN defined by the pair (PLMN ID, NID)."
+      }
+    },
+    {
+      "id": "transmit_receive_point",
+      "canonical": "Transmit/Receive Point",
+      "type": "network_function",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "part of the gNB transmitting and receiving radio signals to/from UE according to physical layer properties and parameters inherent to that element."
+      }
+    },
+    {
+      "id": "u2n_relay_ue",
+      "canonical": "U2N Relay UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that provides functionality to support connectivity to the network for U2N Remote UE(s)."
+      }
+    },
+    {
+      "id": "u2n_remote_ue",
+      "canonical": "U2N Remote UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that communicates with the network via a U2N Relay UE."
+      }
+    },
+    {
+      "id": "u2u_relay_ue",
+      "canonical": "U2U Relay UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that provides functionality to support connectivity between two U2U Remote UEs."
+      }
+    },
+    {
+      "id": "u2u_remote_ue",
+      "canonical": "U2U Remote UE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "a UE that communicates with other UE(s) via a U2U Relay UE."
+      }
+    },
+    {
+      "id": "upstream",
+      "canonical": "Upstream",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "direction toward parent node in IAB-topology."
+      }
+    },
+    {
+      "id": "uu_relay_rlc_channel",
+      "canonical": "Uu Relay RLC channel",
+      "type": "channel",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "an RLC channel between L2 U2N Relay UE or MP Relay UE and gNB, which is used to transport packets over Uu for L2 UE-to-Network Relay or for indirect path in case of MP."
+      }
+    },
+    {
+      "id": "v2x_sidelink_communication",
+      "canonical": "V2X sidelink communication",
+      "type": "connection",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "AS functionality enabling V2X communication as defined in TS 23.285 [41], between nearby UEs, using E-UTRA technology but not traversing any network node."
+      }
+    },
+    {
+      "id": "xn",
+      "canonical": "Xn",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3.2",
+        "source": "definition",
+        "definition": "network interface between NG-RAN nodes."
+      }
+    },
+    {
+      "id": "abbreviations_and_definitions",
+      "canonical": "Abbreviations and Definitions",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "overall_architecture",
+      "canonical": "Overall Architecture",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "functional_split",
+      "canonical": "Functional Split",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "network_interfaces",
+      "canonical": "Network Interfaces",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ng_interface",
+      "canonical": "NG Interface",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ng_user_plane",
+      "canonical": "NG User Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.1.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ng_control_plane",
+      "canonical": "NG Control Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.1.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "xn_interface",
+      "canonical": "Xn Interface",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "xn_user_plane",
+      "canonical": "Xn User Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.2.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "xn_control_plane",
+      "canonical": "Xn Control Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.3.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "radio_protocol_architecture",
+      "canonical": "Radio Protocol Architecture",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "user_plane",
+      "canonical": "User Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "control_plane",
+      "canonical": "Control Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "multi-radio_dual_connectivity",
+      "canonical": "Multi-Radio Dual Connectivity",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "radio_access_network_sharing",
+      "canonical": "Radio Access Network Sharing",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "integrated_access_and_backhaul",
+      "canonical": "Integrated Access and Backhaul",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "architecture",
+      "canonical": "Architecture",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "protocol_stacks",
+      "canonical": "Protocol Stacks",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "user-plane_aspects",
+      "canonical": "User-plane Aspects",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "backhaul_transport",
+      "canonical": "Backhaul transport",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.3.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "flow_and_congestion_control",
+      "canonical": "Flow and Congestion Control",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_scheduling_latency",
+      "canonical": "Uplink Scheduling Latency",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "signalling_procedures",
+      "canonical": "Signalling procedures",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "iab-node_integration",
+      "canonical": "IAB-node Integration",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "iab-node_migration",
+      "canonical": "IAB-node Migration",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "topological_redundancy",
+      "canonical": "Topological Redundancy",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "backhaul_rlf_recovery",
+      "canonical": "Backhaul RLF Recovery",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ota_timing_synchronization",
+      "canonical": "OTA timing synchronization",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "inter_node_discovery",
+      "canonical": "Inter node discovery",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.4.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mobile_iab",
+      "canonical": "Mobile IAB",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "general",
+      "canonical": "General",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.7.5.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "non-public_networks",
+      "canonical": "Non-Public Networks",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.8",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "network-controlled_repeaters",
+      "canonical": "Network-Controlled Repeaters",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.9",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "capabilities",
+      "canonical": "Capabilities",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.9.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "oam_aspects",
+      "canonical": "OAM aspects",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.9.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "network-controlled_repeater_management",
+      "canonical": "Network-controlled repeater management",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "4.9.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_layer",
+      "canonical": "Physical Layer",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "waveform_numerology_and_frame_structure",
+      "canonical": "Waveform, numerology and frame structure",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "downlink",
+      "canonical": "Downlink",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "downlink_transmission_scheme",
+      "canonical": "Downlink transmission scheme",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical-layer_processing_for_physical_downlink_shared_channel",
+      "canonical": "Physical-layer processing for physical downlink shared channel",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_downlink_control_channels",
+      "canonical": "Physical downlink control channels",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "synchronization_signal_and_pbch_block",
+      "canonical": "Synchronization signal and PBCH block",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_layer_procedures",
+      "canonical": "Physical layer procedures",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "link_adaptation",
+      "canonical": "Link adaptation",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "power_control",
+      "canonical": "Power Control",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "cell_search",
+      "canonical": "Cell search",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "harq",
+      "canonical": "HARQ",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "reception_of_sib1",
+      "canonical": "Reception of SIB1",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.5.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "downlink_reference_signals_and_measurements_for_positioning",
+      "canonical": "Downlink Reference Signals and Measurements for Positioning",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.2.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink",
+      "canonical": "Uplink",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_transmission_scheme",
+      "canonical": "Uplink transmission scheme",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical-layer_processing_for_physical_uplink_shared_channel",
+      "canonical": "Physical-layer processing for physical uplink shared channel",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_uplink_control_channel",
+      "canonical": "Physical uplink control channel",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "random_access",
+      "canonical": "Random access",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_power_control",
+      "canonical": "Uplink Power control",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.5.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_timing_control",
+      "canonical": "Uplink timing control",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.5.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "prioritization_of_overlapping_transmissions",
+      "canonical": "Prioritization of overlapping transmissions",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.5.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_reference_signals_and_measurements_for_positioning",
+      "canonical": "Uplink Reference Signals and Measurements for Positioning",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.3.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "carrier_aggregation",
+      "canonical": "Carrier aggregation",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "supplementary_uplink",
+      "canonical": "Supplementary Uplink",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "uplink_tx_switching",
+      "canonical": "Uplink Tx switching",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.4.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "transport_channels",
+      "canonical": "Transport Channels",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "access_to_shared_spectrum",
+      "canonical": "Access to Shared Spectrum",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "overview",
+      "canonical": "Overview",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.6.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "channel_access_priority_classes",
+      "canonical": "Channel Access Priority Classes",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.6.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "sidelink",
+      "canonical": "Sidelink",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "sidelink_resource_allocation_modes_schemes",
+      "canonical": "Sidelink resource allocation modes/schemes",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_sidelink_channels_and_signals",
+      "canonical": "Physical sidelink channels and signals",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_layer_procedures_for_sidelink",
+      "canonical": "Physical layer procedures for sidelink",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "harq_feedback",
+      "canonical": "HARQ feedback",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "csi_report",
+      "canonical": "CSI report",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.4.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "physical_layer_measurement_definition",
+      "canonical": "Physical layer measurement definition",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "sidelink_reference_signal_and_measurements_for_positioning",
+      "canonical": "Sidelink Reference Signal and Measurements for Positioning",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "5.7.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mac_sublayer",
+      "canonical": "MAC Sublayer",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "services_and_functions",
+      "canonical": "Services and Functions",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.2.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "logical_channels",
+      "canonical": "Logical Channels",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mapping_to_transport_channels",
+      "canonical": "Mapping to Transport Channels",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.2.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "rlc_sublayer",
+      "canonical": "RLC Sublayer",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "transmission_modes",
+      "canonical": "Transmission Modes",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.3.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "arq",
+      "canonical": "ARQ",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "pdcp_sublayer",
+      "canonical": "PDCP Sublayer",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "sdap_sublayer",
+      "canonical": "SDAP Sublayer",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "l2_data_flow",
+      "canonical": "L2 Data Flow",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "carrier_aggregation_2",
+      "canonical": "Carrier Aggregation",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.7",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "dual_connectivity",
+      "canonical": "Dual Connectivity",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.8",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "bandwidth_adaptation",
+      "canonical": "Bandwidth Adaptation",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.10",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "backhaul_adaptation_protocol_sublayer",
+      "canonical": "Backhaul Adaptation Protocol Sublayer",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.11",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "traffic_mapping_from_upper_layers_to_layer-2",
+      "canonical": "Traffic Mapping from Upper Layers to Layer-2",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.11.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "routing_bap_header_rewriting_and_bh-rlc-channel_mapping_on_bap_sublayer",
+      "canonical": "Routing, BAP Header Rewriting and BH-RLC-channel Mapping on BAP sublayer",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.11.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "multiple_transmit_receive_point_operation",
+      "canonical": "Multiple Transmit/Receive Point Operation",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "6.12",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "rrc",
+      "canonical": "RRC",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "protocol_states",
+      "canonical": "Protocol States",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "system_information_handling",
+      "canonical": "System Information Handling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "scheduling",
+      "canonical": "Scheduling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "si_modification",
+      "canonical": "SI Modification",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "access_control",
+      "canonical": "Access Control",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ue_capability_retrieval_framework",
+      "canonical": "UE Capability Retrieval framework",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "transport_of_nas_messages",
+      "canonical": "Transport of NAS Messages",
+      "type": "protocol",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ue_assistance_information",
+      "canonical": "UE Assistance Information",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.9",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "segmentation_of_rrc_messages",
+      "canonical": "Segmentation of RRC messages",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "7.10",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ng_identities",
+      "canonical": "NG Identities",
+      "type": "information_element",
+      "aliases": [],
+      "provenance": {
+        "clause": "8",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ue_identities",
+      "canonical": "UE Identities",
+      "type": "information_element",
+      "aliases": [],
+      "provenance": {
+        "clause": "8.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "network_identities",
+      "canonical": "Network Identities",
+      "type": "information_element",
+      "aliases": [],
+      "provenance": {
+        "clause": "8.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "user_data_transport_on_the_cn-ran_interface",
+      "canonical": "User Data Transport on the CN-RAN Interface",
+      "type": "architecture",
+      "aliases": [],
+      "provenance": {
+        "clause": "8.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mobility_and_state_transitions",
+      "canonical": "Mobility and State Transitions",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "intra-nr",
+      "canonical": "Intra-NR",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mobility_in_rrc_idle",
+      "canonical": "Mobility in RRC_IDLE",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "cell_selection",
+      "canonical": "Cell Selection",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.1.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "cell_reselection",
+      "canonical": "Cell Reselection",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.1.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "state_transitions",
+      "canonical": "State Transitions",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.1.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mobility_in_rrc_inactive",
+      "canonical": "Mobility in RRC_INACTIVE",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ran-based_notification_area",
+      "canonical": "RAN-Based Notification Area",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "ue_triggered_transition_from_rrc_inactive_to_rrc_connected",
+      "canonical": "UE triggered transition from RRC_INACTIVE to RRC_CONNECTED",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2.4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "network_triggered_transition_from_rrc_inactive_to_rrc_connected",
+      "canonical": "Network triggered transition from RRC_INACTIVE to RRC_CONNECTED",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2.4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "rna_update",
+      "canonical": "RNA update",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "resume_request_responded_with_release_with_redirect_with_ue_context_relocation",
+      "canonical": "Resume request responded with Release with Redirect, with UE context relocation",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.2.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "mobility_in_rrc_connected",
+      "canonical": "Mobility in RRC_CONNECTED",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "handover",
+      "canonical": "Handover",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "c-plane_handling",
+      "canonical": "C-Plane Handling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.2.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "u-plane_handling",
+      "canonical": "U-Plane Handling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "data_forwarding",
+      "canonical": "Data Forwarding",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.2.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "re-establishment_procedure",
+      "canonical": "Re-establishment procedure",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "c-plane_handling_2",
+      "canonical": "C-plane handling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.4.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "u-plane_handling_2",
+      "canonical": "U-plane handling",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.4.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "rach-less_handover",
+      "canonical": "RACH-less handover",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.3.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "measurements",
+      "canonical": "Measurements",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "paging",
+      "canonical": "Paging",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "random_access_procedure",
+      "canonical": "Random Access Procedure",
+      "type": "procedure",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.6",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "radio_link_failure",
+      "canonical": "Radio Link Failure",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.7",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "beam_failure_detection_and_recovery",
+      "canonical": "Beam failure detection and recovery",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.8",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "timing_advance",
+      "canonical": "Timing Advance",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.9",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "extended_drx_for_rrc_idle_and_rrc_inactive",
+      "canonical": "Extended DRX for RRC_IDLE and RRC_INACTIVE",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.2.10",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "inter_rat",
+      "canonical": "Inter RAT",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "nr-e-utra_mobility_intra_5gc",
+      "canonical": "NR-E-UTRA mobility: Intra 5GC",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "nr-e-utra_mobility_from_5gc_to_epc",
+      "canonical": "NR-E-UTRA mobility: From 5GC to EPC",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "handover_and_redirection",
+      "canonical": "Handover and redirection",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.2.2",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "data_forwarding_for_the_control_plane",
+      "canonical": "Data Forwarding for the Control Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.2.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "data_forwarding_for_the_user_plane",
+      "canonical": "Data Forwarding for the User Plane",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.2.5",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "nr-e-utra_mobility_from_epc_to_5gc",
+      "canonical": "NR-E-UTRA mobility: From EPC to 5GC",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.3",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "nr-utra_mobility",
+      "canonical": "NR-UTRA mobility",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "handover_with_srvcc_operation",
+      "canonical": "Handover with SRVCC operation",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.3.4.1",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "roaming_and_access_restrictions",
+      "canonical": "Roaming and Access Restrictions",
+      "type": "mobility",
+      "aliases": [],
+      "provenance": {
+        "clause": "9.4",
+        "source": "heading"
+      }
+    },
+    {
+      "id": "the_ng-ran_node_updates_its_inter-system_ncrt",
+      "canonical": "The NG-RAN node updates its inter-system NCRT.",
+      "type": "concept",
+      "aliases": [],
+      "provenance": {
+        "clause": "5",
+        "source": "heading"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "source": "conditional_handover",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.3.4",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "daps_handover",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.3",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "intra-system_handover",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.1",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "inter-system_handover",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.3",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "l1_l2_triggered_mobility",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.3.5",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "rach-less_ltm",
+      "rel": "is_a",
+      "target": "l1_l2_triggered_mobility",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.3.6",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "rach-less_handover",
+      "rel": "is_a",
+      "target": "handover",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "9.2.3.6",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "broadcast_mrb",
+      "rel": "is_a",
+      "target": "mbs_radio_bearer",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "multicast_mrb",
+      "rel": "is_a",
+      "target": "mbs_radio_bearer",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "bh_rlc_channel",
+      "rel": "part_of",
+      "target": "iab",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "uu_relay_rlc_channel",
+      "rel": "part_of",
+      "target": "sidelink",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "ncr-fwd_access_link",
+      "rel": "part_of",
+      "target": "ncr-fwd",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "ncr-fwd_backhaul_link",
+      "rel": "part_of",
+      "target": "ncr-fwd",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "iab-donor-cu",
+      "rel": "part_of",
+      "target": "iab-donor",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "iab-donor-du",
+      "rel": "part_of",
+      "target": "iab-donor",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "iab-du",
+      "rel": "part_of",
+      "target": "iab-node",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "iab-mt",
+      "rel": "part_of",
+      "target": "iab-node",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "child_node",
+      "rel": "part_of",
+      "target": "iab",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "parent_node",
+      "rel": "part_of",
+      "target": "iab",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "mobile_iab-du",
+      "rel": "is_a",
+      "target": "iab-du",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "mobile_iab-mt",
+      "rel": "is_a",
+      "target": "iab-mt",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "mobile_iab-node",
+      "rel": "is_a",
+      "target": "iab-node",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "ng_interface",
+      "rel": "part_of",
+      "target": "overall_architecture",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "4.3.1",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "xn_interface",
+      "rel": "part_of",
+      "target": "overall_architecture",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "4.3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "ng_user_plane",
+      "rel": "part_of",
+      "target": "ng_interface",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "4.3.1.1",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "ng_control_plane",
+      "rel": "part_of",
+      "target": "ng_interface",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "4.3.1.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "cag-only_cell",
+      "rel": "is_a",
+      "target": "cag_cell",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "cell-defining_ssb",
+      "rel": "is_a",
+      "target": "ssb",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    },
+    {
+      "source": "non-cell_defining_ssb",
+      "rel": "is_a",
+      "target": "ssb",
+      "weight": 0.7,
+      "confidence": 0.9,
+      "provenance": {
+        "clause": "3.2",
+        "source": "curated_38.300"
+      }
+    }
+  ]
+}

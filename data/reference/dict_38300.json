@@ -1,0 +1,3778 @@
+{
+  "entries": [
+    {
+      "surface": "2Rx XR UE",
+      "canonical": "2Rx XR UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "5G Core Network",
+      "canonical": "5GC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "5G QoS Identifier",
+      "canonical": "5QI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "5G System",
+      "canonical": "5GS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "5GC",
+      "canonical": "5GC",
+      "type": "abbreviation",
+      "aliases": [
+        "5G Core Network"
+      ]
+    },
+    {
+      "surface": "5GS",
+      "canonical": "5GS",
+      "type": "abbreviation",
+      "aliases": [
+        "5G System"
+      ]
+    },
+    {
+      "surface": "5QI",
+      "canonical": "5QI",
+      "type": "abbreviation",
+      "aliases": [
+        "5G QoS Identifier"
+      ]
+    },
+    {
+      "surface": "A-CSI",
+      "canonical": "A-CSI",
+      "type": "abbreviation",
+      "aliases": [
+        "Aperiodic CSI"
+      ]
+    },
+    {
+      "surface": "A2X",
+      "canonical": "A2X",
+      "type": "abbreviation",
+      "aliases": [
+        "Aircraft-to-Everything"
+      ]
+    },
+    {
+      "surface": "A2X communication",
+      "canonical": "A2X communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Access and Mobility Management Function",
+      "canonical": "AMF",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Adaptive Modulation and Coding",
+      "canonical": "AMC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Aerial UE communication",
+      "canonical": "Aerial UE communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AGC",
+      "canonical": "AGC",
+      "type": "abbreviation",
+      "aliases": [
+        "Automatic Gain Control"
+      ]
+    },
+    {
+      "surface": "Aggregate Maximum Bit Rate",
+      "canonical": "AMBR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AI",
+      "canonical": "AI",
+      "type": "abbreviation",
+      "aliases": [
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "surface": "Air to Ground",
+      "canonical": "ATG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Air to Ground network",
+      "canonical": "Air to Ground network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Aircraft-to-Everything",
+      "canonical": "A2X",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "AKA",
+      "canonical": "AKA",
+      "type": "abbreviation",
+      "aliases": [
+        "Authentication and Key Agreement"
+      ]
+    },
+    {
+      "surface": "Allocation and Retention Priority",
+      "canonical": "ARP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AMBR",
+      "canonical": "AMBR",
+      "type": "abbreviation",
+      "aliases": [
+        "Aggregate Maximum Bit Rate"
+      ]
+    },
+    {
+      "surface": "AMC",
+      "canonical": "AMC",
+      "type": "abbreviation",
+      "aliases": [
+        "Adaptive Modulation and Coding"
+      ]
+    },
+    {
+      "surface": "AMF",
+      "canonical": "AMF",
+      "type": "abbreviation",
+      "aliases": [
+        "Access and Mobility Management Function"
+      ]
+    },
+    {
+      "surface": "Aperiodic CSI",
+      "canonical": "A-CSI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "AR",
+      "canonical": "AR",
+      "type": "abbreviation",
+      "aliases": [
+        "Augmented Reality"
+      ]
+    },
+    {
+      "surface": "ARP",
+      "canonical": "ARP",
+      "type": "abbreviation",
+      "aliases": [
+        "Allocation and Retention Priority"
+      ]
+    },
+    {
+      "surface": "Artificial Intelligence",
+      "canonical": "AI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ATG",
+      "canonical": "ATG",
+      "type": "abbreviation",
+      "aliases": [
+        "Air to Ground"
+      ]
+    },
+    {
+      "surface": "Augmented Reality",
+      "canonical": "AR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Authentication and Key Agreement",
+      "canonical": "AKA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Automatic Gain Control",
+      "canonical": "AGC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BA",
+      "canonical": "BA",
+      "type": "abbreviation",
+      "aliases": [
+        "Bandwidth Adaptation"
+      ]
+    },
+    {
+      "surface": "Backhaul",
+      "canonical": "BH",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Bandwidth Adaptation",
+      "canonical": "BA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Bandwidth reduced Low complexity",
+      "canonical": "BL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BCCH",
+      "canonical": "BCCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Broadcast Control Channel"
+      ]
+    },
+    {
+      "surface": "BCH",
+      "canonical": "BCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Broadcast Channel"
+      ]
+    },
+    {
+      "surface": "Beam Failure Detection",
+      "canonical": "BFD",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BFD",
+      "canonical": "BFD",
+      "type": "abbreviation",
+      "aliases": [
+        "Beam Failure Detection"
+      ]
+    },
+    {
+      "surface": "BH",
+      "canonical": "BH",
+      "type": "abbreviation",
+      "aliases": [
+        "Backhaul"
+      ]
+    },
+    {
+      "surface": "BH RLC channel",
+      "canonical": "BH RLC channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Binary Phase Shift Keying",
+      "canonical": "BPSK",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BL",
+      "canonical": "BL",
+      "type": "abbreviation",
+      "aliases": [
+        "Bandwidth reduced Low complexity"
+      ]
+    },
+    {
+      "surface": "Boundary IAB-node",
+      "canonical": "Boundary IAB-node",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "BPSK",
+      "canonical": "BPSK",
+      "type": "abbreviation",
+      "aliases": [
+        "Binary Phase Shift Keying"
+      ]
+    },
+    {
+      "surface": "BRID",
+      "canonical": "BRID",
+      "type": "abbreviation",
+      "aliases": [
+        "Broadcast Remote Identification"
+      ]
+    },
+    {
+      "surface": "Broadcast Channel",
+      "canonical": "BCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast Control Channel",
+      "canonical": "BCCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast MRB",
+      "canonical": "Broadcast MRB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Broadcast Remote Identification",
+      "canonical": "BRID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "C-RNTI",
+      "canonical": "C-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Cell RNTI"
+      ]
+    },
+    {
+      "surface": "CAG",
+      "canonical": "CAG",
+      "type": "abbreviation",
+      "aliases": [
+        "Closed Access Group"
+      ]
+    },
+    {
+      "surface": "CAG Cell",
+      "canonical": "CAG Cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CAG Member Cell",
+      "canonical": "CAG Member Cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CAG-only cell",
+      "canonical": "CAG-only cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CAPC",
+      "canonical": "CAPC",
+      "type": "abbreviation",
+      "aliases": [
+        "Channel Access Priority Class"
+      ]
+    },
+    {
+      "surface": "CBRA",
+      "canonical": "CBRA",
+      "type": "abbreviation",
+      "aliases": [
+        "Contention Based Random Access"
+      ]
+    },
+    {
+      "surface": "CCE",
+      "canonical": "CCE",
+      "type": "abbreviation",
+      "aliases": [
+        "Control Channel Element"
+      ]
+    },
+    {
+      "surface": "CD-SSB",
+      "canonical": "CD-SSB",
+      "type": "abbreviation",
+      "aliases": [
+        "Cell Defining SSB"
+      ]
+    },
+    {
+      "surface": "Cell Defining SSB",
+      "canonical": "CD-SSB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cell Discontinuous Transmission and Reception RNTI",
+      "canonical": "cellDTRX-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cell RNTI",
+      "canonical": "C-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cell-Defining SSB",
+      "canonical": "Cell-Defining SSB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "cellDTRX-RNTI",
+      "canonical": "cellDTRX-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Cell Discontinuous Transmission and Reception RNTI"
+      ]
+    },
+    {
+      "surface": "Cellular Internet of Things",
+      "canonical": "CIoT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CFR",
+      "canonical": "CFR",
+      "type": "abbreviation",
+      "aliases": [
+        "Common Frequency Resource"
+      ]
+    },
+    {
+      "surface": "CFRA",
+      "canonical": "CFRA",
+      "type": "abbreviation",
+      "aliases": [
+        "Contention Free Random Access"
+      ]
+    },
+    {
+      "surface": "CG",
+      "canonical": "CG",
+      "type": "abbreviation",
+      "aliases": [
+        "Configured Grant"
+      ]
+    },
+    {
+      "surface": "Channel Access Priority Class",
+      "canonical": "CAPC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Child node",
+      "canonical": "Child node",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CHO",
+      "canonical": "CHO",
+      "type": "abbreviation",
+      "aliases": [
+        "Conditional Handover"
+      ]
+    },
+    {
+      "surface": "CIoT",
+      "canonical": "CIoT",
+      "type": "abbreviation",
+      "aliases": [
+        "Cellular Internet of Things"
+      ]
+    },
+    {
+      "surface": "CLI",
+      "canonical": "CLI",
+      "type": "abbreviation",
+      "aliases": [
+        "Cross Link interference"
+      ]
+    },
+    {
+      "surface": "Closed Access Group",
+      "canonical": "CAG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CMAS",
+      "canonical": "CMAS",
+      "type": "abbreviation",
+      "aliases": [
+        "Commercial Mobile Alert Service"
+      ]
+    },
+    {
+      "surface": "Commercial Mobile Alert Service",
+      "canonical": "CMAS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Common Frequency Resource",
+      "canonical": "CFR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Conditional Handover",
+      "canonical": "CHO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Conditional PSCell Addition",
+      "canonical": "CPA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Conditional PSCell Change",
+      "canonical": "CPC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Configured Grant",
+      "canonical": "CG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Contention Based Random Access",
+      "canonical": "CBRA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Contention Free Random Access",
+      "canonical": "CFRA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Control Channel Element",
+      "canonical": "CCE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Control Resource Set",
+      "canonical": "CORESET",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "CORESET",
+      "canonical": "CORESET",
+      "type": "abbreviation",
+      "aliases": [
+        "Control Resource Set"
+      ]
+    },
+    {
+      "surface": "CORESET#0",
+      "canonical": "CORESET#0",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "CP",
+      "canonical": "CP",
+      "type": "abbreviation",
+      "aliases": [
+        "Cyclic Prefix"
+      ]
+    },
+    {
+      "surface": "CPA",
+      "canonical": "CPA",
+      "type": "abbreviation",
+      "aliases": [
+        "Conditional PSCell Addition"
+      ]
+    },
+    {
+      "surface": "CPC",
+      "canonical": "CPC",
+      "type": "abbreviation",
+      "aliases": [
+        "Conditional PSCell Change"
+      ]
+    },
+    {
+      "surface": "Cross Link interference",
+      "canonical": "CLI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Cyclic Prefix",
+      "canonical": "CP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DAA",
+      "canonical": "DAA",
+      "type": "abbreviation",
+      "aliases": [
+        "Detect And Avoid"
+      ]
+    },
+    {
+      "surface": "DAG",
+      "canonical": "DAG",
+      "type": "abbreviation",
+      "aliases": [
+        "Directed Acyclic Graph"
+      ]
+    },
+    {
+      "surface": "DAPS",
+      "canonical": "DAPS",
+      "type": "abbreviation",
+      "aliases": [
+        "Dual Active Protocol Stack"
+      ]
+    },
+    {
+      "surface": "DAPS Handover",
+      "canonical": "DAPS Handover",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Data Burst",
+      "canonical": "Data Burst",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DCI",
+      "canonical": "DCI",
+      "type": "abbreviation",
+      "aliases": [
+        "Downlink Control Information"
+      ]
+    },
+    {
+      "surface": "DCI with CRC scrambled by PS-RNTI",
+      "canonical": "DCP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DCP",
+      "canonical": "DCP",
+      "type": "abbreviation",
+      "aliases": [
+        "DCI with CRC scrambled by PS-RNTI"
+      ]
+    },
+    {
+      "surface": "DCR",
+      "canonical": "DCR",
+      "type": "abbreviation",
+      "aliases": [
+        "Direct Communication Request"
+      ]
+    },
+    {
+      "surface": "Delay Status Report",
+      "canonical": "DSR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Demodulation Reference Signal",
+      "canonical": "DMRS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Detect And Avoid",
+      "canonical": "DAA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DFT",
+      "canonical": "DFT",
+      "type": "abbreviation",
+      "aliases": [
+        "Discrete Fourier Transform"
+      ]
+    },
+    {
+      "surface": "Direct Communication Request",
+      "canonical": "DCR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Direct Path",
+      "canonical": "Direct Path",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Directed Acyclic Graph",
+      "canonical": "DAG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Discontinuous Reception",
+      "canonical": "DRX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Discontinuous Transmission",
+      "canonical": "DTX",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Discrete Fourier Transform",
+      "canonical": "DFT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "DL-AoD",
+      "canonical": "DL-AoD",
+      "type": "abbreviation",
+      "aliases": [
+        "Downlink Angle-of-Departure"
+      ]
+    },
+    {
+      "surface": "DL-SCH",
+      "canonical": "DL-SCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Downlink Shared Channel"
+      ]
+    },
+    {
+      "surface": "DL-TDOA",
+      "canonical": "DL-TDOA",
+      "type": "abbreviation",
+      "aliases": [
+        "Downlink Time Difference Of Arrival"
+      ]
+    },
+    {
+      "surface": "DMRS",
+      "canonical": "DMRS",
+      "type": "abbreviation",
+      "aliases": [
+        "Demodulation Reference Signal"
+      ]
+    },
+    {
+      "surface": "Downlink Angle-of-Departure",
+      "canonical": "DL-AoD",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Downlink Control Information",
+      "canonical": "DCI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Downlink Shared Channel",
+      "canonical": "DL-SCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Downlink Time Difference Of Arrival",
+      "canonical": "DL-TDOA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Downstream",
+      "canonical": "Downstream",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "DRX",
+      "canonical": "DRX",
+      "type": "abbreviation",
+      "aliases": [
+        "Discontinuous Reception"
+      ]
+    },
+    {
+      "surface": "DSR",
+      "canonical": "DSR",
+      "type": "abbreviation",
+      "aliases": [
+        "Delay Status Report"
+      ]
+    },
+    {
+      "surface": "DTX",
+      "canonical": "DTX",
+      "type": "abbreviation",
+      "aliases": [
+        "Discontinuous Transmission"
+      ]
+    },
+    {
+      "surface": "Dual Active Protocol Stack",
+      "canonical": "DAPS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "E-CID",
+      "canonical": "E-CID",
+      "type": "abbreviation",
+      "aliases": [
+        "Enhanced Cell-ID (positioning method)"
+      ]
+    },
+    {
+      "surface": "Early Data Forwarding",
+      "canonical": "Early Data Forwarding",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Earth-centered, earth-fixed",
+      "canonical": "Earth-centered, earth-fixed",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Earthquake and Tsunami Warning System",
+      "canonical": "ETWS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "EC",
+      "canonical": "EC",
+      "type": "abbreviation",
+      "aliases": [
+        "Energy Cost"
+      ]
+    },
+    {
+      "surface": "EHC",
+      "canonical": "EHC",
+      "type": "abbreviation",
+      "aliases": [
+        "Ethernet Header Compression"
+      ]
+    },
+    {
+      "surface": "Energy Cost",
+      "canonical": "EC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Enhanced Cell-ID (positioning method)",
+      "canonical": "E-CID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "enhancements of Public Warning System",
+      "canonical": "ePWS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ePWS",
+      "canonical": "ePWS",
+      "type": "abbreviation",
+      "aliases": [
+        "enhancements of Public Warning System"
+      ]
+    },
+    {
+      "surface": "eRedCap UE",
+      "canonical": "eRedCap UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Ethernet Header Compression",
+      "canonical": "EHC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "ETWS",
+      "canonical": "ETWS",
+      "type": "abbreviation",
+      "aliases": [
+        "Earthquake and Tsunami Warning System"
+      ]
+    },
+    {
+      "surface": "eXtended Reality",
+      "canonical": "XR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Feature Set",
+      "canonical": "FS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Feeder link",
+      "canonical": "Feeder link",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Frequency Selection Area Identity",
+      "canonical": "FSA ID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "FS",
+      "canonical": "FS",
+      "type": "abbreviation",
+      "aliases": [
+        "Feature Set"
+      ]
+    },
+    {
+      "surface": "FSA ID",
+      "canonical": "FSA ID",
+      "type": "phrase",
+      "aliases": [
+        "Frequency Selection Area Identity"
+      ]
+    },
+    {
+      "surface": "G-CS-RNTI",
+      "canonical": "G-CS-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Group Configured Scheduling RNTI"
+      ]
+    },
+    {
+      "surface": "G-RNTI",
+      "canonical": "G-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Group RNTI"
+      ]
+    },
+    {
+      "surface": "Geosynchronous Orbit",
+      "canonical": "GSO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "GFBR",
+      "canonical": "GFBR",
+      "type": "abbreviation",
+      "aliases": [
+        "Guaranteed Flow Bit Rate"
+      ]
+    },
+    {
+      "surface": "GIN",
+      "canonical": "GIN",
+      "type": "abbreviation",
+      "aliases": [
+        "Group ID for Network selection"
+      ]
+    },
+    {
+      "surface": "Global Navigation Satellite System",
+      "canonical": "GNSS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "gNB",
+      "canonical": "gNB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "GNSS",
+      "canonical": "GNSS",
+      "type": "abbreviation",
+      "aliases": [
+        "Global Navigation Satellite System"
+      ]
+    },
+    {
+      "surface": "Group Configured Scheduling RNTI",
+      "canonical": "G-CS-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Group ID for Network selection",
+      "canonical": "GIN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Group ID for Network Selection",
+      "canonical": "Group ID for Network Selection",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Group RNTI",
+      "canonical": "G-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "GSO",
+      "canonical": "GSO",
+      "type": "abbreviation",
+      "aliases": [
+        "Geosynchronous Orbit"
+      ]
+    },
+    {
+      "surface": "Guaranteed Flow Bit Rate",
+      "canonical": "GFBR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "H-SFN",
+      "canonical": "H-SFN",
+      "type": "abbreviation",
+      "aliases": [
+        "Hyper System Frame Number"
+      ]
+    },
+    {
+      "surface": "HAPS",
+      "canonical": "HAPS",
+      "type": "abbreviation",
+      "aliases": [
+        "High Altitude Platform Station"
+      ]
+    },
+    {
+      "surface": "High Altitude Platform Station",
+      "canonical": "HAPS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "HRNN",
+      "canonical": "HRNN",
+      "type": "abbreviation",
+      "aliases": [
+        "Human-Readable Network Name"
+      ]
+    },
+    {
+      "surface": "Human-Readable Network Name",
+      "canonical": "HRNN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Hyper System Frame Number",
+      "canonical": "H-SFN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "I-RNTI",
+      "canonical": "I-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Inactive RNTI"
+      ]
+    },
+    {
+      "surface": "IAB",
+      "canonical": "IAB",
+      "type": "abbreviation",
+      "aliases": [
+        "Integrated Access and Backhaul"
+      ]
+    },
+    {
+      "surface": "IAB topology",
+      "canonical": "IAB topology",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-donor",
+      "canonical": "IAB-donor",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-donor-CU",
+      "canonical": "IAB-donor-CU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-donor-DU",
+      "canonical": "IAB-donor-DU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-DU",
+      "canonical": "IAB-DU",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-MT",
+      "canonical": "IAB-MT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-MT's or mobile IAB-MT's next hop neighbour node; the parent node can be an IAB-node or IAB-donor-DU PC5 Relay RLC channel",
+      "canonical": "IAB-MT's or mobile IAB-MT's next hop neighbour node; the parent node can be an IAB-node or IAB-donor-DU PC5 Relay RLC channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "IAB-node",
+      "canonical": "IAB-node",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "IFRI",
+      "canonical": "IFRI",
+      "type": "abbreviation",
+      "aliases": [
+        "Intra Frequency Reselection Indication"
+      ]
+    },
+    {
+      "surface": "Inactive RNTI",
+      "canonical": "I-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Indirect Path",
+      "canonical": "Indirect Path",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "INT-RNTI",
+      "canonical": "INT-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Interruption RNTI"
+      ]
+    },
+    {
+      "surface": "Integrated Access and Backhaul",
+      "canonical": "IAB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-donor partial migration",
+      "canonical": "Inter-donor partial migration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Inter-system Handover",
+      "canonical": "Inter-system Handover",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Interruption RNTI",
+      "canonical": "INT-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Intra Frequency Reselection Indication",
+      "canonical": "IFRI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Intra-system Handover",
+      "canonical": "Intra-system Handover",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Korean Public Alarm System",
+      "canonical": "KPAS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "KPAS",
+      "canonical": "KPAS",
+      "type": "abbreviation",
+      "aliases": [
+        "Korean Public Alarm System"
+      ]
+    },
+    {
+      "surface": "L1/L2 Triggered Mobility",
+      "canonical": "LTM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "L2",
+      "canonical": "L2",
+      "type": "abbreviation",
+      "aliases": [
+        "Layer-2"
+      ]
+    },
+    {
+      "surface": "L3",
+      "canonical": "L3",
+      "type": "abbreviation",
+      "aliases": [
+        "Layer-3"
+      ]
+    },
+    {
+      "surface": "Late Data Forwarding",
+      "canonical": "Late Data Forwarding",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Layer-2",
+      "canonical": "L2",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Layer-3",
+      "canonical": "L3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "LBT",
+      "canonical": "LBT",
+      "type": "abbreviation",
+      "aliases": [
+        "Listen Before Talk"
+      ]
+    },
+    {
+      "surface": "LDPC",
+      "canonical": "LDPC",
+      "type": "abbreviation",
+      "aliases": [
+        "Low Density Parity Check"
+      ]
+    },
+    {
+      "surface": "LEO",
+      "canonical": "LEO",
+      "type": "abbreviation",
+      "aliases": [
+        "Low Earth Orbit"
+      ]
+    },
+    {
+      "surface": "Listen Before Talk",
+      "canonical": "LBT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Low Density Parity Check",
+      "canonical": "LDPC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Low Earth Orbit",
+      "canonical": "LEO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "LTM",
+      "canonical": "LTM",
+      "type": "abbreviation",
+      "aliases": [
+        "L1/L2 Triggered Mobility"
+      ]
+    },
+    {
+      "surface": "Machine Learning",
+      "canonical": "ML",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mapped Cell ID",
+      "canonical": "Mapped Cell ID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Master Information Block",
+      "canonical": "MIB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Maximum Data Burst Volume",
+      "canonical": "MDBV",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Maximum Flow Bit Rate",
+      "canonical": "MFBR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Maximum Permissible Exposure",
+      "canonical": "MPE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MBS",
+      "canonical": "MBS",
+      "type": "abbreviation",
+      "aliases": [
+        "Multicast/Broadcast Services"
+      ]
+    },
+    {
+      "surface": "MBS Control Channel",
+      "canonical": "MCCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MBS Radio Bearer",
+      "canonical": "MRB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MBS Traffic Channel",
+      "canonical": "MTCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MCCH",
+      "canonical": "MCCH",
+      "type": "abbreviation",
+      "aliases": [
+        "MBS Control Channel"
+      ]
+    },
+    {
+      "surface": "MCE",
+      "canonical": "MCE",
+      "type": "abbreviation",
+      "aliases": [
+        "Measurement Collection Entity"
+      ]
+    },
+    {
+      "surface": "MDBV",
+      "canonical": "MDBV",
+      "type": "abbreviation",
+      "aliases": [
+        "Maximum Data Burst Volume"
+      ]
+    },
+    {
+      "surface": "Measurement Collection Entity",
+      "canonical": "MCE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Medium Earth Orbit",
+      "canonical": "MEO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MEO",
+      "canonical": "MEO",
+      "type": "abbreviation",
+      "aliases": [
+        "Medium Earth Orbit"
+      ]
+    },
+    {
+      "surface": "MFBR",
+      "canonical": "MFBR",
+      "type": "abbreviation",
+      "aliases": [
+        "Maximum Flow Bit Rate"
+      ]
+    },
+    {
+      "surface": "MIB",
+      "canonical": "MIB",
+      "type": "abbreviation",
+      "aliases": [
+        "Master Information Block"
+      ]
+    },
+    {
+      "surface": "MICO",
+      "canonical": "MICO",
+      "type": "abbreviation",
+      "aliases": [
+        "Mobile Initiated Connection Only"
+      ]
+    },
+    {
+      "surface": "ML",
+      "canonical": "ML",
+      "type": "abbreviation",
+      "aliases": [
+        "Machine Learning"
+      ]
+    },
+    {
+      "surface": "MMTEL",
+      "canonical": "MMTEL",
+      "type": "abbreviation",
+      "aliases": [
+        "Multimedia telephony"
+      ]
+    },
+    {
+      "surface": "MNO",
+      "canonical": "MNO",
+      "type": "abbreviation",
+      "aliases": [
+        "Mobile Network Operator"
+      ]
+    },
+    {
+      "surface": "MO-SDT",
+      "canonical": "MO-SDT",
+      "type": "abbreviation",
+      "aliases": [
+        "Mobile Originated SDT"
+      ]
+    },
+    {
+      "surface": "Mobile IAB-DU",
+      "canonical": "Mobile IAB-DU",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile IAB-DU migration",
+      "canonical": "Mobile IAB-DU migration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile IAB-MT",
+      "canonical": "Mobile IAB-MT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile IAB-MT migration",
+      "canonical": "Mobile IAB-MT migration",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile IAB-node",
+      "canonical": "Mobile IAB-node",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile Initiated Connection Only",
+      "canonical": "MICO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile Network Operator",
+      "canonical": "MNO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile Originated SDT",
+      "canonical": "MO-SDT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile Terminated SDT",
+      "canonical": "MT-SDT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile Termination",
+      "canonical": "MT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Mobile-IAB cell",
+      "canonical": "Mobile-IAB cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MP",
+      "canonical": "MP",
+      "type": "abbreviation",
+      "aliases": [
+        "Multi-Path"
+      ]
+    },
+    {
+      "surface": "MP Relay UE",
+      "canonical": "MP Relay UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MP Remote UE",
+      "canonical": "MP Remote UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MPE",
+      "canonical": "MPE",
+      "type": "abbreviation",
+      "aliases": [
+        "Maximum Permissible Exposure"
+      ]
+    },
+    {
+      "surface": "MRB",
+      "canonical": "MRB",
+      "type": "abbreviation",
+      "aliases": [
+        "MBS Radio Bearer"
+      ]
+    },
+    {
+      "surface": "MSG1",
+      "canonical": "MSG1",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSG3",
+      "canonical": "MSG3",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSGA",
+      "canonical": "MSGA",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MSGB",
+      "canonical": "MSGB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "MT",
+      "canonical": "MT",
+      "type": "abbreviation",
+      "aliases": [
+        "Mobile Termination"
+      ]
+    },
+    {
+      "surface": "MT-SDT",
+      "canonical": "MT-SDT",
+      "type": "abbreviation",
+      "aliases": [
+        "Mobile Terminated SDT"
+      ]
+    },
+    {
+      "surface": "MTCH",
+      "canonical": "MTCH",
+      "type": "abbreviation",
+      "aliases": [
+        "MBS Traffic Channel"
+      ]
+    },
+    {
+      "surface": "MTSI",
+      "canonical": "MTSI",
+      "type": "abbreviation",
+      "aliases": [
+        "Multimedia Telephony Service for IMS"
+      ]
+    },
+    {
+      "surface": "MU-MIMO",
+      "canonical": "MU-MIMO",
+      "type": "abbreviation",
+      "aliases": [
+        "Multi User MIMO"
+      ]
+    },
+    {
+      "surface": "Multi User MIMO",
+      "canonical": "MU-MIMO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-hop backhauling",
+      "canonical": "Multi-hop backhauling",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-Path",
+      "canonical": "MP",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-Round Trip Time",
+      "canonical": "Multi-RTT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multi-RTT",
+      "canonical": "Multi-RTT",
+      "type": "abbreviation",
+      "aliases": [
+        "Multi-Round Trip Time"
+      ]
+    },
+    {
+      "surface": "Multi-Universal Subscriber Identity Module",
+      "canonical": "MUSIM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multicast MRB",
+      "canonical": "Multicast MRB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multicast/Broadcast Service",
+      "canonical": "Multicast/Broadcast Service",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multicast/Broadcast Services",
+      "canonical": "MBS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multimedia telephony",
+      "canonical": "MMTEL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Multimedia Telephony Service for IMS",
+      "canonical": "MTSI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "MUSIM",
+      "canonical": "MUSIM",
+      "type": "abbreviation",
+      "aliases": [
+        "Multi-Universal Subscriber Identity Module"
+      ]
+    },
+    {
+      "surface": "N3C",
+      "canonical": "N3C",
+      "type": "abbreviation",
+      "aliases": [
+        "Non-3GPP Connection"
+      ]
+    },
+    {
+      "surface": "Narrow Band Internet of Things",
+      "canonical": "NB-IoT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NB-IoT",
+      "canonical": "NB-IoT",
+      "type": "abbreviation",
+      "aliases": [
+        "Narrow Band Internet of Things"
+      ]
+    },
+    {
+      "surface": "NCD-SSB",
+      "canonical": "NCD-SSB",
+      "type": "abbreviation",
+      "aliases": [
+        "Non Cell Defining SSB"
+      ]
+    },
+    {
+      "surface": "NCGI",
+      "canonical": "NCGI",
+      "type": "abbreviation",
+      "aliases": [
+        "NR Cell Global Identifier"
+      ]
+    },
+    {
+      "surface": "NCL",
+      "canonical": "NCL",
+      "type": "abbreviation",
+      "aliases": [
+        "Neighbour Cell List"
+      ]
+    },
+    {
+      "surface": "NCR",
+      "canonical": "NCR",
+      "type": "abbreviation",
+      "aliases": [
+        "Neighbour Cell Relation"
+      ]
+    },
+    {
+      "surface": "NCR-Fwd",
+      "canonical": "NCR-Fwd",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-Fwd access link",
+      "canonical": "NCR-Fwd access link",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-Fwd backhaul link",
+      "canonical": "NCR-Fwd backhaul link",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-MT",
+      "canonical": "NCR-MT",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCR-node",
+      "canonical": "NCR-node",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NCRT",
+      "canonical": "NCRT",
+      "type": "abbreviation",
+      "aliases": [
+        "Neighbour Cell Relation Table"
+      ]
+    },
+    {
+      "surface": "Neighbour Cell List",
+      "canonical": "NCL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Neighbour Cell Relation",
+      "canonical": "NCR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Neighbour Cell Relation Table",
+      "canonical": "NCRT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NES",
+      "canonical": "NES",
+      "type": "abbreviation",
+      "aliases": [
+        "Network Energy Savings"
+      ]
+    },
+    {
+      "surface": "Network Energy Savings",
+      "canonical": "NES",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Network Identifier",
+      "canonical": "NID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Network Slice AS Group",
+      "canonical": "NSAG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG Application Protocol",
+      "canonical": "NGAP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG-C",
+      "canonical": "NG-C",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "ng-eNB",
+      "canonical": "ng-eNB",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NG-RAN node",
+      "canonical": "NG-RAN node",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NG-U",
+      "canonical": "NG-U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "NGAP",
+      "canonical": "NGAP",
+      "type": "abbreviation",
+      "aliases": [
+        "NG Application Protocol"
+      ]
+    },
+    {
+      "surface": "NGSO",
+      "canonical": "NGSO",
+      "type": "abbreviation",
+      "aliases": [
+        "Non-Geosynchronous Orbit"
+      ]
+    },
+    {
+      "surface": "NID",
+      "canonical": "NID",
+      "type": "abbreviation",
+      "aliases": [
+        "Network Identifier"
+      ]
+    },
+    {
+      "surface": "Non Cell Defining SSB",
+      "canonical": "NCD-SSB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-3GPP Connection",
+      "canonical": "N3C",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-CAG Cell",
+      "canonical": "Non-CAG Cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Cell Defining SSB",
+      "canonical": "Non-Cell Defining SSB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Geosynchronous Orbit",
+      "canonical": "NGSO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Geosynchronous orbit",
+      "canonical": "Non-Geosynchronous orbit",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Public Network",
+      "canonical": "NPN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-Terrestrial Network",
+      "canonical": "NTN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Non-terrestrial network",
+      "canonical": "Non-terrestrial network",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NPN",
+      "canonical": "NPN",
+      "type": "abbreviation",
+      "aliases": [
+        "Non-Public Network"
+      ]
+    },
+    {
+      "surface": "NR",
+      "canonical": "NR",
+      "type": "abbreviation",
+      "aliases": [
+        "NR Radio Access"
+      ]
+    },
+    {
+      "surface": "NR backhaul link",
+      "canonical": "NR backhaul link",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR Cell Global Identifier",
+      "canonical": "NCGI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR Radio Access",
+      "canonical": "NR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR sidelink communication",
+      "canonical": "NR sidelink communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NR sidelink discovery",
+      "canonical": "NR sidelink discovery",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NSAG",
+      "canonical": "NSAG",
+      "type": "abbreviation",
+      "aliases": [
+        "Network Slice AS Group"
+      ]
+    },
+    {
+      "surface": "NTN",
+      "canonical": "NTN",
+      "type": "abbreviation",
+      "aliases": [
+        "Non-Terrestrial Network"
+      ]
+    },
+    {
+      "surface": "NTN Gateway",
+      "canonical": "NTN Gateway",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "NTN payload",
+      "canonical": "NTN payload",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Numerology",
+      "canonical": "Numerology",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "P-MPR",
+      "canonical": "P-MPR",
+      "type": "abbreviation",
+      "aliases": [
+        "Power Management Maximum Power Reduction"
+      ]
+    },
+    {
+      "surface": "P-RNTI",
+      "canonical": "P-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging RNTI"
+      ]
+    },
+    {
+      "surface": "Packet Delay Budget",
+      "canonical": "PDB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Packet Error Rate",
+      "canonical": "PER",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Channel",
+      "canonical": "PCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Early Indication",
+      "canonical": "PEI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Hyperframe",
+      "canonical": "PH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Occasion",
+      "canonical": "PO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging RNTI",
+      "canonical": "P-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Paging Time Window",
+      "canonical": "PTW",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Parent node",
+      "canonical": "Parent node",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PC5 5QI",
+      "canonical": "PQI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PCH",
+      "canonical": "PCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging Channel"
+      ]
+    },
+    {
+      "surface": "PCI",
+      "canonical": "PCI",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Cell Identifier"
+      ]
+    },
+    {
+      "surface": "PDB",
+      "canonical": "PDB",
+      "type": "abbreviation",
+      "aliases": [
+        "Packet Delay Budget"
+      ]
+    },
+    {
+      "surface": "PDC",
+      "canonical": "PDC",
+      "type": "abbreviation",
+      "aliases": [
+        "Propagation Delay Compensation"
+      ]
+    },
+    {
+      "surface": "PDCCH",
+      "canonical": "PDCCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Downlink Control Channel"
+      ]
+    },
+    {
+      "surface": "PDSCH",
+      "canonical": "PDSCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Downlink Shared Channel"
+      ]
+    },
+    {
+      "surface": "PDU Set",
+      "canonical": "PDU Set",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Set Delay Budget",
+      "canonical": "PSDB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Set Error Rate",
+      "canonical": "PSER",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Set Importance",
+      "canonical": "PSI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PDU Set Integrated Handling Information",
+      "canonical": "PSIHI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PEI",
+      "canonical": "PEI",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging Early Indication"
+      ]
+    },
+    {
+      "surface": "PER",
+      "canonical": "PER",
+      "type": "abbreviation",
+      "aliases": [
+        "Packet Error Rate"
+      ]
+    },
+    {
+      "surface": "PH",
+      "canonical": "PH",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging Hyperframe"
+      ]
+    },
+    {
+      "surface": "Physical Cell Identifier",
+      "canonical": "PCI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Downlink Control Channel",
+      "canonical": "PDCCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Downlink Shared Channel",
+      "canonical": "PDSCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Random Access Channel",
+      "canonical": "PRACH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Resource Block",
+      "canonical": "PRB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Uplink Control Channel",
+      "canonical": "PUCCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Physical Uplink Shared Channel",
+      "canonical": "PUSCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PLMN",
+      "canonical": "PLMN",
+      "type": "abbreviation",
+      "aliases": [
+        "Public Land Mobile Network"
+      ]
+    },
+    {
+      "surface": "PLMN Cell",
+      "canonical": "PLMN Cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PNI-NPN",
+      "canonical": "PNI-NPN",
+      "type": "abbreviation",
+      "aliases": [
+        "Public Network Integrated NPN"
+      ]
+    },
+    {
+      "surface": "PO",
+      "canonical": "PO",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging Occasion"
+      ]
+    },
+    {
+      "surface": "Point to Multipoint",
+      "canonical": "PTM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Point to Point",
+      "canonical": "PTP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Positioning Reference Signal",
+      "canonical": "PRS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Power Management Maximum Power Reduction",
+      "canonical": "P-MPR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Power Saving RNTI",
+      "canonical": "PS-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PQI",
+      "canonical": "PQI",
+      "type": "abbreviation",
+      "aliases": [
+        "PC5 5QI"
+      ]
+    },
+    {
+      "surface": "PRACH",
+      "canonical": "PRACH",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Random Access Channel"
+      ]
+    },
+    {
+      "surface": "PRB",
+      "canonical": "PRB",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Resource Block"
+      ]
+    },
+    {
+      "surface": "Precoding Resource block Group",
+      "canonical": "PRG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PRG",
+      "canonical": "PRG",
+      "type": "abbreviation",
+      "aliases": [
+        "Precoding Resource block Group"
+      ]
+    },
+    {
+      "surface": "Primary Synchronisation Signal",
+      "canonical": "PSS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Propagation Delay Compensation",
+      "canonical": "PDC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PRS",
+      "canonical": "PRS",
+      "type": "abbreviation",
+      "aliases": [
+        "Positioning Reference Signal"
+      ]
+    },
+    {
+      "surface": "PS-RNTI",
+      "canonical": "PS-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Power Saving RNTI"
+      ]
+    },
+    {
+      "surface": "PSDB",
+      "canonical": "PSDB",
+      "type": "abbreviation",
+      "aliases": [
+        "PDU Set Delay Budget"
+      ]
+    },
+    {
+      "surface": "PSER",
+      "canonical": "PSER",
+      "type": "abbreviation",
+      "aliases": [
+        "PDU Set Error Rate"
+      ]
+    },
+    {
+      "surface": "PSI",
+      "canonical": "PSI",
+      "type": "abbreviation",
+      "aliases": [
+        "PDU Set Importance"
+      ]
+    },
+    {
+      "surface": "PSIHI",
+      "canonical": "PSIHI",
+      "type": "abbreviation",
+      "aliases": [
+        "PDU Set Integrated Handling Information"
+      ]
+    },
+    {
+      "surface": "PSS",
+      "canonical": "PSS",
+      "type": "abbreviation",
+      "aliases": [
+        "Primary Synchronisation Signal"
+      ]
+    },
+    {
+      "surface": "PTM",
+      "canonical": "PTM",
+      "type": "abbreviation",
+      "aliases": [
+        "Point to Multipoint"
+      ]
+    },
+    {
+      "surface": "PTP",
+      "canonical": "PTP",
+      "type": "abbreviation",
+      "aliases": [
+        "Point to Point"
+      ]
+    },
+    {
+      "surface": "PTW",
+      "canonical": "PTW",
+      "type": "abbreviation",
+      "aliases": [
+        "Paging Time Window"
+      ]
+    },
+    {
+      "surface": "Public Land Mobile Network",
+      "canonical": "PLMN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Public Network Integrated NPN",
+      "canonical": "PNI-NPN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Public Warning System",
+      "canonical": "PWS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "PUCCH",
+      "canonical": "PUCCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Uplink Control Channel"
+      ]
+    },
+    {
+      "surface": "PUSCH",
+      "canonical": "PUSCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Physical Uplink Shared Channel"
+      ]
+    },
+    {
+      "surface": "PWS",
+      "canonical": "PWS",
+      "type": "abbreviation",
+      "aliases": [
+        "Public Warning System"
+      ]
+    },
+    {
+      "surface": "QAM",
+      "canonical": "QAM",
+      "type": "abbreviation",
+      "aliases": [
+        "Quadrature Amplitude Modulation"
+      ]
+    },
+    {
+      "surface": "QFI",
+      "canonical": "QFI",
+      "type": "abbreviation",
+      "aliases": [
+        "QoS Flow ID"
+      ]
+    },
+    {
+      "surface": "QMC",
+      "canonical": "QMC",
+      "type": "abbreviation",
+      "aliases": [
+        "QoE Measurement Collection"
+      ]
+    },
+    {
+      "surface": "QoE",
+      "canonical": "QoE",
+      "type": "abbreviation",
+      "aliases": [
+        "Quality of Experience"
+      ]
+    },
+    {
+      "surface": "QoE Measurement Collection",
+      "canonical": "QMC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QoS Flow ID",
+      "canonical": "QFI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "QPSK",
+      "canonical": "QPSK",
+      "type": "abbreviation",
+      "aliases": [
+        "Quadrature Phase Shift Keying"
+      ]
+    },
+    {
+      "surface": "Quadrature Amplitude Modulation",
+      "canonical": "QAM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Quadrature Phase Shift Keying",
+      "canonical": "QPSK",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Quality of Experience",
+      "canonical": "QoE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RA",
+      "canonical": "RA",
+      "type": "abbreviation",
+      "aliases": [
+        "Random Access"
+      ]
+    },
+    {
+      "surface": "RA-RNTI",
+      "canonical": "RA-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Random Access RNTI"
+      ]
+    },
+    {
+      "surface": "RACH",
+      "canonical": "RACH",
+      "type": "abbreviation",
+      "aliases": [
+        "Random Access Channel"
+      ]
+    },
+    {
+      "surface": "RACH-less LTM",
+      "canonical": "RACH-less LTM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Link Monitoring",
+      "canonical": "RLM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Radio Network Temporary Identifier",
+      "canonical": "RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN visible QoE",
+      "canonical": "RVQoE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN-based Notification Area",
+      "canonical": "RNA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN-based Notification Area Code",
+      "canonical": "RANAC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RAN-based Notification Area Update",
+      "canonical": "RNAU",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RANAC",
+      "canonical": "RANAC",
+      "type": "abbreviation",
+      "aliases": [
+        "RAN-based Notification Area Code"
+      ]
+    },
+    {
+      "surface": "Random Access",
+      "canonical": "RA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Random Access Channel",
+      "canonical": "RACH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Random Access RNTI",
+      "canonical": "RA-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Received Signal Strength Indicator",
+      "canonical": "RSSI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RedCap UE",
+      "canonical": "RedCap UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reference Signal",
+      "canonical": "RS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reference Signal Received Power",
+      "canonical": "RSRP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reference Signal Received Quality",
+      "canonical": "RSRQ",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reference Signal Time Difference",
+      "canonical": "RSTD",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reflective QoS Attribute",
+      "canonical": "RQA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Reflective Quality of Service",
+      "canonical": "RQoS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "REG",
+      "canonical": "REG",
+      "type": "abbreviation",
+      "aliases": [
+        "Resource Element Group"
+      ]
+    },
+    {
+      "surface": "Relay discovery",
+      "canonical": "Relay discovery",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Remaining Minimum SI",
+      "canonical": "RMSI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Remote Interference Management",
+      "canonical": "RIM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Resource Element Group",
+      "canonical": "REG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RIM",
+      "canonical": "RIM",
+      "type": "abbreviation",
+      "aliases": [
+        "Remote Interference Management"
+      ]
+    },
+    {
+      "surface": "RLM",
+      "canonical": "RLM",
+      "type": "abbreviation",
+      "aliases": [
+        "Radio Link Monitoring"
+      ]
+    },
+    {
+      "surface": "RMSI",
+      "canonical": "RMSI",
+      "type": "abbreviation",
+      "aliases": [
+        "Remaining Minimum SI"
+      ]
+    },
+    {
+      "surface": "RNA",
+      "canonical": "RNA",
+      "type": "abbreviation",
+      "aliases": [
+        "RAN-based Notification Area"
+      ]
+    },
+    {
+      "surface": "RNAU",
+      "canonical": "RNAU",
+      "type": "abbreviation",
+      "aliases": [
+        "RAN-based Notification Area Update"
+      ]
+    },
+    {
+      "surface": "RNTI",
+      "canonical": "RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Radio Network Temporary Identifier"
+      ]
+    },
+    {
+      "surface": "Round Trip Time",
+      "canonical": "RTT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "RQA",
+      "canonical": "RQA",
+      "type": "abbreviation",
+      "aliases": [
+        "Reflective QoS Attribute"
+      ]
+    },
+    {
+      "surface": "RQoS",
+      "canonical": "RQoS",
+      "type": "abbreviation",
+      "aliases": [
+        "Reflective Quality of Service"
+      ]
+    },
+    {
+      "surface": "RS",
+      "canonical": "RS",
+      "type": "abbreviation",
+      "aliases": [
+        "Reference Signal"
+      ]
+    },
+    {
+      "surface": "RSRP",
+      "canonical": "RSRP",
+      "type": "abbreviation",
+      "aliases": [
+        "Reference Signal Received Power"
+      ]
+    },
+    {
+      "surface": "RSRQ",
+      "canonical": "RSRQ",
+      "type": "abbreviation",
+      "aliases": [
+        "Reference Signal Received Quality"
+      ]
+    },
+    {
+      "surface": "RSSI",
+      "canonical": "RSSI",
+      "type": "abbreviation",
+      "aliases": [
+        "Received Signal Strength Indicator"
+      ]
+    },
+    {
+      "surface": "RSTD",
+      "canonical": "RSTD",
+      "type": "abbreviation",
+      "aliases": [
+        "Reference Signal Time Difference"
+      ]
+    },
+    {
+      "surface": "RTT",
+      "canonical": "RTT",
+      "type": "abbreviation",
+      "aliases": [
+        "Round Trip Time"
+      ]
+    },
+    {
+      "surface": "RVQoE",
+      "canonical": "RVQoE",
+      "type": "abbreviation",
+      "aliases": [
+        "RAN visible QoE"
+      ]
+    },
+    {
+      "surface": "S-NSSAI",
+      "canonical": "S-NSSAI",
+      "type": "abbreviation",
+      "aliases": [
+        "Single Network Slice Selection Assistance Information"
+      ]
+    },
+    {
+      "surface": "Satellite",
+      "canonical": "Satellite",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Scheduling Request",
+      "canonical": "SR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SCS",
+      "canonical": "SCS",
+      "type": "abbreviation",
+      "aliases": [
+        "SubCarrier Spacing"
+      ]
+    },
+    {
+      "surface": "SD",
+      "canonical": "SD",
+      "type": "abbreviation",
+      "aliases": [
+        "Slice Differentiator"
+      ]
+    },
+    {
+      "surface": "SD-RSRP",
+      "canonical": "SD-RSRP",
+      "type": "abbreviation",
+      "aliases": [
+        "Sidelink Discovery RSRP"
+      ]
+    },
+    {
+      "surface": "SDAP",
+      "canonical": "SDAP",
+      "type": "abbreviation",
+      "aliases": [
+        "Service Data Adaptation Protocol"
+      ]
+    },
+    {
+      "surface": "SDT",
+      "canonical": "SDT",
+      "type": "abbreviation",
+      "aliases": [
+        "Small Data Transmission"
+      ]
+    },
+    {
+      "surface": "Search Space Set Group",
+      "canonical": "SSSG",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Secondary Synchronisation Signal",
+      "canonical": "SSS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Security Mode Command",
+      "canonical": "SMC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Semi-Persistent Scheduling",
+      "canonical": "SPS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Service Data Adaptation Protocol",
+      "canonical": "SDAP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Service Level Agreement",
+      "canonical": "SLA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Service link",
+      "canonical": "Service link",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Session Management Function",
+      "canonical": "SMF",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SFI-RNTI",
+      "canonical": "SFI-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "Slot Format Indication RNTI"
+      ]
+    },
+    {
+      "surface": "SHR",
+      "canonical": "SHR",
+      "type": "abbreviation",
+      "aliases": [
+        "Successful Handover Report"
+      ]
+    },
+    {
+      "surface": "SI-RNTI",
+      "canonical": "SI-RNTI",
+      "type": "abbreviation",
+      "aliases": [
+        "System Information RNTI"
+      ]
+    },
+    {
+      "surface": "SIB",
+      "canonical": "SIB",
+      "type": "abbreviation",
+      "aliases": [
+        "System Information Block"
+      ]
+    },
+    {
+      "surface": "Sidelink Discovery RSRP",
+      "canonical": "SD-RSRP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Positioning Reference Signal",
+      "canonical": "SL-PRS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink Relay Adaptation Protocol",
+      "canonical": "SRAP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sidelink RSRP",
+      "canonical": "SL-RSRP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Single Network Slice Selection Assistance Information",
+      "canonical": "S-NSSAI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Single Radio Voice Call Continuity",
+      "canonical": "SRVCC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Single User MIMO",
+      "canonical": "SU-MIMO",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SL-PRS",
+      "canonical": "SL-PRS",
+      "type": "abbreviation",
+      "aliases": [
+        "Sidelink Positioning Reference Signal"
+      ]
+    },
+    {
+      "surface": "SL-RSRP",
+      "canonical": "SL-RSRP",
+      "type": "abbreviation",
+      "aliases": [
+        "Sidelink RSRP"
+      ]
+    },
+    {
+      "surface": "SLA",
+      "canonical": "SLA",
+      "type": "abbreviation",
+      "aliases": [
+        "Service Level Agreement"
+      ]
+    },
+    {
+      "surface": "Slice Differentiator",
+      "canonical": "SD",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Slice/Service Type",
+      "canonical": "SST",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Slot Format Indication RNTI",
+      "canonical": "SFI-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Small Data Transmission",
+      "canonical": "SDT",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SMC",
+      "canonical": "SMC",
+      "type": "abbreviation",
+      "aliases": [
+        "Security Mode Command"
+      ]
+    },
+    {
+      "surface": "SMF",
+      "canonical": "SMF",
+      "type": "abbreviation",
+      "aliases": [
+        "Session Management Function"
+      ]
+    },
+    {
+      "surface": "SMTC",
+      "canonical": "SMTC",
+      "type": "abbreviation",
+      "aliases": [
+        "SS/PBCH block Measurement Timing Configuration"
+      ]
+    },
+    {
+      "surface": "SNPN",
+      "canonical": "SNPN",
+      "type": "abbreviation",
+      "aliases": [
+        "Stand-alone Non-Public Network"
+      ]
+    },
+    {
+      "surface": "SNPN Access Mode",
+      "canonical": "SNPN Access Mode",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SNPN ID",
+      "canonical": "SNPN ID",
+      "type": "phrase",
+      "aliases": [
+        "Stand-alone Non-Public Network Identity"
+      ]
+    },
+    {
+      "surface": "SNPN Identity",
+      "canonical": "SNPN Identity",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SNPN-only cell",
+      "canonical": "SNPN-only cell",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Sounding Reference Signal",
+      "canonical": "SRS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SPR",
+      "canonical": "SPR",
+      "type": "abbreviation",
+      "aliases": [
+        "Successful PSCell Addition/Change Report"
+      ]
+    },
+    {
+      "surface": "SPS",
+      "canonical": "SPS",
+      "type": "abbreviation",
+      "aliases": [
+        "Semi-Persistent Scheduling"
+      ]
+    },
+    {
+      "surface": "SR",
+      "canonical": "SR",
+      "type": "abbreviation",
+      "aliases": [
+        "Scheduling Request"
+      ]
+    },
+    {
+      "surface": "SRAP",
+      "canonical": "SRAP",
+      "type": "abbreviation",
+      "aliases": [
+        "Sidelink Relay Adaptation Protocol"
+      ]
+    },
+    {
+      "surface": "SRS",
+      "canonical": "SRS",
+      "type": "abbreviation",
+      "aliases": [
+        "Sounding Reference Signal"
+      ]
+    },
+    {
+      "surface": "SRVCC",
+      "canonical": "SRVCC",
+      "type": "abbreviation",
+      "aliases": [
+        "Single Radio Voice Call Continuity"
+      ]
+    },
+    {
+      "surface": "SS",
+      "canonical": "SS",
+      "type": "abbreviation",
+      "aliases": [
+        "Synchronization Signal"
+      ]
+    },
+    {
+      "surface": "SS/PBCH block",
+      "canonical": "SSB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SS/PBCH block Measurement Timing Configuration",
+      "canonical": "SMTC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SSB",
+      "canonical": "SSB",
+      "type": "abbreviation",
+      "aliases": [
+        "SS/PBCH block"
+      ]
+    },
+    {
+      "surface": "SSS",
+      "canonical": "SSS",
+      "type": "abbreviation",
+      "aliases": [
+        "Secondary Synchronisation Signal"
+      ]
+    },
+    {
+      "surface": "SSSG",
+      "canonical": "SSSG",
+      "type": "abbreviation",
+      "aliases": [
+        "Search Space Set Group"
+      ]
+    },
+    {
+      "surface": "SST",
+      "canonical": "SST",
+      "type": "abbreviation",
+      "aliases": [
+        "Slice/Service Type"
+      ]
+    },
+    {
+      "surface": "Stand-alone Non-Public Network",
+      "canonical": "SNPN",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Stand-alone Non-Public Network Identity",
+      "canonical": "SNPN ID",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SU-MIMO",
+      "canonical": "SU-MIMO",
+      "type": "abbreviation",
+      "aliases": [
+        "Single User MIMO"
+      ]
+    },
+    {
+      "surface": "SubCarrier Spacing",
+      "canonical": "SCS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Successful Handover Report",
+      "canonical": "SHR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Successful PSCell Addition/Change Report",
+      "canonical": "SPR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "SUL",
+      "canonical": "SUL",
+      "type": "abbreviation",
+      "aliases": [
+        "Supplementary Uplink"
+      ]
+    },
+    {
+      "surface": "Supplementary Uplink",
+      "canonical": "SUL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Synchronization Signal",
+      "canonical": "SS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "System Information Block",
+      "canonical": "SIB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "System Information RNTI",
+      "canonical": "SI-RNTI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TA",
+      "canonical": "TA",
+      "type": "abbreviation",
+      "aliases": [
+        "Timing Advance"
+      ]
+    },
+    {
+      "surface": "TB",
+      "canonical": "TB",
+      "type": "abbreviation",
+      "aliases": [
+        "Transport Block"
+      ]
+    },
+    {
+      "surface": "TCE",
+      "canonical": "TCE",
+      "type": "abbreviation",
+      "aliases": [
+        "Trace Collection Entity"
+      ]
+    },
+    {
+      "surface": "Timing Advance",
+      "canonical": "TA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Timing Synchronization Status",
+      "canonical": "TSS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TNL",
+      "canonical": "TNL",
+      "type": "abbreviation",
+      "aliases": [
+        "Transport Network Layer"
+      ]
+    },
+    {
+      "surface": "TPC",
+      "canonical": "TPC",
+      "type": "abbreviation",
+      "aliases": [
+        "Transmit Power Control"
+      ]
+    },
+    {
+      "surface": "Trace Collection Entity",
+      "canonical": "TCE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Tracking Reference Signal",
+      "canonical": "TRS",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Transmit Power Control",
+      "canonical": "TPC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Transmit/Receive Point",
+      "canonical": "TRP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Transport Block",
+      "canonical": "TB",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Transport Network Layer",
+      "canonical": "TNL",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "TRP",
+      "canonical": "TRP",
+      "type": "abbreviation",
+      "aliases": [
+        "Transmit/Receive Point"
+      ]
+    },
+    {
+      "surface": "TRS",
+      "canonical": "TRS",
+      "type": "abbreviation",
+      "aliases": [
+        "Tracking Reference Signal"
+      ]
+    },
+    {
+      "surface": "TSS",
+      "canonical": "TSS",
+      "type": "abbreviation",
+      "aliases": [
+        "Timing Synchronization Status"
+      ]
+    },
+    {
+      "surface": "U2N",
+      "canonical": "U2N",
+      "type": "abbreviation",
+      "aliases": [
+        "UE-to-Network"
+      ]
+    },
+    {
+      "surface": "U2N Relay UE",
+      "canonical": "U2N Relay UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "U2N Remote UE",
+      "canonical": "U2N Remote UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "U2U",
+      "canonical": "U2U",
+      "type": "abbreviation",
+      "aliases": [
+        "UE-to-UE"
+      ]
+    },
+    {
+      "surface": "U2U Relay UE",
+      "canonical": "U2U Relay UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "U2U Remote UE",
+      "canonical": "U2U Remote UE",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UAV",
+      "canonical": "UAV",
+      "type": "abbreviation",
+      "aliases": [
+        "Uncrewed Aerial Vehicle"
+      ]
+    },
+    {
+      "surface": "UCI",
+      "canonical": "UCI",
+      "type": "abbreviation",
+      "aliases": [
+        "Uplink Control Information"
+      ]
+    },
+    {
+      "surface": "UDC",
+      "canonical": "UDC",
+      "type": "abbreviation",
+      "aliases": [
+        "Uplink Data Compression"
+      ]
+    },
+    {
+      "surface": "UDM",
+      "canonical": "UDM",
+      "type": "abbreviation",
+      "aliases": [
+        "Unified Data Management"
+      ]
+    },
+    {
+      "surface": "UE Slice Maximum Bit Rate",
+      "canonical": "UE-Slice-MBR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UE-Slice-MBR",
+      "canonical": "UE-Slice-MBR",
+      "type": "abbreviation",
+      "aliases": [
+        "UE Slice Maximum Bit Rate"
+      ]
+    },
+    {
+      "surface": "UE-to-Network",
+      "canonical": "U2N",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UE-to-UE",
+      "canonical": "U2U",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "UL-AoA",
+      "canonical": "UL-AoA",
+      "type": "abbreviation",
+      "aliases": [
+        "Uplink Angles of Arrival"
+      ]
+    },
+    {
+      "surface": "UL-RTOA",
+      "canonical": "UL-RTOA",
+      "type": "abbreviation",
+      "aliases": [
+        "Uplink Relative Time of Arrival"
+      ]
+    },
+    {
+      "surface": "UL-SCH",
+      "canonical": "UL-SCH",
+      "type": "abbreviation",
+      "aliases": [
+        "Uplink Shared Channel"
+      ]
+    },
+    {
+      "surface": "Ultra-Reliable and Low Latency Communications",
+      "canonical": "URLLC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uncrewed Aerial Vehicle",
+      "canonical": "UAV",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Unified Data Management",
+      "canonical": "UDM",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "UPF",
+      "canonical": "UPF",
+      "type": "abbreviation",
+      "aliases": [
+        "User Plane Function"
+      ]
+    },
+    {
+      "surface": "Uplink Angles of Arrival",
+      "canonical": "UL-AoA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Control Information",
+      "canonical": "UCI",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Data Compression",
+      "canonical": "UDC",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Relative Time of Arrival",
+      "canonical": "UL-RTOA",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uplink Shared Channel",
+      "canonical": "UL-SCH",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Upstream",
+      "canonical": "Upstream",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "URLLC",
+      "canonical": "URLLC",
+      "type": "abbreviation",
+      "aliases": [
+        "Ultra-Reliable and Low Latency Communications"
+      ]
+    },
+    {
+      "surface": "User Plane Function",
+      "canonical": "UPF",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Uu Relay RLC channel",
+      "canonical": "Uu Relay RLC channel",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "V2X",
+      "canonical": "V2X",
+      "type": "abbreviation",
+      "aliases": [
+        "Vehicle-to-Everything"
+      ]
+    },
+    {
+      "surface": "V2X sidelink communication",
+      "canonical": "V2X sidelink communication",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Vehicle-to-Everything",
+      "canonical": "V2X",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Virtual Reality",
+      "canonical": "VR",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "VR",
+      "canonical": "VR",
+      "type": "abbreviation",
+      "aliases": [
+        "Virtual Reality"
+      ]
+    },
+    {
+      "surface": "Xn",
+      "canonical": "Xn",
+      "type": "abbreviation",
+      "aliases": []
+    },
+    {
+      "surface": "Xn Application Protocol",
+      "canonical": "XnAP",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Xn-C",
+      "canonical": "Xn-C",
+      "type": "abbreviation",
+      "aliases": [
+        "Xn-Control plane"
+      ]
+    },
+    {
+      "surface": "Xn-Control plane",
+      "canonical": "Xn-C",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "Xn-U",
+      "canonical": "Xn-U",
+      "type": "abbreviation",
+      "aliases": [
+        "Xn-User plane"
+      ]
+    },
+    {
+      "surface": "Xn-User plane",
+      "canonical": "Xn-U",
+      "type": "phrase",
+      "aliases": []
+    },
+    {
+      "surface": "XnAP",
+      "canonical": "XnAP",
+      "type": "abbreviation",
+      "aliases": [
+        "Xn Application Protocol"
+      ]
+    },
+    {
+      "surface": "XR",
+      "canonical": "XR",
+      "type": "abbreviation",
+      "aliases": [
+        "eXtended Reality"
+      ]
+    }
+  ]
+}
