@@ -88,11 +88,23 @@ class LLMConfig:
             enabled = data.get("enabled", False)
             default = cls.from_dict(data.get("default"))
             default.enabled = enabled
+            # Inherit api_base/api_key from default into tasks that omit them
+            # (so api_base/api_key don't need to be repeated per task).
+            if default.api_base:
+                default.extra.setdefault("api_base", default.api_base)
+            if default.api_key:
+                default.extra.setdefault("api_key", default.api_key)
             models = {
                 name: cls.from_dict(cfg) for name, cfg in data.get("models", {}).items()
             }
             for cfg in models.values():
                 cfg.enabled = enabled
+                if not cfg.api_base and default.api_base:
+                    cfg.api_base = default.api_base
+                if not cfg.api_key and default.api_key:
+                    cfg.api_key = default.api_key
+                if not cfg.provider and default.provider:
+                    cfg.provider = default.provider
             default.models = models
             return default
         # Flat single-model form.
@@ -125,8 +137,19 @@ class LLMClient:
         """Send a prompt and return the raw text response."""
         import litellm
 
+        # Map non-litellm provider names (e.g. "cmdc" — an internal alias for
+        # an OpenAI-compatible gateway) to a real litellm provider. The model
+        # name may already carry a prefix like "openai/..."; we normalize it.
+        provider = self.config.provider
+        model = self.config.model
+        KNOWN_OPENAI_COMPAT = {"cmdc", "commandcode"}
+        if provider in KNOWN_OPENAI_COMPAT:
+            provider = "openai"
+            if not model.startswith("openai/"):
+                model = f"openai/{model}"
+
         kwargs: dict[str, Any] = {
-            "model": self.config.model,
+            "model": model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": self.config.temperature,
             "max_tokens": self.config.max_tokens,
@@ -135,8 +158,8 @@ class LLMClient:
             kwargs["api_base"] = self.config.api_base
         if self.config.api_key:
             kwargs["api_key"] = self.config.api_key
-        if self.config.provider:
-            kwargs["custom_llm_provider"] = self.config.provider
+        if provider:
+            kwargs["custom_llm_provider"] = provider
         kwargs.update(self.config.extra)
         resp = litellm.completion(**kwargs)
         return resp.choices[0].message.content

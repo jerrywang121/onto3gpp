@@ -1,0 +1,437 @@
+{
+  "embedder": "ollama",
+  "dim": 768,
+  "index_size": 25,
+  "pairs": 18,
+  "merge_cases": 8,
+  "add_cases": 10,
+  "tp": 8,
+  "fp": 0,
+  "tn": 10,
+  "fn": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "accuracy": 1.0,
+  "target_accuracy": 1.0,
+  "retrieval_recall@5": 1.0,
+  "p50_search_ms_per_term": 691.809,
+  "used_llm": true,
+  "llm_model": "meta/muse-spark-1.2-contributor",
+  "results": [
+    {
+      "new": "NG-AP",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "ngap",
+      "expected_target": "ngap",
+      "note": "hyphen variant",
+      "neighbours": [
+        [
+          "ngap",
+          0.828
+        ],
+        [
+          "nrdc",
+          0.647
+        ],
+        [
+          "mps",
+          0.589
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "EUTRAN",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "eutran",
+      "expected_target": "eutran",
+      "note": "hyphen stripped",
+      "neighbours": [
+        [
+          "eutran",
+          0.825
+        ],
+        [
+          "start",
+          0.564
+        ],
+        [
+          "upf",
+          0.561
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "NRDC",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "nrdc",
+      "expected_target": "nrdc",
+      "note": "hyphen stripped",
+      "neighbours": [
+        [
+          "nrdc",
+          0.847
+        ],
+        [
+          "ngap",
+          0.683
+        ],
+        [
+          "sldrx",
+          0.617
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "SL DRX",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "sldrx",
+      "expected_target": "sldrx",
+      "note": "hyphen→space",
+      "neighbours": [
+        [
+          "sldrx",
+          0.932
+        ],
+        [
+          "smf",
+          0.63
+        ],
+        [
+          "nrdc",
+          0.603
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "MBS Broadcast",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "broadcast_mbs",
+      "expected_target": "broadcast_mbs",
+      "note": "token order",
+      "neighbours": [
+        [
+          "broadcast_mbs",
+          0.926
+        ],
+        [
+          "mps",
+          0.605
+        ],
+        [
+          "smf",
+          0.564
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "qos flow",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "qos_flow",
+      "expected_target": "qos_flow",
+      "note": "case variant",
+      "neighbours": [
+        [
+          "qos_flow",
+          0.918
+        ],
+        [
+          "five_qi",
+          0.593
+        ],
+        [
+          "mps",
+          0.589
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "5gc",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "five_gc",
+      "expected_target": "five_gc",
+      "note": "case variant",
+      "neighbours": [
+        [
+          "five_gc",
+          0.964
+        ],
+        [
+          "fivegs",
+          0.83
+        ],
+        [
+          "five_qi",
+          0.736
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "ngap",
+      "expected": "MERGE",
+      "predicted": "MERGE",
+      "target": "ngap",
+      "expected_target": "ngap",
+      "note": "case variant lower",
+      "neighbours": [
+        [
+          "ngap",
+          0.812
+        ],
+        [
+          "activation",
+          0.641
+        ],
+        [
+          "start",
+          0.598
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "PDU SESSION INACTIVE",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "ACTIVE vs INACTIVE (opp)",
+      "neighbours": [
+        [
+          "pdu_active",
+          0.824
+        ],
+        [
+          "activation",
+          0.595
+        ],
+        [
+          "rrc_idle",
+          0.539
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "EMM-DEREGISTERED",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "REGISTERED vs DEREGISTERED (opp)",
+      "neighbours": [
+        [
+          "emm_registered",
+          0.894
+        ],
+        [
+          "amf",
+          0.491
+        ],
+        [
+          "plmn",
+          0.485
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "T3445",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "timer off-by-one vs T3444",
+      "neighbours": [
+        [
+          "t3444",
+          0.888
+        ],
+        [
+          "mcptt",
+          0.428
+        ],
+        [
+          "mps",
+          0.401
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "C1-174183",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "CR id off-by-one vs C1-174182",
+      "neighbours": [
+        [
+          "c1_174182",
+          0.874
+        ],
+        [
+          "five_gc",
+          0.379
+        ],
+        [
+          "nrdc",
+          0.368
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "DCI-0-1",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "DCI format vs DCI-1-0",
+      "neighbours": [
+        [
+          "dci_1_0",
+          0.915
+        ],
+        [
+          "nrdc",
+          0.621
+        ],
+        [
+          "five_qi",
+          0.499
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "STOP",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "START vs STOP (opp)",
+      "neighbours": [
+        [
+          "start",
+          0.55
+        ],
+        [
+          "rrc_idle",
+          0.509
+        ],
+        [
+          "amf",
+          0.504
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "DEACTIVATION",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "ACTIVATION vs DEACTIVATION (opp)",
+      "neighbours": [
+        [
+          "activation",
+          0.714
+        ],
+        [
+          "pdu_active",
+          0.534
+        ],
+        [
+          "rrc_idle",
+          0.529
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "RRC_INACTIVE",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "third RRC state, distinct from CONNECTED/IDLE",
+      "neighbours": [
+        [
+          "rrc_idle",
+          0.768
+        ],
+        [
+          "rrc_connected",
+          0.7
+        ],
+        [
+          "activation",
+          0.581
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "S-NSSAI",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "no close neighbour in index",
+      "neighbours": [
+        [
+          "nrdc",
+          0.587
+        ],
+        [
+          "ngap",
+          0.576
+        ],
+        [
+          "mps",
+          0.546
+        ]
+      ],
+      "ok": true
+    },
+    {
+      "new": "QFI",
+      "expected": "ADD",
+      "predicted": "ADD",
+      "target": null,
+      "expected_target": null,
+      "note": "no close neighbour in index",
+      "neighbours": [
+        [
+          "five_qi",
+          0.732
+        ],
+        [
+          "smf",
+          0.652
+        ],
+        [
+          "qos_flow",
+          0.648
+        ]
+      ],
+      "ok": true
+    }
+  ]
+}
