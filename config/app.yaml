@@ -1,0 +1,99 @@
+# App-level AI provider / model configuration (domain-agnostic).
+# This file owns `llm` (enabled + default + per-task models) and `embed`.
+# Domain packs (`docs/domain/*/config.yaml`) no longer contain AI config —
+# they stay portable (intents, patterns, metadata, judge_threshold only).
+# See ADR-0015 and docs/architecture.md §3.1.1.
+#
+# Secrets stay out of git: leave `api_key: null` and set `api_key_env`
+# to the env var name that carries the key (e.g. COMMAND_CODE_API_KEY,
+# OPENAI_API_KEY). Ollama/local needs no key (omit api_key_env).
+# The loader resolves `api_key` as: explicit api_key → os.getenv(api_key_env) → None.
+# Migrated verbatim from docs/domain/3gpp/config.yaml (user's cmdc/minimax edits).
+
+llm:
+  enabled: true
+  default:
+    provider: cmdc
+    model: minimax/minimax-m3-free
+    api_base: https://api.commandcode.ai/provider/v1
+    api_key: null
+    api_key_env: COMMAND_CODE_API_KEY
+    temperature: 0.5
+    max_tokens: 4096
+  models:
+    extract:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.1
+      max_tokens: 4096
+    verify:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.3
+      max_tokens: 4096
+    relations:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.3
+      max_tokens: 4096
+    judge:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.5
+      max_tokens: 4096
+    align:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.5
+      max_tokens: 4096
+    merge:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.5
+      max_tokens: 4096
+    domain_detect:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.5
+      max_tokens: 2048
+    improve:
+      provider: cmdc
+      model: minimax/minimax-m3-free
+      api_key_env: COMMAND_CODE_API_KEY
+      temperature: 0.8
+      max_tokens: 4096
+  # Examples for swapping providers (one-line change per task or default):
+  # - OpenAI cloud: {provider: openai, model: gpt-4o-mini, api_key_env: OPENAI_API_KEY}
+  # - Ollama local (no key): {provider: ollama, model: llama3, api_base: http://localhost:11434}
+
+embed:
+  kind: hash
+  dim: 384
+  threshold: 0.25
+  top_k: 5
+  api_key: null
+  api_key_env: null
+  # ollama example (local, no key, e.g. embeddinggemma:300m 768-d):
+  # kind: ollama
+  # api_base: http://localhost:11434
+  # model: embeddinggemma:300m
+  # dim: 768
+  # api example (customer-defined OpenAI-compat):
+  # kind: api
+  # api_base: https://api.openai.com/v1
+  # model: text-embedding-3-small
+  # dim: 1536
+  # api_key_env: OPENAI_API_KEY
+  # cmdc embed (OpenAI-compat):
+  # kind: api
+  # api_base: https://api.commandcode.ai/provider/v1
+  # model: <embedding-model>
+  # dim: <model-dim>
+  # api_key_env: COMMAND_CODE_API_KEY

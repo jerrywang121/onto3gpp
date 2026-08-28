@@ -13,6 +13,16 @@ from onto3gpp.parser import parse_docx, parse_file
 from onto3gpp.search.bm25 import BM25Index
 
 
+def _load_app_config(app_config: Path | None = None):
+    """Load app-level AI config (config/app.yaml) with --app-config override."""
+    from onto3gpp.app_config import load_app_config as _load
+
+    # Click passes None when not given; load_app_config auto-discovers then.
+    if app_config is not None:
+        return _load(app_config)
+    return _load(None)
+
+
 def _apply_llm_overrides(llm, overrides: str) -> LLMConfig:
     """Apply 'task=model' overrides to an LLMConfig (Stage 8).
 
@@ -28,10 +38,14 @@ def _apply_llm_overrides(llm, overrides: str) -> LLMConfig:
                 "provider": llm.provider,
                 "api_base": llm.api_base,
                 "api_key": llm.api_key,
+                "api_key_env": llm.api_key_env,
                 "temperature": llm.temperature,
                 "max_tokens": llm.max_tokens,
             },
-            "models": {name: {"model": m.model} for name, m in llm.models.items()},
+            "models": {
+                name: {"model": m.model, "api_key_env": m.api_key_env}
+                for name, m in llm.models.items()
+            },
         }
     )
     for pair in overrides.split(","):
@@ -327,6 +341,7 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path, domain: Path | None
 @click.option("--ontology", type=click.Path(exists=True, path_type=Path), required=True)
 @click.option("--out", type=click.Path(path_type=Path), default="data/ontology.json")
 @click.option("--domain", type=click.Path(exists=True, path_type=Path), default=None)
+@click.option("--app-config", type=click.Path(exists=True, path_type=Path), default=None, help="Path to app-level AI config (default: config/app.yaml)")
 @click.option("--top-k", default=10, show_default=True)
 @click.option("--max-chars", default=500, show_default=True, help="Max chunk length in characters.")
 @click.option("--overlap", default=80, show_default=True, help="Chunk overlap in characters.")
@@ -335,13 +350,13 @@ def build_ontology(parsed: Path, dict_path: Path, out: Path, domain: Path | None
     "llm_model",
     default=None,
     help="Override a task's model, e.g. 'judge=gpt-4o' or 'default=gpt-4o-mini' "
-    "(repeatable). Overrides the domain pack's llm.models map.",
+    "(repeatable). Overrides the app's llm.models map (config/app.yaml).",
 )
-def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, top_k: int, max_chars: int, overlap: int, llm_model: str | None) -> None:
+def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | None, app_config: Path | None, top_k: int, max_chars: int, overlap: int, llm_model: str | None) -> None:
     """Run one closed-loop improvement iteration (AI-as-judge).
 
     Evaluates the ontology against the gold set, finds gaps, asks the LLM
-    (configured in the domain pack's config.yaml) to propose improvements,
+    (configured in config/app.yaml) to propose improvements,
     applies valid ones, and re-evaluates. Writes the improved ontology to
     --out.
     """
@@ -354,19 +369,20 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
     from onto3gpp.ontology.schema import ontology_from_dict
     from onto3gpp.search.chunker import load_chunks
 
-    # Load domain pack (for LLM config + prompt templates).
+    # Load domain pack (for prompt templates) + app AI config.
     if domain is None:
         domain = Path("docs/domain/3gpp")
-    cfg = load_domain(domain)
+    load_domain(domain)  # validate domain exists
+    app_cfg = _load_app_config(app_config)
 
-    if not cfg.llm.enabled:
-        click.echo("LLM is disabled in the domain pack config.yaml (llm.enabled: false).")
+    if not app_cfg.llm.enabled:
+        click.echo("LLM is disabled in app config (config/app.yaml llm.enabled: false).")
         click.echo("Enable it to run the AI-as-judge improvement loop.")
         raise SystemExit(1)
 
-    # Apply --llm-model task=model overrides to the LLM config.
+    # Apply --llm-model task=model overrides to the app LLM config.
     if llm_model:
-        cfg.llm = _apply_llm_overrides(cfg.llm, llm_model)
+        app_cfg.llm = _apply_llm_overrides(app_cfg.llm, llm_model)
 
     # Build the BM25 index from parsed sections.
     chunks = load_chunks(parsed, max_chars=max_chars, overlap=overlap)
@@ -374,7 +390,7 @@ def improve(parsed: Path, gold: Path, ontology: Path, out: Path, domain: Path | 
 
     gold_queries = load_gold(gold)
     onto = ontology_from_dict(json.loads(ontology.read_text(encoding="utf-8")))
-    llm = LLMClient(cfg.llm)
+    llm = LLMClient(app_cfg.llm)
 
     result = run_improvement_loop(
         index,
@@ -486,6 +502,12 @@ def align(ontology: Path, domain: Path | None) -> None:
     help="Path to a domain pack directory (default: docs/domain/3gpp).",
 )
 @click.option(
+    "--app-config",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="Path to app-level AI config (default: config/app.yaml)",
+)
+@click.option(
     "--abox",
     "abox_path",
     type=click.Path(path_type=Path),
@@ -498,7 +520,7 @@ def align(ontology: Path, domain: Path | None) -> None:
     default=None,
     help="Where to write the merged ABox (JSON). Default: <parsed>.abox.json",
 )
-def ingest(parsed: Path, domain: Path | None, abox_path: Path | None, out: Path | None) -> None:
+def ingest(parsed: Path, domain: Path | None, app_config: Path | None, abox_path: Path | None, out: Path | None) -> None:
     """Ingest a parsed document into the TBox/ABox (Stage 9).
 
     Extracts terms + relations, aligns against the domain pack's TBox, evolves

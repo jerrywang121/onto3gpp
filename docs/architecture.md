@@ -163,13 +163,15 @@ itself. The judge's decisions are auditable via provenance and eval logs.
   hallucinations as correct)?
 - What is the minimum gold-set size for reliable gating?
 
-### 3.1.1 External AI Hooks (ADR-0004, ADR-0012)
+### 3.1.1 External AI Hooks (ADR-0004, ADR-0012, ADR-0015)
 
 The AI-as-judge / AI-extraction / ingestion / improvement-loop paths are
 **optional** and driven by a configurable LLM client (`src/onto3gpp/llm.py`,
-LiteLLM-backed). The app configures models via the domain pack's `config.yaml`
-`llm:` section. Deterministic by default (`enabled: false`); the runtime query
-path is always AI-free.
+LiteLLM-backed). The app configures providers/models/embeddings via the
+**app-level** `config/app.yaml` (ADR-0015), not the domain pack. Domain packs
+keep only intents/patterns/metadata/`judge_threshold` and stay portable. The
+app is deterministic by default (`llm.enabled: false` in `config/app.yaml`);
+the runtime query path is always AI-free.
 
 **Multi-model routing (ADR-0012).** Different pipeline tasks have different
 cost/quality needs, so the `llm:` section supports **multiple named models**
@@ -199,14 +201,16 @@ explicit model falls back to a default. Consumers:
 Every AI prompt and pipeline stage is driven by a **domain pack**:
 
 ```
+config/
+└── app.yaml            # app-level AI config (llm: enabled/default/models + embed: kind/dim — ADR-0015)
 docs/domain/
 ├── _template/          # template for new domains
 │   ├── prompts/        # AI prompt templates (parameterized)
-│   ├── config.yaml     # domain config (intents, patterns, metadata, llm)
+│   ├── config.yaml     # domain config (intents, patterns, metadata, judge_threshold — no llm/embed)
 │   └── tbox.yaml       # top-level ontology (TBox): concept/relation types + constraints
 └── 3gpp/               # the first concrete domain
     ├── prompts/
-    ├── config.yaml
+    ├── config.yaml     # domain-only (no llm/embed)
     └── tbox.yaml
 ```
 
@@ -266,6 +270,18 @@ input doc
 - **ABox merge / conflict resolution** — add new terms/relations to the
   low-level KG; merge similar objects/relations; resolve conflicts
   (deterministic similarity first, AI-judge for ambiguous cases).
+  The promoted path (`src/onto3gpp/ingest/merge_judge.py` +
+  `merge_abox_with_judge`, ADR-0014) does **embedding-guided retrieval**
+  then an **LLM judge** over the top-k neighbours only (bounded cost).
+  Default embedding is CPU-only `hash` (384-d char n-grams, stdlib, no
+  download); swappable to `tfidf` / `ollama` (e.g. `embeddinggemma:300m`
+  768-d, `http://localhost:11434/api/embed`) / `api` (OpenAI-compat)
+  via the domain pack `embed:` block (`threshold 0.25`, `top_k 5`). The
+  judge prompt distinguishes timers/DCI single-char variants (distinct)
+  from hyphen/space/case variants (same); hallucinated targets fall back
+  to ADD and `enabled: false` falls back to deterministic normalization.
+  This is **offline ingest only** — the runtime query path stays
+  AI-free and CPU-only.
 
 **Where AI is NOT used:**
 - The runtime query path (core search) is always deterministic and AI-free.

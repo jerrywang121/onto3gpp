@@ -97,62 +97,6 @@ document_metadata:
 
 judge_threshold: 0.8
 
-# External AI model hooks (optional). The pipeline is deterministic and
-# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
-# the improvement loop / AI-assisted ingestion. See docs/architecture.md
-# §"AI as Judge" and ADR-0012.
-#
-# Multi-model routing: each pipeline task resolves to a named model. A task
-# with no entry falls back to `default`. A flat `model:`/`provider:`/
-# `api_base:`/`api_key:` block (the old single-model form) is treated as
-# `default` for backward compatibility.
-llm:
-  enabled: true
-  default:
-    provider: ollama
-    model: deepseek-v4-flash:0731-cloud
-    api_base: http://localhost:11434        # e.g. http://localhost:8000/v1 for a local vLLM
-    api_key: null                           # set via env (OPENAI_API_KEY) or here
-    temperature: 0.5
-    max_tokens: 4096
-  models:
-    extract:
-      provider: ollama
-      model: deepseek-v4-flash:0731-cloud
-      temperature: 0.1
-      max_tokens: 4096
-    verify:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.3
-      max_tokens: 4096
-    relations:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.3
-      max_tokens: 4096
-    judge:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.5
-      max_tokens: 4096
-    align:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.5
-      max_tokens: 4096
-    merge:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.5
-      max_tokens: 4096
-    domain_detect:
-      provider: ollama
-      model: deepseek-v4-flash:0731-cloud
-      temperature: 0.5
-      max_tokens: 2048
-    improve:
-      provider: ollama
-      model: minimax-m3:cloud
-      temperature: 0.8
-      max_tokens: 4096
+# AI provider/model config lives in config/app.yaml (app-level, not domain-level).
+# Domain packs stay portable (intents, patterns, metadata, judge_threshold only).
+# See ADR-0015 and config/app.yaml. Copying _template needs no AI edits.

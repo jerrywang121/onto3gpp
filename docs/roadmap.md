@@ -286,6 +286,19 @@ pre-AI-retyping state; see `docs/status.md` §9).
 > failure rate from local-model flakiness). Full 532-section run + eval vs.
 > baseline (MRR 0.6369) pending.
 
+> **Embedding + AI Merge Judge promotion (2026-08-28, ADR-0014):** promoted
+> `prototypes/ai-merge` into the main app as `src/onto3gpp/embed/` (pluggable
+> CPU embedding: `hash` default 384-d, `tfidf`, `ollama` e.g.
+> `embeddinggemma:300m` 768-d, `api` OpenAI-compat) + `EmbeddingIndex` (brute
+> cosine, `threshold 0.25` `top_k 5`, replaceable with FAISS) and
+> `src/onto3gpp/ingest/merge_judge.py` + `merge_abox_with_judge` (embed →
+> top-k → LLM judge over neighbours only, deterministic normalized+denylist
+> fallback). Domain-pack `embed:` block swappable without code change; offline
+> ingest only, runtime stays AI-free/CPU-only. Holdout 18 pairs:
+> hash  P 1.0 R 0.625 F1 0.77 / hash+LLM 1.0/0.75/0.86 / ollama+LLM 1.0/1.0/1.0
+> (no false merges; DCI-1-0/DCI-0-1 denylist). TDD: `test_embed`,
+> `test_merge_judge`, `test_config_embed`, `test_ingest_merge` green.
+
 **Branch:** `stage/9-ai-ingestion`
 
 ---

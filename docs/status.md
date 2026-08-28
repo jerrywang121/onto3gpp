@@ -600,6 +600,18 @@ types into curated TBox types.
   metrics. **Do not promote** the AI-ingested dict/ontology to `main`; the
   deterministic verb-based baseline remains the runtime default.
 
+**Embedding + AI Merge Judge promotion (2026-08-28, ADR-0014) — see `prototypes/ai-merge/`:**
+
+Offline ingest ABox dedup (`src/onto3gpp/embed/` + `src/onto3gpp/ingest/merge_judge.py` via domain-pack `embed:` block; runtime stays AI-free/CPU-only; `embed.kind hash` 384-d stdlib default, swappable to `tfidf`/`ollama`/`api` — see `docs/architecture.md` §3.3 and `docs/adr/0014-*.md`):
+
+| Variant | P | R | F1 | target_acc | retrieval@5 | p50 (ms) | LLM | Notes |
+|---------|---|----|----|-----------|-------------|----------|-----|-------|
+| hash deterministic | 1.00 | 0.625 | 0.77 | 1.000 | 0.625 | <1 | none | no false merges |
+| hash + LLM | 1.00 | 0.750 | 0.86 | 1.000 | — | — | yes (bounded top-k) | recovers hyphen misses when retrieval ≥ threshold |
+| ollama (`embeddinggemma:300m`) + LLM | **1.00** | **1.00** | **1.00** | **1.000** | 1.000 | ~700 | yes | recovers all 3 hyphen-concatenated misses |
+
+Holdout: 18 pairs (8 MERGE lexical variants, 10 ADD hard negatives incl. `ACTIVE`/`INACTIVE`, `T3444`/`T3445`, `C1-174182`/`C1-174183`, `DCI-1-0`/`DCI-0-1`, `START`/`STOP`). `DCI-1-0`/`DCI-0-1` denylist enforced; hallucinated LLM targets fall back to ADD. TDD: `test_embed`, `test_merge_judge`, `test_config_embed`, `test_ingest_merge` — all green; full suite green.
+
 ## Stage 10 — AI-as-Judge Weighted Path Search (deferred, later phase)
 
 **Design:** Use AI as judge during inference to build a weighted path search

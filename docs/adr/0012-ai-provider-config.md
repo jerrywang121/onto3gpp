@@ -83,6 +83,17 @@ llm:
 - **Trade-off:** we accept a slightly larger config schema for per-task
   control.
 
+## Amendment (ADR-0015, 2026-08-28)
+
+AI provider/model config is **app-level** (`config/app.yaml`), not domain-level.
+Domain packs no longer contain `llm:`/`embed:` — they keep only
+`domain`/`intents`/`intent_patterns`/`document_metadata`/`judge_threshold`.
+Each entry in `config/app.yaml` declares `api_key_env: <ENV_NAME>` (e.g.
+`COMMAND_CODE_API_KEY` for `cmdc`, `OPENAI_API_KEY` for `openai`; omit for
+`ollama`) so provider keys are wired declaratively — swapping `cmdc`↔`openai`
+↔`ollama` is a one-line change in `config/app.yaml` with `api_key: null`
+(no secret in git).
+
 ## Open Questions
 
 - Should model configs be overridable via environment variables / CLI flags

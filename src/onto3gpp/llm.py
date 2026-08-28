@@ -2,29 +2,52 @@
 
 This is the seam where the app can plug in external AI models. The pipeline
 itself is deterministic and AI-free; these hooks are *optional* and enabled
-only when a domain pack configures an LLM.
+only when app config (``config/app.yaml``) configures an LLM.
 
 The client wraps LiteLLM (``litellm.completion``), which supports OpenAI,
 Anthropic, local vLLM/ollama, and many other providers behind one interface.
 A subclass can override :meth:`_call` to use any other backend.
 
-Configuration lives in the domain pack's ``config.yaml`` under ``llm:``::
+Configuration lives in the app config ``config/app.yaml`` under ``llm:``::
 
     llm:
       enabled: false
-      model: gpt-4o-mini
-      provider: openai
-      api_base: null
-      temperature: 0.0
-      max_tokens: 1024
+      default:
+        provider: openai
+        model: gpt-4o-mini
+        api_key_env: OPENAI_API_KEY
+      models:
+        merge: {provider: ollama, model: llama3, api_base: http://localhost:11434}
+
+Domain packs no longer own ``llm:`` (ADR-0015); they stay portable.
+
+Each entry may declare ``api_key_env: <ENV_NAME>`` (e.g. ``COMMAND_CODE_API_KEY``
+for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``; omit for ``ollama``/local).
+The loader resolves ``api_key`` as: explicit ``api_key`` → ``os.getenv(api_key_env)``
+→ legacy fallback (``COMMAND_CODE_API_KEY``/``OPENAI_API_KEY``) when
+``api_key_env`` is unset (backward compat).
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import dataclass, field
 from typing import Any
+
+
+def _resolve_api_key(explicit: str | None, api_key_env: str | None = None) -> str | None:
+    if explicit:
+        return explicit
+    if api_key_env:
+        return os.getenv(api_key_env) or None
+    # Legacy fallback for old configs without api_key_env (backward compat).
+    return (
+        os.getenv("COMMAND_CODE_API_KEY")
+        or os.getenv("OPENAI_API_KEY")
+        or os.getenv("COMMANDCODE_API_KEY")
+    )
 
 
 class LLMDisabledError(RuntimeError):
@@ -39,6 +62,10 @@ class LLMConfig:
     configs. A task with no explicit entry falls back to ``default``. The
     flat single-model form (``model``/``provider``/``api_base``/``api_key``)
     is treated as ``default`` for backward compatibility.
+
+    ``api_key_env`` names the env var that carries the secret (e.g.
+    ``COMMAND_CODE_API_KEY`` for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``;
+    omit for ``ollama``). The actual key never lives in YAML.
     """
 
     enabled: bool = False
@@ -46,6 +73,7 @@ class LLMConfig:
     provider: str | None = None
     api_base: str | None = None
     api_key: str | None = None
+    api_key_env: str | None = None
     temperature: float = 0.0
     max_tokens: int = 1024
     extra: dict[str, Any] = field(default_factory=dict)
@@ -60,6 +88,7 @@ class LLMConfig:
             provider=self.provider,
             api_base=self.api_base,
             api_key=self.api_key,
+            api_key_env=self.api_key_env,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
             extra=dict(self.extra),
@@ -80,6 +109,7 @@ class LLMConfig:
             "provider",
             "api_base",
             "api_key",
+            "api_key_env",
             "temperature",
             "max_tokens",
         }
@@ -88,12 +118,14 @@ class LLMConfig:
             enabled = data.get("enabled", False)
             default = cls.from_dict(data.get("default"))
             default.enabled = enabled
-            # Inherit api_base/api_key from default into tasks that omit them
-            # (so api_base/api_key don't need to be repeated per task).
+            # Inherit api_base/api_key/api_key_env from default into tasks that omit them
+            # (so they don't need to be repeated per task).
             if default.api_base:
                 default.extra.setdefault("api_base", default.api_base)
             if default.api_key:
                 default.extra.setdefault("api_key", default.api_key)
+            if default.api_key_env:
+                default.extra.setdefault("api_key_env", default.api_key_env)
             models = {
                 name: cls.from_dict(cfg) for name, cfg in data.get("models", {}).items()
             }
@@ -103,6 +135,8 @@ class LLMConfig:
                     cfg.api_base = default.api_base
                 if not cfg.api_key and default.api_key:
                     cfg.api_key = default.api_key
+                if not cfg.api_key_env and default.api_key_env:
+                    cfg.api_key_env = default.api_key_env
                 if not cfg.provider and default.provider:
                     cfg.provider = default.provider
             default.models = models
@@ -156,8 +190,9 @@ class LLMClient:
         }
         if self.config.api_base:
             kwargs["api_base"] = self.config.api_base
-        if self.config.api_key:
-            kwargs["api_key"] = self.config.api_key
+        api_key = _resolve_api_key(self.config.api_key, self.config.api_key_env)
+        if api_key:
+            kwargs["api_key"] = api_key
         if provider:
             kwargs["custom_llm_provider"] = provider
         kwargs.update(self.config.extra)

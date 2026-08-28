@@ -223,5 +223,12 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Local secrets — never commit keys (use COMMAND_CODE_API_KEY env)
+.env
+.env.*
+!.env.example
+.secrets.toml
+secrets.toml
+
 # Streamlit
 .streamlit/secrets.toml

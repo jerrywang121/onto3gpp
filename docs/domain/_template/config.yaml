@@ -51,28 +51,13 @@ document_metadata:
 # AI-as-judge gate (see docs/architecture.md §"AI as Judge").
 judge_threshold: 0.8
 
-# External AI model hooks (optional). The pipeline is deterministic and
-# AI-free by default; enable an LLM only to use AI-as-judge / AI extraction /
-# the improvement loop / AI-assisted ingestion. See docs/architecture.md
-# §"AI as Judge" and ADR-0012.
-#
-# Multi-model routing: each pipeline task resolves to a named model. A task
-# with no entry falls back to `default`. A flat `model:`/`provider:`/
-# `api_base:`/`api_key:` block (the old single-model form) is treated as
-# `default` for backward compatibility.
-llm:
-  enabled: false
-  default:
-    provider: openai
-    model: gpt-4o-mini
-    api_base: null        # e.g. http://localhost:8000/v1 for a local vLLM
-    api_key: null         # set via env (OPENAI_API_KEY) or here
-    temperature: 0.0
-    max_tokens: 1024
-  models:
-    extract:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
-    judge:         {provider: openai, model: gpt-4o,      temperature: 0.0, max_tokens: 1024}
-    align:         {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
-    merge:         {provider: ollama, model: llama3,     api_base: http://localhost:11434, temperature: 0.0, max_tokens: 1024}
-    domain_detect: {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 256}
-    improve:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
+# AI provider/model config is NOT here — it lives in config/app.yaml (app-level).
+# Domain packs stay portable; copying _template needs no AI edits.
+# To configure providers/models/embed, edit config/app.yaml:
+#   llm.enabled + default/models: {provider, model, api_base, api_key_env, temperature, max_tokens}
+#   embed: {kind, dim, threshold, top_k, api_base, model, api_key_env}
+# Swapping providers is a one-line change in config/app.yaml:
+#   cmdc→{provider: cmdc, api_key_env: COMMAND_CODE_API_KEY},
+#   openai→{provider: openai, api_key_env: OPENAI_API_KEY},
+#   ollama→{provider: ollama, api_base: http://localhost:11434} (no key).
+# See ADR-0015 and config/app.yaml.

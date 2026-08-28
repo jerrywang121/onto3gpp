@@ -15,6 +15,36 @@ from onto3gpp.llm import LLMConfig
 
 
 @dataclass
+class EmbedConfig:
+    """Embedding configuration (swappable local/API).
+
+    ``api_key_env`` names the env var for the secret (e.g. ``COMMAND_CODE_API_KEY``
+    for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``; omit for ``ollama``).
+    """
+
+    kind: str = "hash"  # hash | tfidf | ollama | api
+    dim: int = 384
+    api_base: str | None = None
+    model: str | None = None
+    api_key: str | None = None
+    api_key_env: str | None = None
+    threshold: float = 0.25
+    top_k: int = 5
+
+    def to_embedder_cfg(self) -> dict:
+        d: dict = {"kind": self.kind, "dim": self.dim}
+        if self.api_base:
+            d["api_base"] = self.api_base
+        if self.model:
+            d["model"] = self.model
+        if self.api_key:
+            d["api_key"] = self.api_key
+        if self.api_key_env:
+            d["api_key_env"] = self.api_key_env
+        return d
+
+
+@dataclass
 class DomainConfig:
     """Configuration loaded from a domain pack's config.yaml."""
 
@@ -24,13 +54,43 @@ class DomainConfig:
     document_metadata: list[str] = field(default_factory=list)
     judge_threshold: float = 0.8
     llm: LLMConfig = field(default_factory=LLMConfig)
+    embed: EmbedConfig = field(default_factory=EmbedConfig)
 
     @classmethod
     def from_yaml(cls, path: Path) -> DomainConfig:
         """Load a DomainConfig from a config.yaml file."""
+        import os as _os
+
         data = yaml.safe_load(path.read_text())
+        # Allow api_key to come from env when config leaves it null
+        # (so the key stays out of git). Checked before LLMConfig.
+        llm_data = data.get("llm")
+        if isinstance(llm_data, dict) and llm_data.get("default", {}).get("api_key") is None:
+            env_key = _os.getenv("COMMAND_CODE_API_KEY") or _os.getenv("OPENAI_API_KEY")
+            if env_key:
+                default = llm_data.setdefault("default", {})
+                if default.get("api_key") is None:
+                    default["api_key"] = env_key
         llm = LLMConfig.from_dict(data.pop("llm", None))
-        return cls(**data, llm=llm)
+        embed_data = data.pop("embed", None)
+        # filter unknown keys defensively (include api_key_env for declarative wiring)
+        if isinstance(embed_data, dict):
+            known = {"kind", "dim", "api_base", "model", "api_key", "api_key_env", "threshold", "top_k"}
+            filtered = {k: v for k, v in embed_data.items() if k in known}
+            embed = EmbedConfig(**filtered)
+            # Resolve declarative api_key via api_key_env
+            if not embed.api_key and embed.api_key_env:
+                env_val = _os.getenv(embed.api_key_env)
+                if env_val:
+                    embed.api_key = env_val
+            # legacy fallback only if no declarative wiring
+            elif not embed.api_key and not embed.api_key_env:
+                ek = _os.getenv("COMMAND_CODE_API_KEY") or _os.getenv("OPENAI_API_KEY")
+                if ek:
+                    embed.api_key = ek
+        else:
+            embed = EmbedConfig(**embed_data) if isinstance(embed_data, dict) else EmbedConfig()
+        return cls(**data, llm=llm, embed=embed)
 
 
 def load_domain(domain_dir: Path) -> DomainConfig:
