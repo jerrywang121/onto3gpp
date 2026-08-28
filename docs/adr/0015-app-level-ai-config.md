@@ -11,8 +11,8 @@ AI provider/model config (`llm:` + `embed:`) lived in domain packs (`docs/domain
 
 ## Decision
 
-- Single app-level file `config/app.yaml` owns `llm:` (enabled + default + per-task models) and `embed:`.
-- Each model/embed entry declares `api_key_env: <ENV_NAME>` (e.g. `COMMAND_CODE_API_KEY` for `cmdc`, `OPENAI_API_KEY` for `openai`; omit for `ollama`). The actual key never lives in YAML.
+- Single app-level file `config/app.yaml` owns `providers:` (per-provider wiring) + `llm:` (enabled + default + per-task models) + `embed:`. `providers:` holds `api_base`/`api_key_env` once; `llm` entries just reference `provider: <name>` (DRY).
+- Each provider entry declares `api_key_env: <ENV_NAME>` (e.g. `COMMAND_CODE_API_KEY` for `cmdc`, `OPENAI_API_KEY` for `openai`; omit for `ollama`). The actual key never lives in YAML.
 - `LLMConfig.api_key_env` + `EmbedConfig.api_key_env`; resolver `_resolve_api_key(explicit, api_key_env)` prefers explicit → `os.getenv(api_key_env)` → legacy fallback (for backward compat).
 - `src/onto3gpp/app_config.py` `AppConfig(llm, embed)` and `load_app_config(path|auto-discover)` resolve keys via declarative env names, with default inheritance.
 - CLI gains `--app-config PATH` (defaults to `config/app.yaml` if present) for `ingest`/`improve`; `load_domain` no longer owns AI wiring. Legacy `llm:`/`embed:` in domain packs still parsed with deprecation (app wins).

@@ -8,24 +8,26 @@ The client wraps LiteLLM (``litellm.completion``), which supports OpenAI,
 Anthropic, local vLLM/ollama, and many other providers behind one interface.
 A subclass can override :meth:`_call` to use any other backend.
 
-Configuration lives in the app config ``config/app.yaml`` under ``llm:``::
+Configuration lives in the app config ``config/app.yaml`` with a ``providers:``
+map plus ``llm:``::
 
+    providers:
+      openai: {api_key_env: OPENAI_API_KEY}
+      ollama: {api_base: http://localhost:11434}
     llm:
       enabled: false
-      default:
-        provider: openai
-        model: gpt-4o-mini
-        api_key_env: OPENAI_API_KEY
+      default: {provider: openai, model: gpt-4o-mini}
       models:
-        merge: {provider: ollama, model: llama3, api_base: http://localhost:11434}
+        merge: {provider: ollama, model: llama3}
 
 Domain packs no longer own ``llm:`` (ADR-0015); they stay portable.
 
-Each entry may declare ``api_key_env: <ENV_NAME>`` (e.g. ``COMMAND_CODE_API_KEY``
-for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``; omit for ``ollama``/local).
-The loader resolves ``api_key`` as: explicit ``api_key`` → ``os.getenv(api_key_env)``
-→ legacy fallback (``COMMAND_CODE_API_KEY``/``OPENAI_API_KEY``) when
-``api_key_env`` is unset (backward compat).
+Each provider entry declares ``api_key_env: <ENV_NAME>`` (e.g.
+``COMMAND_CODE_API_KEY`` for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``;
+omit for ``ollama``/local). Model sections just reference ``provider: <name>``.
+The loader resolves ``api_key`` as: explicit ``api_key`` →
+``os.getenv(api_key_env)`` → legacy fallback (``COMMAND_CODE_API_KEY``/
+``OPENAI_API_KEY``) when ``api_key_env`` is unset (backward compat).
 """
 
 from __future__ import annotations

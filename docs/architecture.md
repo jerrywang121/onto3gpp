@@ -173,18 +173,23 @@ keep only intents/patterns/metadata/`judge_threshold` and stay portable. The
 app is deterministic by default (`llm.enabled: false` in `config/app.yaml`);
 the runtime query path is always AI-free.
 
-**Multi-model routing (ADR-0012).** Different pipeline tasks have different
-cost/quality needs, so the `llm:` section supports **multiple named models**
-with a **task → model routing map**:
+**Multi-model routing (ADR-0012) with DRY providers (ADR-0015).** Different
+pipeline tasks have different cost/quality needs, so `config/app.yaml` owns a
+**`providers:`** map (per-provider wiring) and an **`llm:`** task → model
+routing map that just references `provider: <name>`:
 
 ```yaml
+providers:
+  openai: {api_key_env: OPENAI_API_KEY}
+  ollama: {api_base: http://localhost:11434}
 llm:
   enabled: false
+  default: {provider: openai, model: gpt-4o-mini}
   models:
     extract:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
     judge:         {provider: openai, model: gpt-4o,      temperature: 0.0, max_tokens: 1024}
     align:         {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
-    merge:         {provider: ollama, model: llama3,     api_base: http://localhost:11434}
+    merge:         {provider: ollama, model: llama3}
     domain_detect: {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 256}
     improve:       {provider: openai, model: gpt-4o-mini, temperature: 0.0, max_tokens: 1024}
 ```

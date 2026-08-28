@@ -54,10 +54,8 @@ judge_threshold: 0.8
 # AI provider/model config is NOT here — it lives in config/app.yaml (app-level).
 # Domain packs stay portable; copying _template needs no AI edits.
 # To configure providers/models/embed, edit config/app.yaml:
-#   llm.enabled + default/models: {provider, model, api_base, api_key_env, temperature, max_tokens}
-#   embed: {kind, dim, threshold, top_k, api_base, model, api_key_env}
-# Swapping providers is a one-line change in config/app.yaml:
-#   cmdc→{provider: cmdc, api_key_env: COMMAND_CODE_API_KEY},
-#   openai→{provider: openai, api_key_env: OPENAI_API_KEY},
-#   ollama→{provider: ollama, api_base: http://localhost:11434} (no key).
+#   providers: {cmdc: {api_base, api_key_env}, openai: {api_key_env}, ollama: {api_base}}
+#   llm: {enabled, default: {provider, model}, models: {task: {provider, model, temperature}}}
+#   embed: {kind, dim, threshold, top_k, provider, model}
+# Swapping providers: edit providers.* once, then change llm.models.<task>.provider.
 # See ADR-0015 and config/app.yaml.

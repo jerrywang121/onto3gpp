@@ -88,11 +88,15 @@ llm:
 AI provider/model config is **app-level** (`config/app.yaml`), not domain-level.
 Domain packs no longer contain `llm:`/`embed:` — they keep only
 `domain`/`intents`/`intent_patterns`/`document_metadata`/`judge_threshold`.
-Each entry in `config/app.yaml` declares `api_key_env: <ENV_NAME>` (e.g.
-`COMMAND_CODE_API_KEY` for `cmdc`, `OPENAI_API_KEY` for `openai`; omit for
-`ollama`) so provider keys are wired declaratively — swapping `cmdc`↔`openai`
-↔`ollama` is a one-line change in `config/app.yaml` with `api_key: null`
-(no secret in git).
+`config/app.yaml` has a `providers:` map where each provider declares
+`api_key_env: <ENV_NAME>` (e.g. `COMMAND_CODE_API_KEY` for `cmdc`,
+`OPENAI_API_KEY` for `openai`; omit for `ollama`); `llm` entries just
+reference `provider: <name>` (DRY). Swapping `cmdc`↔`openai`↔`ollama` is a
+one-line provider change with `api_key: null` (no secret in git).
+
+### Update (2026-08-28 — DRY `providers:`)
+
+`config/app.yaml` now has a top-level `providers:` section (e.g. `cmdc: {api_base, api_key_env}`, `ollama: {api_base}`). `llm.default`/`llm.models.*` no longer repeat `api_base`/`api_key_env` — they just name the provider. See ADR-0015 Decision.
 
 ## Open Questions
 
