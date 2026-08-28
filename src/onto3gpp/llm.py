@@ -131,14 +131,19 @@ class LLMConfig:
             }
             for cfg in models.values():
                 cfg.enabled = enabled
-                if not cfg.api_base and default.api_base:
-                    cfg.api_base = default.api_base
-                if not cfg.api_key and default.api_key:
-                    cfg.api_key = default.api_key
-                if not cfg.api_key_env and default.api_key_env:
-                    cfg.api_key_env = default.api_key_env
+                # Inherit provider if omitted; only inherit wiring fields
+                # when the effective provider matches the default's provider
+                # (so an ollama task doesn't pick up COMMAND_CODE_API_KEY).
                 if not cfg.provider and default.provider:
                     cfg.provider = default.provider
+                same_provider = cfg.provider == default.provider
+                if same_provider:
+                    if not cfg.api_base and default.api_base:
+                        cfg.api_base = default.api_base
+                    if not cfg.api_key and default.api_key:
+                        cfg.api_key = default.api_key
+                    if not cfg.api_key_env and default.api_key_env:
+                        cfg.api_key_env = default.api_key_env
             default.models = models
             return default
         # Flat single-model form.
