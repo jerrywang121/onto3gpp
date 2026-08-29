@@ -35,6 +35,8 @@ class EmbedConfig:
     n_ctx: int | None = None
     n_batch: int | None = None
     n_gpu_layers: int | None = None
+    # Ollama ctx cap (e.g. qwen3-embedding 32k → 2048 to save VRAM)
+    num_ctx: int | None = None
     threshold: float = 0.25
     top_k: int = 5
 
@@ -60,6 +62,10 @@ class EmbedConfig:
             d["n_batch"] = self.n_batch
         if self.n_gpu_layers is not None:
             d["n_gpu_layers"] = self.n_gpu_layers
+        if self.num_ctx is not None:
+            d["num_ctx"] = self.num_ctx
+        if self.n_ctx is not None:
+            d["n_ctx"] = self.n_ctx
         return d
 
 

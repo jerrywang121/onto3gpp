@@ -128,21 +128,29 @@ def _fmt_relations(rels) -> str:
 def build_term_index(onto: Ontology, embedder) -> EmbeddingIndex:
     idx = EmbeddingIndex(dim=embedder.dim, embedder=embedder)
     if onto.concepts:
-        idx.add_many([(c.id, c.canonical) for c in onto.concepts])
+        items = [(c.id, c.canonical) for c in onto.concepts]
+        # Batch to avoid 5778-text single embed timeout on ollama (30s)
+        batch = 256
+        for i in range(0, len(items), batch):
+            idx.add_many(items[i:i+batch])
+            if (i // batch) % 10 == 0 and i > 0:
+                print(f"  term_index {i+batch}/{len(items)}...", flush=True)
     return idx
 
 
 def build_rel_index(onto: Ontology, embedder) -> EmbeddingIndex:
     idx = EmbeddingIndex(dim=embedder.dim, embedder=embedder)
     if onto.relations:
-        # Use fresh embedder copy to keep same dim but separate id space
-        # Keys are "source rel target" strings; id is f"{source}|{rel}|{target}"
         items = []
         for r in onto.relations:
             rid = f"{r.source}|{r.rel}|{r.target}"
             txt = f"{r.source} {r.rel} {r.target}"
             items.append((rid, txt))
-        idx.add_many(items)
+        batch = 256
+        for i in range(0, len(items), batch):
+            idx.add_many(items[i:i+batch])
+            if (i // batch) % 10 == 0 and i > 0:
+                print(f"  rel_index {i+batch}/{len(items)}...", flush=True)
     return idx
 
 # ---------------------------------------------------------------------------
@@ -927,8 +935,8 @@ def main() -> None:
         "threshold": getattr(app.embed, "threshold", 0.25),
         "top_k": getattr(app.embed, "top_k", 5),
     }
-    # Optional overrides
-    for k in ("api_base", "model", "api_key", "api_key_env"):
+    # Optional overrides (forward num_ctx/n_ctx for ollama ctx cap, e.g. 2048)
+    for k in ("api_base", "model", "api_key", "api_key_env", "num_ctx", "n_ctx"):
         v = getattr(app.embed, k, None)
         if v is not None:
             embed_cfg[k] = v

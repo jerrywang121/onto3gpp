@@ -600,6 +600,14 @@ types into curated TBox types.
   metrics. **Do not promote** the AI-ingested dict/ontology to `main`; the
   deterministic verb-based baseline remains the runtime default.
 
+**AI Ingest v2 smoke — per-chunk extract→match→AI-merge (2026-08-29) — see `docs/ai_ingest_v2_report.md`:**
+- **Corpus:** 38.300 `i30` first 20 sections (`--empty --limit 20`), clean bootstrap; embed `embeddinggemma:300m` (ollama 768-d, `num_ctx 2048`, thr 0.25, top_k 5); LLM via cmdc gateway `extract/relations=poolside/laguna-s-2.1-free` + `merge=minimax/minimax-m3-free` (judge LLM on), `--parallel 4`.
+- **Run:** 2-stage resume due to gateway stall; fix `LLMClient._call` timeout 120 s (was litellm default 600 s → ~2 min/chunk hang). Final: `DONE ok=10 fail=0 final_dict=438 final_concepts=438 final_relations=96 total_time=1448 s` (resumed 10 chunks). 173 AI term candidates pre-dedup; 438 added / 185 merged / 96 rels added; clause `3.1` alone 214 terms (301/438 `abbreviation` concepts, avg 0.05 alias/concept; 64.8% overlap with baseline).
+- **Lab (deterministic judges):** term 18 P/R/F1 1.0, relation 12 P/R/F1 1.0 — identical for baseline and AI (judge LLM path not exercised; p50 ~700 ms with ollama).
+- **Corpus smoke — `evaluate_v2.py` on `38300-i30` (7463 chunks, 60 gold):** baseline 5815/5778/22719 MRR 0.7185 vs AI 438/438/96 **MRR 0.6767 (−0.042)**, NDCG −0.040, R@5 −0.15, R@10 −0.35.
+- **CLI `onto3gpp eval` on `data/parsed` (scoped per-spec, same gold):** plain 0.5700 · baseline expand 0.5971 · baseline full **0.7185** · AI dict-only 0.5700 (zero lift) · AI full **0.6767** (AI onto rerank +0.107 over plain, but −0.042 vs baseline full). AI dict alone has no expansion lift (0.05 alias/concept; 154 novel terms are generic abbreviations `TS`/`V18`/`ETSI`/`LTE`…).
+- **Gate: Do not promote.** −0.042 MRR vs baseline (20-sec vs 4-spec caveat), thin alias coverage, only 20/532 sections of one spec. Keep the 120 s timeout fix; next steps: prompt filter for single-token abbreviations, alias wiring from `3.1` definitions, relation logging, full-corpus replication. Full table + per-chunk breakdown in `docs/ai_ingest_v2_report.md`.
+
 **Embedding + AI Merge Judge promotion (2026-08-28, ADR-0014) — see `prototypes/ai-merge/`:**
 
 Offline ingest ABox dedup (`src/onto3gpp/embed/` + `src/onto3gpp/ingest/merge_judge.py` via domain-pack `embed:` block; runtime stays AI-free/CPU-only; `embed.kind hash` 384-d stdlib default, swappable to `tfidf`/`ollama`/`api` — see `docs/architecture.md` §3.3 and `docs/adr/0014-*.md`):

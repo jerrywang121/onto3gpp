@@ -261,18 +261,26 @@ class OllamaEmbedder:
         api_base: str = "http://localhost:11434",
         model: str = "embeddinggemma:300m",
         dim: int = 768,
-        timeout: float = 15.0,
+        timeout: float = 30.0,
+        num_ctx: int | None = None,
+        n_ctx: int | None = None,
     ) -> None:
         self.api_base = api_base.rstrip("/")
         self.model = model
         self.dim = dim
         self.timeout = timeout
+        # 32k ctx (qwen3-embedding) blows VRAM (5.7 GB) and batch latency (16s/32);
+        # cap to 2048 via options.num_ctx (~2.1 GB, 1.6s/32) by default for ollama.
+        self.num_ctx = num_ctx if num_ctx is not None else n_ctx
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         if not texts:
             return []
         url = f"{self.api_base}/api/embed"
-        body = json.dumps({"model": self.model, "input": texts}).encode()
+        payload: dict = {"model": self.model, "input": texts}
+        if self.num_ctx is not None:
+            payload["options"] = {"num_ctx": self.num_ctx}
+        body = json.dumps(payload).encode()
         headers = {"Content-Type": "application/json"}
         req = urllib.request.Request(url, data=body, headers=headers, method="POST")
         try:
@@ -399,6 +407,7 @@ def get_embedder(cfg: dict | None) -> HashEmbedder | TfIdfEmbedder | OllamaEmbed
             api_base=cfg.get("api_base", "http://localhost:11434"),
             model=cfg.get("model", "embeddinggemma:300m"),
             dim=int(cfg.get("dim", 768)),
+            num_ctx=int(cfg["num_ctx"]) if cfg.get("num_ctx") is not None else (int(cfg["n_ctx"]) if cfg.get("n_ctx") is not None else None),
         )
     if kind == "api":
         return ApiEmbedder(

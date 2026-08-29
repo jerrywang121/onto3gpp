@@ -30,26 +30,42 @@ llm:
     temperature: 0.5
     max_tokens: 4096
   models:
-    extract:       {provider: cmdc, model: minimax/minimax-m2.7-free, temperature: 0.1, max_tokens: 4096}
-    verify:        {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.3, max_tokens: 4096}
-    relations:     {provider: cmdc, model: minimax/minimax-m2.7-free, temperature: 0.3, max_tokens: 4096}
-    judge:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 4096}
-    align:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 4096}
-    merge:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 4096}
-    domain_detect: {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 2048}
-    improve:       {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.8, max_tokens: 4096}
+    extract:       {provider: cmdc, model: poolside/laguna-s-2.1-free, temperature: 0.1, max_tokens: 8000}
+    verify:        {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.3, max_tokens: 8000}
+    relations:     {provider: cmdc, model: poolside/laguna-s-2.1-free, temperature: 0.3, max_tokens: 8000}
+    judge:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 8000}
+    align:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 8000}
+    merge:         {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 8000}
+    domain_detect: {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.5, max_tokens: 8000}
+    improve:       {provider: cmdc, model: minimax/minimax-m3-free, temperature: 0.8, max_tokens: 8000}
   # To swap a task to another provider, just change `provider:`:
   #   merge: {provider: ollama, model: llama3, temperature: 0.5}
   #   judge: {provider: openai, model: gpt-4o, temperature: 0.0}
 
 embed:
-  kind: gguf
-  repo_id: unsloth/embeddinggemma-300m-GGUF
-  filename: embeddinggemma-300M-BF16.gguf
+  kind: ollama
+  api_base: http://localhost:11434
+  model: embeddinggemma:300m
   dim: 768
-  n_gpu_layers: -1
+  num_ctx: 2048
   threshold: 0.25
   top_k: 5
+  # qwen variant (heavier 2.13 GB, 1.6s/32 vs 0.68 GB 1.07s/32 — needs num_ctx cap):
+  # kind: ollama
+  # model: qwen3-embedding:0.6b
+  # dim: 1024
+  # num_ctx: 2048
+  # local fast alternative (no ollama daemon, 0.46s/32, 6.4s cold once per process):
+  # kind: gguf
+  # repo_id: unsloth/embeddinggemma-300m-GGUF
+  # filename: embeddinggemma-300M-BF16.gguf
+  # dim: 768
+  # n_gpu_layers: -1
+  # resident server alternative (requires `llama serve -hf ... --embeddings`
+  # but currently crashes on cublasCreate/resource allocation on RTX 2000 Ada):
+  # kind: api
+  # api_base: http://127.0.0.1:8080/v1
+  # model: unsloth/embeddinggemma-300m-GGUF:BF16
   # local hash fallback (no model download):
   # kind: hash
   # dim: 384

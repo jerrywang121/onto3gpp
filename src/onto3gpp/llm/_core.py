@@ -194,6 +194,9 @@ class LLMClient:
             "messages": [{"role": "user", "content": prompt}],
             "temperature": self.config.temperature,
             "max_tokens": self.config.max_tokens,
+            # Fail fast on gateway hangs (litellm default is 600s, which stalls
+            # ingest retries for minutes per attempt). Override via extra.timeout.
+            "timeout": self.config.extra.get("timeout", 120),
         }
         if self.config.api_base:
             kwargs["api_base"] = self.config.api_base
