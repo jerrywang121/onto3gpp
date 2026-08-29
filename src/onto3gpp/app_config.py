@@ -62,7 +62,7 @@ def _load_embed(data: dict | None, providers: dict | None = None) -> EmbedConfig
             if data.get(k) is None and isinstance(p, dict) and p.get(k) is not None:
                 data = dict(data)
                 data[k] = p[k]
-    known = {"kind", "dim", "api_base", "model", "api_key", "api_key_env", "threshold", "top_k", "provider"}
+    known = {"kind", "dim", "api_base", "model", "api_key", "api_key_env", "repo_id", "filename", "model_path", "n_ctx", "n_batch", "n_gpu_layers", "threshold", "top_k", "provider"}
     filtered = {k: v for k, v in data.items() if k in known}
     # provider is not on EmbedConfig yet — strip it before construction, keep wiring via api_* fields
     filtered.pop("provider", None)

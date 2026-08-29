@@ -230,5 +230,8 @@ __marimo__/
 .secrets.toml
 secrets.toml
 
+# CodeGraph local index (regeneratable)
+.codegraph/
+
 # Streamlit
 .streamlit/secrets.toml

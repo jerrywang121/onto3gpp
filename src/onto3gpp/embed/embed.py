@@ -117,6 +117,134 @@ class TfIdfEmbedder:
 
 
 # ---------------------------------------------------------------------------
+# GgufEmbedder — direct HF GGUF (unsloth/embeddinggemma-300m-GGUF BF16)
+# ---------------------------------------------------------------------------
+class GgufEmbedder:
+    """Load a GGUF embedding model directly via llama-cpp-python.
+
+    Default: ``unsloth/embeddinggemma-300m-GGUF`` / ``embeddinggemma-300M-BF16.gguf``
+    (768-d, ~612 MB). Downloads from Hugging Face on first use and caches in
+    ``~/.cache/huggingface/hub``. CPU-only, no Ollama daemon needed.
+
+    Config keys:
+      repo_id  — HF repo (default ``unsloth/embeddinggemma-300m-GGUF``)
+      filename — GGUF file in repo (default ``embeddinggemma-300M-BF16.gguf``)
+      model_path — direct local path override (skip HF download)
+      dim      — expected dim (inferred from model if mismatch)
+      n_ctx / n_batch / n_threads — llama.cpp tuning
+    """
+
+    # Process-wide singleton so repeated get_embedder() calls don't reload 600 MB.
+    _llama_singleton: dict[str, object] = {}
+    _lock_singleton: object = None
+
+    def __init__(
+        self,
+        repo_id: str = "unsloth/embeddinggemma-300m-GGUF",
+        filename: str = "embeddinggemma-300M-BF16.gguf",
+        model_path: str | None = None,
+        dim: int = 768,
+        n_ctx: int = 512,
+        n_batch: int = 512,
+        n_threads: int | None = None,
+        n_gpu_layers: int = 0,
+        verbose: bool = False,
+    ) -> None:
+        self.repo_id = repo_id
+        self.filename = filename
+        self.model_path = model_path
+        self.dim = dim
+        self.n_ctx = n_ctx
+        self.n_batch = n_batch
+        self.n_threads = n_threads
+        self.n_gpu_layers = n_gpu_layers
+        self.verbose = verbose
+        self._llama = None  # lazy
+        # lazy import guard — defer heavy import until first embed
+
+    def _ensure_model(self):  # type: ignore[no-untyped-def]
+        if self._llama is not None:
+            return self._llama
+        # Resolve file path
+        if self.model_path:
+            from pathlib import Path as _Path
+
+            path = str(_Path(self.model_path).expanduser().resolve())
+        else:
+            try:
+                from huggingface_hub import hf_hub_download as _dl
+            except ImportError as e:
+                raise RuntimeError(
+                    "GgufEmbedder needs huggingface-hub: pip install huggingface-hub"
+                ) from e
+            path = _dl(repo_id=self.repo_id, filename=self.filename)
+        # Singleton keyed by path
+        key = path
+        # Use class-level cache
+        import threading as _threading
+
+        if GgufEmbedder._lock_singleton is None:
+            GgufEmbedder._lock_singleton = _threading.Lock()
+        with GgufEmbedder._lock_singleton:  # type: ignore[union-attr]
+            if key in GgufEmbedder._llama_singleton:
+                self._llama = GgufEmbedder._llama_singleton[key]
+                # infer dim
+                try:
+                    self.dim = int(self._llama.n_embd())  # type: ignore[union-attr]
+                except Exception:
+                    pass
+                return self._llama
+            try:
+                from llama_cpp import Llama as _Llama
+            except ImportError as e:
+                raise RuntimeError(
+                    "GgufEmbedder needs llama-cpp-python: pip install llama-cpp-python"
+                ) from e
+            llm = _Llama(
+                model_path=path,
+                embedding=True,
+                n_ctx=self.n_ctx,
+                n_batch=self.n_batch,
+                n_threads=self.n_threads,
+                n_gpu_layers=self.n_gpu_layers,
+                verbose=self.verbose,
+            )
+            try:
+                inferred = int(llm.n_embd())
+                if inferred != self.dim:
+                    self.dim = inferred
+            except Exception:
+                pass
+            GgufEmbedder._llama_singleton[key] = llm
+            self._llama = llm
+            return llm
+
+    def embed(self, texts: list[str]) -> list[list[float]]:
+        if not texts:
+            return []
+        llm = self._ensure_model()
+        # llama_cpp Llama.embed handles batching internally; returns list[list[float]]
+        try:
+            vecs = llm.embed(texts)  # type: ignore[union-attr]
+        except TypeError:
+            # older API: embed(input, normalize=False)
+            vecs = llm.embed(texts, normalize=False)  # type: ignore[union-attr]
+        # llama returns list for single string vs list — normalize
+        if vecs and isinstance(vecs[0], float):
+            vecs = [vecs]  # type: ignore[list-item]
+        if vecs and len(vecs[0]) != self.dim:
+            self.dim = len(vecs[0])
+        out: list[list[float]] = []
+        for v in vecs:  # type: ignore[union-attr]
+            norm = math.sqrt(sum(float(x) * float(x) for x in v))
+            if norm > 0:
+                out.append([float(x) / norm for x in v])
+            else:
+                out.append([float(x) for x in v])
+        return out
+
+
+# ---------------------------------------------------------------------------
 # OllamaEmbedder — local HTTP (embeddinggemma:300m etc.)
 # ---------------------------------------------------------------------------
 class OllamaEmbedder:
@@ -237,12 +365,14 @@ class ApiEmbedder:
 # ---------------------------------------------------------------------------
 # Factory
 # ---------------------------------------------------------------------------
-def get_embedder(cfg: dict | None) -> HashEmbedder | TfIdfEmbedder | OllamaEmbedder | ApiEmbedder:
+def get_embedder(cfg: dict | None) -> HashEmbedder | TfIdfEmbedder | OllamaEmbedder | ApiEmbedder | GgufEmbedder:
     """Return an Embedder from a dict config.
 
     cfg examples:
       {"kind": "hash", "dim": 384}
       {"kind": "tfidf", "dim": 384, "corpus": [...]}
+      {"kind": "gguf", "repo_id": "unsloth/embeddinggemma-300m-GGUF",
+       "filename": "embeddinggemma-300M-BF16.gguf", "dim": 768}
       {"kind": "ollama", "api_base": "http://localhost:11434",
        "model": "embeddinggemma:300m", "dim": 768}
       {"kind": "api", "api_base": "https://api.openai.com/v1",
@@ -253,6 +383,17 @@ def get_embedder(cfg: dict | None) -> HashEmbedder | TfIdfEmbedder | OllamaEmbed
         return HashEmbedder(dim=384)
     kind = (cfg.get("kind") or "hash").lower()
     dim = int(cfg.get("dim", 384))
+    if kind == "gguf":
+        return GgufEmbedder(
+            repo_id=cfg.get("repo_id", "unsloth/embeddinggemma-300m-GGUF"),
+            filename=cfg.get("filename", "embeddinggemma-300M-BF16.gguf"),
+            model_path=cfg.get("model_path"),
+            dim=int(cfg.get("dim", 768)),
+            n_ctx=int(cfg.get("n_ctx", 512)) if cfg.get("n_ctx") is not None else 512,
+            n_batch=int(cfg.get("n_batch", 512)) if cfg.get("n_batch") is not None else 512,
+            n_gpu_layers=int(cfg.get("n_gpu_layers", 0)) if cfg.get("n_gpu_layers") is not None else 0,
+            verbose=bool(cfg.get("verbose", False)),
+        )
     if kind == "ollama":
         return OllamaEmbedder(
             api_base=cfg.get("api_base", "http://localhost:11434"),
@@ -330,3 +471,16 @@ class EmbeddingIndex:
     ) -> list[tuple[str, float]]:
         qv = self.embedder.embed([text])[0]
         return self.search(qv, top_k=top_k, threshold=threshold)
+
+    def search_texts(
+        self, texts: list[str], top_k: int = 5, threshold: float = 0.0
+    ) -> list[list[tuple[str, float]]]:
+        """Batch variant of search_text — one embed call for all queries.
+
+        Critical for GGUF/CPU models where per-text overhead dominates.
+        Returns list aligned with texts.
+        """
+        if not texts:
+            return []
+        qvecs = self.embedder.embed(texts)
+        return [self.search(qv, top_k=top_k, threshold=threshold) for qv in qvecs]

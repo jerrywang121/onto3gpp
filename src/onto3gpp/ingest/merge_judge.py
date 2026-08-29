@@ -30,6 +30,11 @@ _DENYLIST_PAIRS: set[frozenset[str]] = {
 }
 
 
+def _compact(s: str) -> str:
+    """Lower + strip hyphens/underscores/spaces — for hyphen variants (NGAP/NG-AP)."""
+    return s.casefold().replace("-", "").replace("_", "").replace(" ", "").strip()
+
+
 def _normalize(s: str) -> str:
     """Casefold + hyphens→spaces + collapse whitespace + sort tokens."""
     s = s.casefold()
@@ -90,18 +95,36 @@ class MergeJudge:
             return {"decision": "ADD", "target": None, "reason": "no neighbours"}
 
         norm_new = _normalize(new_canonical)
+        compact_new = _compact(new_canonical)
+        lid_new = new_canonical.lower().replace(" ", "_").replace("-", "_")
 
         if not self._llm_available or LLMClient is None:
             for nb in neighbours:
-                if _normalize(nb["canonical"]) == norm_new and not _denied(
-                    new_canonical, nb["canonical"]
-                ):
+                can = nb["canonical"]
+                if _denied(new_canonical, can):
+                    continue
+                # Hybrid exact: normalized, compact (NGAP/NG-AP, E-UTRAN/EUTRAN),
+                # or id-folded lower — all catch hyphen/space/case variants
+                # without false merges on DCI/timers (denylist-gated).
+                if _normalize(can) == norm_new:
                     return {
                         "decision": "MERGE",
                         "target": nb["id"],
-                        "reason": f"normalized match: {nb['canonical']!r}",
+                        "reason": f"normalized match: {can!r}",
                     }
-            return {"decision": "ADD", "target": None, "reason": "no normalized match"}
+                if _compact(can) == compact_new:
+                    return {
+                        "decision": "MERGE",
+                        "target": nb["id"],
+                        "reason": f"compact match: {can!r}",
+                    }
+                if can.lower().replace(" ", "_").replace("-", "_") == lid_new:
+                    return {
+                        "decision": "MERGE",
+                        "target": nb["id"],
+                        "reason": f"id match: {can!r}",
+                    }
+            return {"decision": "ADD", "target": None, "reason": "no normalized/compact match"}
 
         nb_lines = "\n".join(
             f'- id={nb["id"]!r} canonical={nb["canonical"]!r} type={nb["type"]!r} cosine={nb["cosine"]:.3f}'
@@ -149,12 +172,17 @@ class MergeJudge:
                 dec, tgt = "ADD", None
             return {"decision": dec, "target": tgt, "reason": data.get("reason", "")}
         except Exception as e:
+            comp_new = _compact(new_canonical)
+            lid_new = new_canonical.lower().replace(" ", "_").replace("-", "_")
             for nb in neighbours:
-                if _normalize(nb["canonical"]) == norm_new:
+                can = nb["canonical"]
+                if _denied(new_canonical, can):
+                    continue
+                if _normalize(can) == norm_new or _compact(can) == comp_new or can.lower().replace(" ", "_").replace("-", "_") == lid_new:
                     return {
                         "decision": "MERGE",
                         "target": nb["id"],
-                        "reason": f"LLM error fallback, normalized match: {e}",
+                        "reason": f"LLM error fallback, hybrid match: {e}",
                     }
             return {"decision": "ADD", "target": None, "reason": f"LLM error fallback: {e}"}
 
@@ -169,7 +197,11 @@ def decide(
     id_to_canonical: dict[str, str] | None = None,
     id_to_type: dict[str, str] | None = None,
 ) -> MergeDecision:
-    """Full pipeline: embed+search → judge → MergeDecision."""
+    """Full pipeline: embed+search → judge → MergeDecision.
+
+    Hybrid retrieval: dict exact (normalized + compact + id-folded, cosine 1.0)
+    UNION embedding top-k. This matches step 2 of the per-chunk loop.
+    """
     neighbours_scored = index.search_text(new_canonical, top_k=top_k, threshold=threshold)
     neighbours: list[dict] = []
     for cid, cos in neighbours_scored:
@@ -181,6 +213,24 @@ def decide(
                 "cosine": cos,
             }
         )
+    # Hybrid dict exact: inject normalized/compact/id matches with cosine 1.0
+    # so the judge (deterministic or LLM) sees hyphen/space/case variants
+    # even when hash embedding cosine is < threshold — but respect the
+    # threshold gate (if threshold > 1.0 nothing passes).
+    if id_to_canonical and 1.0 >= threshold:
+        norm_new = _normalize(new_canonical)
+        compact_new = _compact(new_canonical)
+        lid_new = new_canonical.lower().replace(" ", "_").replace("-", "_")
+        seen_ids = {nb["id"] for nb in neighbours}
+        for cid, can in id_to_canonical.items():
+            if cid in seen_ids:
+                continue
+            if _denied(new_canonical, can):
+                continue
+            if _normalize(can) == norm_new or _compact(can) == compact_new or can.lower().replace(" ", "_").replace("-", "_") == lid_new:
+                neighbours.insert(0, {"id": cid, "canonical": can, "type": (id_to_type or {}).get(cid, "concept"), "cosine": 1.0})
+                neighbours_scored = [(cid, 1.0)] + neighbours_scored
+                seen_ids.add(cid)
     res = judge.judge(new_canonical, new_type, neighbours)
     return MergeDecision(
         decision=res["decision"],

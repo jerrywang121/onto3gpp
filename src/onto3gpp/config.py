@@ -22,12 +22,19 @@ class EmbedConfig:
     for ``cmdc``, ``OPENAI_API_KEY`` for ``openai``; omit for ``ollama``).
     """
 
-    kind: str = "hash"  # hash | tfidf | ollama | api
+    kind: str = "hash"  # hash | tfidf | ollama | api | gguf
     dim: int = 384
     api_base: str | None = None
     model: str | None = None
     api_key: str | None = None
     api_key_env: str | None = None
+    # GGUF-specific (used when kind=gguf)
+    repo_id: str | None = None
+    filename: str | None = None
+    model_path: str | None = None
+    n_ctx: int | None = None
+    n_batch: int | None = None
+    n_gpu_layers: int | None = None
     threshold: float = 0.25
     top_k: int = 5
 
@@ -41,6 +48,18 @@ class EmbedConfig:
             d["api_key"] = self.api_key
         if self.api_key_env:
             d["api_key_env"] = self.api_key_env
+        if self.repo_id:
+            d["repo_id"] = self.repo_id
+        if self.filename:
+            d["filename"] = self.filename
+        if self.model_path:
+            d["model_path"] = self.model_path
+        if self.n_ctx is not None:
+            d["n_ctx"] = self.n_ctx
+        if self.n_batch is not None:
+            d["n_batch"] = self.n_batch
+        if self.n_gpu_layers is not None:
+            d["n_gpu_layers"] = self.n_gpu_layers
         return d
 
 

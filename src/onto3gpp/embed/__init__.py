@@ -3,6 +3,7 @@
 from onto3gpp.embed.embed import (
     ApiEmbedder,
     EmbeddingIndex,
+    GgufEmbedder,
     HashEmbedder,
     OllamaEmbedder,
     TfIdfEmbedder,
@@ -12,6 +13,7 @@ from onto3gpp.embed.embed import (
 __all__ = [
     "HashEmbedder",
     "TfIdfEmbedder",
+    "GgufEmbedder",
     "OllamaEmbedder",
     "ApiEmbedder",
     "EmbeddingIndex",
